@@ -86,6 +86,18 @@ class HomeListItem extends StatelessWidget {
             fit: BoxFit.fill,
           ),
           Positioned(
+            right: 12,
+            top: 12,
+            child: Container(
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.black12,
+                borderRadius: BorderRadius.circular(6)
+              ),
+              child: Icon(Icons.favorite_border_rounded,color: Colors.white,),
+            ),
+          ),
+          Positioned(
             bottom: 0,
             child: Container(
               width: 270,
@@ -127,7 +139,7 @@ class HomeListItem extends StatelessWidget {
                       Text(
                         '12,000원',
                         style: TextStyle(
-                          color: deepGray,
+                          color: Color(0xFF626262),
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                         ),

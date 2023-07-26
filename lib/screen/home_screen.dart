@@ -16,6 +16,19 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: mainColor,
       body: Column(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Row(
+              children: [
+                GestureDetector(
+                  child: const Icon(Icons.edit,color: Colors.white,size: 28,),
+                  onTap: (){
+
+                  },
+                )
+              ],
+            ),
+          ),
           const HomeSearchWidget(),
           Expanded(
             child: Container(
