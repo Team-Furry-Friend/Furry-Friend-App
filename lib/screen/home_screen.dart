@@ -21,10 +21,12 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               children: [
                 GestureDetector(
-                  child: const Icon(Icons.edit,color: Colors.white,size: 28,),
-                  onTap: (){
-
-                  },
+                  child: const Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                  onTap: () {},
                 )
               ],
             ),
