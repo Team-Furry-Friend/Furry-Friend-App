@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:furry_friend/service/login_service.dart';
 import 'package:furry_friend/widget/color.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -67,24 +66,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginOnTap(String element) {
+    final serviceLogin = ServiceLogin();
     switch (element) {
       case "kakao":
-        kakaoLogin();
+        serviceLogin.kakaoLogin();
       case "naver":
-        naverLogin();
+        serviceLogin.naverLogin();
+      case "google":
+        serviceLogin.googleLogin();
     }
-  }
-
-  Future<void> kakaoLogin() async {
-    try {
-      await UserApi.instance.loginWithKakaoAccount();
-      print('KakaoAccount Login success');
-    } catch (error) {
-      print('KakaoAccount Login Error $error');
-    }
-  }
-
-  Future<void> naverLogin() async {
-    NaverLoginResult _result = await FlutterNaverLogin.logIn();
   }
 }
