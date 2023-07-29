@@ -15,4 +15,9 @@
     <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
+
+    <!-- 네이버 설정 -->
+    <string name="client_id">qv81SiyPKtr7tDVEBsmW</string>
+    <string name="client_secret">kEDueC9v4P</string>
+    <string name="client_name">Furry_friends</string>
 </resources>

@@ -63,5 +63,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>naverConsumerKey</key>
+	<string>qv81SiyPKtr7tDVEBsmW</string>
+	<key>naverConsumerSecret</key>
+	<string>kEDueC9v4P</string>
+	<key>naverServiceAppName</key>
+	<string>Furry_friends</string>
+	<key>naverServiceAppUrlScheme</key>
+	<string>naver</string>
 </dict>
 </plist>

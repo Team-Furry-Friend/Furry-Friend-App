@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:furry_friend/widget/color.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
@@ -69,6 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
     switch (element) {
       case "kakao":
         kakaoLogin();
+      case "naver":
+        naverLogin();
     }
   }
 
@@ -79,5 +82,9 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (error) {
       print('KakaoAccount Login Error $error');
     }
+  }
+
+  Future<void> naverLogin() async {
+    NaverLoginResult _result = await FlutterNaverLogin.logIn();
   }
 }
