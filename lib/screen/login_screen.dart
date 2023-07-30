@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/screen/sign_up_screen.dart';
 import 'package:furry_friend/service/login_service.dart';
 import 'package:furry_friend/widget/color.dart';
 
@@ -49,7 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()));
+              },
               child: const Text(
                 '이메일 회원가입',
                 style: TextStyle(

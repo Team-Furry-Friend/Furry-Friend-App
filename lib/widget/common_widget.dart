@@ -2,6 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:furry_friend/screen/home_screen.dart';
 import 'package:furry_friend/widget/color.dart';
 
+PreferredSizeWidget DefaultAppBar(BuildContext context) {
+  return AppBar(
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+    leading: GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: const Padding(
+        padding: EdgeInsets.only(left: 18),
+        child: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.black87,
+        ),
+      ),
+    ),
+  );
+}
+
 class BottomNavigator extends StatefulWidget {
   const BottomNavigator({Key? key}) : super(key: key);
 
@@ -46,6 +65,52 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         onTap: _onTapped,
         showSelectedLabels: false,
         showUnselectedLabels: false,
+      ),
+    );
+  }
+}
+
+class BottomButton extends StatelessWidget {
+  const BottomButton({
+    super.key,
+    required this.onTap,
+    required this.text,
+    this.textColor = Colors.white,
+    this.backgroundColor = const Color(0xFF70A3F3),
+  });
+
+  final Function() onTap;
+  final String text;
+  final Color textColor;
+  final Color backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        decoration: ShapeDecoration(
+          color: backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
