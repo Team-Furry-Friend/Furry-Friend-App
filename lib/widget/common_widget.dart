@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:furry_friend/screen/home_screen.dart';
 import 'package:furry_friend/widget/color.dart';
 
-PreferredSizeWidget DefaultAppBar(BuildContext context) {
+PreferredSizeWidget DefaultAppBar(BuildContext context, {Widget? title}) {
   return AppBar(
     elevation: 0,
+    title: title,
     backgroundColor: Colors.transparent,
     leading: GestureDetector(
       onTap: () {
@@ -87,7 +88,7 @@ class BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap: () => onTap(),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 25),
         padding: const EdgeInsets.symmetric(vertical: 20),
