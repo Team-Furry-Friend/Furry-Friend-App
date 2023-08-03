@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/screen/login_screen.dart';
-import 'package:furry_friend/widget/common_widget.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk_common.dart';
+import 'package:furry_friend/common/utils.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+import 'app/screen/login_screen.dart';
+import 'domain/providers/user.dart';
+
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  KakaoSdk.init(
-    nativeAppKey: '2b171fd1be0956ce61a994f5d910834e',
-  );
+  await Utils().serviceSetting();
 
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => User()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
