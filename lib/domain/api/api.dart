@@ -1,14 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:furry_friend/api/client.dart';
-import 'package:furry_friend/model/user/token.dart';
-import 'package:furry_friend/model/user/user.dart';
+
+import '../model/user/token.dart';
+import '../model/user/user.dart';
+import 'client.dart';
+
 
 class ApiRepositories {
-  late Dio _dio;
-
-  ApiRepositories() {
-    _dio = UserClient().dio;
-  }
+  static final Dio _dio = UserClient().dio;
 
   RequestOptions settingOptions(String method, String path,
       {Map<String, dynamic>? headers,

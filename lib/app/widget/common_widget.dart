@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/screen/home_screen.dart';
-import 'package:furry_friend/widget/color.dart';
+
+import '../screen/home_screen.dart';
+import 'color.dart';
 
 PreferredSizeWidget DefaultAppBar(BuildContext context, {Widget? title}) {
   return AppBar(

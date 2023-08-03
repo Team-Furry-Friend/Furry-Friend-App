@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/widget/color.dart';
+
+import 'color.dart';
 
 class HomeSearchWidget extends StatelessWidget {
   const HomeSearchWidget({

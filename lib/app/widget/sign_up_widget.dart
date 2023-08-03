@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/widget/color.dart';
-import 'package:furry_friend/widget/common_widget.dart';
+
+import 'color.dart';
+import 'common_widget.dart';
 
 class SignTextFieldRow extends StatelessWidget {
   const SignTextFieldRow({
@@ -8,11 +9,13 @@ class SignTextFieldRow extends StatelessWidget {
     required this.icon,
     required this.hintText,
     required this.controller,
+    this.inputType = TextInputType.text
   });
 
   final IconData icon;
   final String hintText;
   final TextEditingController controller;
+  final TextInputType inputType;
 
   final textStyle = const TextStyle(
     color: Color(0xFFB8B8B8),
@@ -36,6 +39,8 @@ class SignTextFieldRow extends StatelessWidget {
             margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
             child: TextField(
               controller: controller,
+              obscureText: hintText == '비밀번호',
+              keyboardType: inputType,
               decoration: InputDecoration(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 14, horizontal: 18),

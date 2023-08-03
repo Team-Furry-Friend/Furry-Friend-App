@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/widget/color.dart';
-import 'package:furry_friend/widget/home_widget.dart';
+
+import '../widget/color.dart';
+import '../widget/home_widget.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/screen/sign_up_screen.dart';
-import 'package:furry_friend/service/login_service.dart';
-import 'package:furry_friend/widget/color.dart';
+import 'package:furry_friend/app/screen/sign_up_screen.dart';
+
+import '../../service/login_service.dart';
+import '../widget/color.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

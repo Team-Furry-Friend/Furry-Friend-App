@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/utils.dart';
-import 'package:furry_friend/widget/color.dart';
-import 'package:furry_friend/widget/common_widget.dart';
-import 'package:furry_friend/widget/sign_up_widget.dart';
+
+import '../../domain/providers/user.dart';
+import '../widget/color.dart';
+import '../widget/common_widget.dart';
+import '../widget/sign_up_widget.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -12,6 +15,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final User userProvider = User();
+  final util = Utils();
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final TextEditingController emailController = TextEditingController();
@@ -19,6 +25,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController phoneController = TextEditingController();
 
   bool isCheckToS = false;
+
+  @override
+  void initState() {
+    controllerListenerSetting();
+    super.initState();
+  }
+  @override
+  void dispose() {
+    controllerListenerSetting(isDispose: true);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +55,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 children: [
                   SignTextFieldRow(
-                      icon: Icons.alternate_email_rounded, hintText: "이메일",controller: emailController,),
+                    icon: Icons.alternate_email_rounded,
+                    hintText: "이메일",
+                    controller: emailController,
+                    inputType: TextInputType.emailAddress,
+                  ),
                   SignTextFieldRow(
-                      icon: Icons.vpn_key_outlined, hintText: "비밀번호",controller: pwController,),
+                    icon: Icons.vpn_key_outlined,
+                    hintText: "비밀번호",
+                    controller: pwController,
+                  ),
                   SignTextFieldRow(
-                      icon: Icons.phone_outlined, hintText: "전화번호",controller: phoneController,),
+                    icon: Icons.phone_outlined,
+                    hintText: "전화번호",
+                    controller: phoneController,
+                    inputType: TextInputType.phone,
+                  ),
                 ],
               ),
             ),
@@ -56,26 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     children: [
                       Checkbox(
                         value: isCheckToS,
-                        onChanged: (isCheck) {
-                          if (isCheck != null) {
-                            if (!isCheckToS) {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (_) {
-                                    return BottomSheetLayout(onTap: (){
-                                      setState(() {
-                                        isCheckToS = isCheck;
-                                      });
-                                      Navigator.pop(context);
-                                    });
-                                  });
-                            } else {
-                              setState(() {
-                                isCheckToS = false;
-                              });
-                            }
-                          }
-                        },
+                        onChanged: checkBoxOnChanged,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4.3)),
                         side: MaterialStateBorderSide.resolveWith(
@@ -96,12 +105,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: BottomButton(text: "다음", onTap: () {
-                    if(!completeCheck()){
-                      Utils().showSnackBar(context, "입력란 및 이용약관 동의를 확인해주세요.");
-                    }
-                  },
-                  backgroundColor: completeCheck() ?  mainColor :  deepGray,),
+                  child: BottomButton(
+                    text: "다음",
+                    onTap: completeButtonOnTap,
+                    backgroundColor: completeCheck() ? mainColor : deepGray,
+                  ),
                 )
               ],
             )),
@@ -111,10 +119,63 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  bool completeCheck(){
+  bool completeCheck() {
     return isCheckToS &&
         pwController.text.isNotEmpty &&
         phoneController.text.isNotEmpty &&
         emailController.text.isNotEmpty;
+  }
+
+  void checkBoxOnChanged(bool? isCheck) {
+    if (isCheck != null) {
+      if (!isCheckToS) {
+        showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return BottomSheetLayout(onTap: () {
+                setState(() {
+                  isCheckToS = isCheck;
+                });
+                Navigator.pop(context);
+              });
+            });
+      } else {
+        setState(() {
+          isCheckToS = false;
+        });
+      }
+    }
+  }
+
+  void textFieldOnChanged(){
+    if(completeCheck()){
+      setState(() {});
+    }
+  }
+
+  void controllerListenerSetting({bool isDispose = false}) {
+    if(isDispose){
+      emailController.removeListener(textFieldOnChanged);
+      pwController.removeListener(textFieldOnChanged);
+      phoneController.removeListener(textFieldOnChanged);
+    }else{
+      emailController.addListener(textFieldOnChanged);
+      pwController.addListener(textFieldOnChanged);
+      phoneController.addListener(textFieldOnChanged);
+    }
+  }
+
+  void completeButtonOnTap() {
+    if (!completeCheck()) {
+      util.showSnackBar(context, "입력란 및 이용약관 동의를 확인해주세요.");
+    } else {
+      if(!util.isValidEmailFormat(emailController.text)){
+        util.showSnackBar(context, "이메일 유형을 맞춰주세요.");
+        return;
+      }
+
+      userProvider.signUpUser(
+          emailController.text, pwController.text);
+    }
   }
 }
