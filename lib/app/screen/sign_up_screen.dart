@@ -56,18 +56,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  SignTextFieldRow(
+                  TextFieldRow(
                     icon: Icons.alternate_email_rounded,
                     hintText: "이메일",
                     controller: emailController,
                     inputType: TextInputType.emailAddress,
                   ),
-                  SignTextFieldRow(
+                  TextFieldRow(
                     icon: Icons.vpn_key_outlined,
                     hintText: "비밀번호",
                     controller: pwController,
                   ),
-                  SignTextFieldRow(
+                  TextFieldRow(
                     icon: Icons.person,
                     hintText: "별명",
                     controller: nameController,
@@ -77,12 +77,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         vertical: 24, horizontal: 40),
                     child: const Divider(),
                   ),
-                  SignTextFieldRow(
+                  TextFieldRow(
                     icon: Icons.map_outlined,
                     hintText: "주소",
                     controller: addressController,
                   ),
-                  SignTextFieldRow(
+                  TextFieldRow(
                     icon: Icons.phone_outlined,
                     hintText: "전화번호",
                     controller: phoneController,

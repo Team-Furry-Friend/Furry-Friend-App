@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/service/prefs.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakao;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils {
   Future<void> serviceSetting() async {
-    Prefs();
+    Prefs().sharedPrefs = await SharedPreferences.getInstance();
     kakao.KakaoSdk.init(
       nativeAppKey: '2b171fd1be0956ce61a994f5d910834e',
     );

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Furry Friend',
       theme: ThemeData(fontFamily: 'Pretendard'),
-      home: Utils().isLogin() ? const HomeScreen() : const LoginScreen(),
+      home: Utils().isLogin() ? const HomeScreen() : LoginScreen(),
     );
   }
 }
