@@ -15,8 +15,11 @@ class Prefs {
     sharedPrefs = await SharedPreferences.getInstance();
   }
 
-
   final String refreshToken = "REFRESHTOKEN";
   final String accessToken = "ACCESSTOKEN";
-
+  final String email = "EMAIL";
+  final String password = "PASSWORD";
+  final String phoneNumber = "PHONENUMBER";
+  final String nickName = "NICKNAME";
+  final String address = "ADRESS";
 }

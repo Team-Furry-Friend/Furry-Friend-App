@@ -6,7 +6,6 @@ import '../widget/color.dart';
 import '../widget/common_widget.dart';
 import '../widget/sign_up_widget.dart';
 
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -23,6 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   bool isCheckToS = false;
 
@@ -31,6 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     controllerListenerSetting();
     super.initState();
   }
+
   @override
   void dispose() {
     controllerListenerSetting(isDispose: true);
@@ -64,6 +66,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     icon: Icons.vpn_key_outlined,
                     hintText: "비밀번호",
                     controller: pwController,
+                  ),
+                  SignTextFieldRow(
+                    icon: Icons.person,
+                    hintText: "별명",
+                    controller: nameController,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 24, horizontal: 40),
+                    child: const Divider(),
+                  ),
+                  SignTextFieldRow(
+                    icon: Icons.map_outlined,
+                    hintText: "주소",
+                    controller: addressController,
                   ),
                   SignTextFieldRow(
                     icon: Icons.phone_outlined,
@@ -123,6 +140,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return isCheckToS &&
         pwController.text.isNotEmpty &&
         phoneController.text.isNotEmpty &&
+        nameController.text.isNotEmpty &&
+        addressController.text.isNotEmpty &&
         emailController.text.isNotEmpty;
   }
 
@@ -147,21 +166,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  void textFieldOnChanged(){
-    if(completeCheck()){
+  void textFieldOnChanged() {
+    if (completeCheck()) {
       setState(() {});
     }
   }
 
   void controllerListenerSetting({bool isDispose = false}) {
-    if(isDispose){
+    if (isDispose) {
       emailController.removeListener(textFieldOnChanged);
       pwController.removeListener(textFieldOnChanged);
       phoneController.removeListener(textFieldOnChanged);
-    }else{
+      nameController.removeListener(textFieldOnChanged);
+      addressController.removeListener(textFieldOnChanged);
+    } else {
       emailController.addListener(textFieldOnChanged);
       pwController.addListener(textFieldOnChanged);
       phoneController.addListener(textFieldOnChanged);
+      nameController.addListener(textFieldOnChanged);
+      addressController.addListener(textFieldOnChanged);
     }
   }
 
@@ -169,13 +192,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (!completeCheck()) {
       util.showSnackBar(context, "입력란 및 이용약관 동의를 확인해주세요.");
     } else {
-      if(!util.isValidEmailFormat(emailController.text)){
+      if (!util.isValidEmailFormat(emailController.text)) {
         util.showSnackBar(context, "이메일 유형을 맞춰주세요.");
         return;
       }
 
-      userProvider.signUpUser(
-          emailController.text, pwController.text);
+      userProvider.signUpUser(context, emailController.text, pwController.text,
+          nameController.text, addressController.text, phoneController.text);
     }
   }
 }

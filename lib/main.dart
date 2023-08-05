@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/home_screen.dart';
 import 'package:furry_friend/common/utils.dart';
 import 'package:provider/provider.dart';
 
 import 'app/screen/login_screen.dart';
 import 'domain/providers/user.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Furry Friend',
       theme: ThemeData(fontFamily: 'Pretendard'),
-      home: LoginScreen(),
+      home: Utils().isLogin() ? const HomeScreen() : const LoginScreen(),
     );
   }
 }

@@ -9,7 +9,7 @@ class UserClient {
 
   UserClient._internal() {
     BaseOptions _options = BaseOptions(
-      baseUrl: 'https://howstheairtoday.site',
+      baseUrl: 'https://howstheairtoday.site/',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       sendTimeout: const Duration(seconds: 10),

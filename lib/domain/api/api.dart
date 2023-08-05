@@ -48,7 +48,7 @@ class ApiRepositories {
   }
 
   // 회원 API
-  Future<Response> login(email, mpw, name, address, phone) async {
+  Future<Response> join(email, mpw, name, address, phone) async {
     final queryParameters = <String, dynamic>{
       'email': email,
       'mpw': mpw,
@@ -57,18 +57,18 @@ class ApiRepositories {
       'phone': phone,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(settingOptions(
-        'POST', 'member/login',
+        'POST', 'member/join',
         queryParameters: queryParameters));
     return _result;
   }
 
-  Future<Token> join(username, password) async {
+  Future<Token> login(username, password) async {
     final queryParameters = <String, dynamic>{
       'username': username,
       'password': password,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(settingOptions(
-        'POST', 'member/join',
+        'POST', 'member/login',
         queryParameters: queryParameters));
     final value = Token.fromJson(_result.data!);
     return value;
