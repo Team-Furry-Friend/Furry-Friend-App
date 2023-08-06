@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 
+import '../model/post/page_post.dart';
+import '../model/post/post.dart';
 import '../model/user/token.dart';
 import '../model/user/user.dart';
 import 'client.dart';
-
 
 class ApiRepositories {
   static final Dio _dio = UserClient().dio;
@@ -77,7 +78,7 @@ class ApiRepositories {
   Future<User> socialLogin(social) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(settingOptions(
       'GET',
-      '/oauth2/$social',
+      'oauth2/$social',
     ));
     final value = User.fromJson(_result.data!);
     return value;
@@ -101,5 +102,50 @@ class ApiRepositories {
         settingOptions('POST', 'member/refresh-token', headers: header));
     final value = Token.fromJson(_result.data!);
     return value;
+  }
+
+  Future<PagePost> getPosts(page, size, type, keyword) async {
+    final queryParameters = <String, dynamic>{
+      'page': page,
+      'size': size,
+      'type': type,
+      'keyword': keyword,
+    };
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        settingOptions('GET', 'products', queryParameters: queryParameters));
+    final value = PagePost.fromJson(_result.data!);
+    return value;
+  }
+
+  Future<Response> postPost(options) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        settingOptions('POST', 'products', data: options));
+    return _result;
+  }
+
+  Future<Response> putPost(options) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        settingOptions('PUT', 'products', data: options));
+    return _result;
+  }
+
+  Future<Post> getPostDetail(pid) async {
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(settingOptions('GET', 'products/$pid'));
+    final value = Post.fromJson(_result.data!);
+    return value;
+  }
+
+  Future<Post> getPopularityPost() async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        settingOptions('GET', 'products/popularity'));
+    final value = Post.fromJson(_result.data!);
+    return value;
+  }
+
+  Future<Response> deletePost(pid) async {
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(settingOptions('DELETE', 'products/$pid'));
+    return _result;
   }
 }
