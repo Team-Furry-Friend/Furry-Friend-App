@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../widget/color.dart';
 import '../widget/home_widget.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -15,34 +14,36 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: backgroundColor,
       body: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(24),
             child: Row(
               children: [
+                const Expanded(child: HomeSearchWidget()),
                 GestureDetector(
-                  child: const Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                    size: 28,
-                  ),
                   onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    margin: const EdgeInsets.only(left: 15),
+                    decoration: BoxDecoration(
+                        color: mainColor,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: const Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    ),
+                  ),
                 )
               ],
             ),
           ),
-          const HomeSearchWidget(),
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
               ),
               child: Column(
                 children: [
@@ -62,17 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 28),
-                    child: SizedBox(
-                      height: 250,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 2,
-                        itemBuilder: (BuildContext context, int index) {
-                          return HomeListItem();
-                        },
-                      ),
+                    padding: const EdgeInsets.only(top: 25),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemCount: 2,
+                      itemBuilder: (BuildContext context, int index) {
+                        return HomeListItem();
+                      },
                     ),
                   )
                 ],

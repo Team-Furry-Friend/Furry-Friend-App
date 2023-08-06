@@ -10,10 +10,13 @@ class HomeSearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 25),
-      padding: const EdgeInsets.symmetric(horizontal: 25),
+      constraints: const BoxConstraints(minHeight: 56),
+      margin: const EdgeInsets.symmetric(vertical: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16), color: Colors.white),
+          border: Border.all(width: 1, color: const Color(0xFFD9D9D9)),
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.white),
       child: const Row(
         children: [
           Expanded(
@@ -71,87 +74,83 @@ class HomeListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 270,
-      margin: const EdgeInsets.only(right: 22),
+      margin: const EdgeInsets.only(bottom: 14),
+      constraints: const BoxConstraints(minHeight: 200),
       decoration: BoxDecoration(
         border: Border.all(
           color: deepGray,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(8),
-      ),
-      child: Stack(
-        children: [
-          const Image(
+        image: DecorationImage(
             image: NetworkImage("https://via.placeholder.com/269x229"),
-            fit: BoxFit.fill,
-          ),
-          Positioned(
-            right: 12,
-            top: 12,
-            child: Container(
-              padding: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.circular(6)
-              ),
-              child: Icon(Icons.favorite_border_rounded,color: Colors.white,),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: 270,
-              height: 120,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        '건식 사료입니다.',
-                        style: TextStyle(
-                          color: mainBlack,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
+            fit: BoxFit.cover),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            gradient: const LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [Colors.black87, Colors.black12, Colors.transparent])),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '건식 사료입니다.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '약 5일전',
-                        style: TextStyle(
-                          color: lightGray,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        '12,000원',
-                        style: TextStyle(
-                          color: Color(0xFF626262),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 14),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(width: 1, color: mainColor),
+                  ),
+                  child: Text(
+                    '사료',
+                    style: TextStyle(
+                      color: Color(0xFF70A3F3),
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          )
-        ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  child: const Icon(
+                    Icons.favorite_border_rounded,
+                    color: lightGray,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 9),
+                  child: Text(
+                    '12,000원',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
