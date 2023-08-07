@@ -18,6 +18,15 @@ class UserClient {
     dio = Dio(_options);
     dio.interceptors.add(QueuedInterceptorsWrapper(onError: (e, handler) {
       if (e.response?.statusCode == 401) {}
+    }, onResponse: (Response response, handler) {
+      if (response.data.toString().contains('error')) {
+        return handler.reject(DioException(
+            requestOptions: response.requestOptions,
+            response: response,
+            error: response.data));
+      }
+
+      handler.next(response);
     }));
   }
 }

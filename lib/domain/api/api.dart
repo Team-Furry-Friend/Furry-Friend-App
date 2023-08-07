@@ -40,11 +40,32 @@ class ApiRepositories {
         .copyWith(baseUrl: _dio.options.baseUrl);
   }
 
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
+    if (T != dynamic &&
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
+      if (T == String) {
+        requestOptions.responseType = ResponseType.plain;
+      } else {
+        requestOptions.responseType = ResponseType.json;
+      }
+    }
+    return requestOptions;
+  }
+
+  dynamic? responseCheck(Map<String, dynamic>? value) {
+    if (value != null && value.containsKey("data")) {
+      return value["data"];
+    }
+
+    return null;
+  }
+
   // 토큰 검증
   Future<User> userVerify(header) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        settingOptions('GET', 'gateway/isvalid', headers: header));
-    final value = User.fromJson(_result.data!);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<User>(
+        settingOptions('GET', 'gateway/isvalid', headers: header)));
+    final value = User.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
@@ -57,9 +78,9 @@ class ApiRepositories {
       'address': address,
       'phone': phone,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(settingOptions(
-        'POST', 'member/join',
-        queryParameters: queryParameters));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response>(settingOptions('POST', 'member/join',
+            queryParameters: queryParameters)));
     return _result;
   }
 
@@ -68,19 +89,20 @@ class ApiRepositories {
       'username': username,
       'password': password,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(settingOptions(
-        'POST', 'member/login',
-        queryParameters: queryParameters));
-    final value = Token.fromJson(_result.data!);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Token>(settingOptions('POST', 'member/login',
+            queryParameters: queryParameters)));
+    final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
   Future<User> socialLogin(social) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(settingOptions(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<User>(settingOptions(
       'GET',
       'oauth2/$social',
-    ));
-    final value = User.fromJson(_result.data!);
+    )));
+    final value = User.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
@@ -91,16 +113,18 @@ class ApiRepositories {
       'address': address,
       'phone': phone,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        settingOptions('PUT', '/oauth2', queryParameters: queryParameters));
-    final value = Token.fromJson(_result.data!);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
+            Token>(
+        settingOptions('PUT', '/oauth2', queryParameters: queryParameters)));
+    final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
   Future<Token> userRefreshToken(header) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        settingOptions('POST', 'member/refresh-token', headers: header));
-    final value = Token.fromJson(_result.data!);
+        _setStreamType<Token>(
+            settingOptions('POST', 'member/refresh-token', headers: header)));
+    final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
@@ -111,41 +135,48 @@ class ApiRepositories {
       'type': type,
       'keyword': keyword,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        settingOptions('GET', 'products', queryParameters: queryParameters));
-    final value = PagePost.fromJson(_result.data!);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
+            PagePost>(
+        settingOptions('GET', 'products', queryParameters: queryParameters)));
+    final value = PagePost.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
   Future<Response> postPost(options) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        settingOptions('POST', 'products', data: options));
+        _setStreamType<Response>(
+            settingOptions('POST', 'products', data: options)));
     return _result;
   }
 
   Future<Response> putPost(options) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        settingOptions('PUT', 'products', data: options));
+        _setStreamType<Response>(
+            settingOptions('PUT', 'products', data: options)));
     return _result;
   }
 
   Future<Post> getPostDetail(pid) async {
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(settingOptions('GET', 'products/$pid'));
-    final value = Post.fromJson(_result.data!);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Post>(settingOptions('GET', 'products/$pid')));
+    final value = Post.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
-  Future<Post> getPopularityPost() async {
+  Future<List<Post>> getPopularityPost() async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        settingOptions('GET', 'products/popularity'));
-    final value = Post.fromJson(_result.data!);
-    return value;
+        _setStreamType<Map<String, dynamic>>(
+            settingOptions('GET', 'products/popularity')));
+    final value = responseCheck(_result.data)!
+        .map((dynamic i) => Post.fromJson(i as Map<String, dynamic>))
+        .toList();
+
+    return List<Post>.from(value);
   }
 
   Future<Response> deletePost(pid) async {
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(settingOptions('DELETE', 'products/$pid'));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response>(settingOptions('DELETE', 'products/$pid')));
     return _result;
   }
 }

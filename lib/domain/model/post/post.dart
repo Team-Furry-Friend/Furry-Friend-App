@@ -35,7 +35,7 @@ class Post {
     pexplain = json['pexplain'];
     pprice = json['pprice'];
     del = json['del'];
-    reviewCnt = json['reviewCnt'];
+    reviewCnt = json['reviewCnt'] ?? 0;
     mid = json['mid'];
     mname = json['mname'] ?? '';
     regDate = json['regDate'];

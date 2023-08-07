@@ -8,8 +8,8 @@ class Token {
   });
 
   Token.fromJson(Map<String, dynamic> json) {
-    refreshToken = json['refreshToken'] ?? '';
-    accessToken = json['accessToken'] ?? '';
+    refreshToken = json['refreshToken'];
+    accessToken = json['accessToken'];
   }
 
   Map<String, dynamic> toJson() {
