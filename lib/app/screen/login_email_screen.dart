@@ -19,6 +19,18 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
   final TextEditingController pwController = TextEditingController();
 
   @override
+  void initState() {
+    controllerListenerSetting();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controllerListenerSetting(isDispose:true);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(context,
