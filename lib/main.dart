@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/home_screen.dart';
 import 'package:furry_friend/common/utils.dart';
+import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'app/screen/login_screen.dart';
-import 'domain/providers/user.dart';
+import 'domain/providers/user_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +14,8 @@ Future<void> main() async {
 
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => User()),
+      ChangeNotifierProvider(create: (_) => UserProvider()),
+      ChangeNotifierProvider(create: (_) => PostProvider()),
     ],
     child: const MyApp(),
   ));

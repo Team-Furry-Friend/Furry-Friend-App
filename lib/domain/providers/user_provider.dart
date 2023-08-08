@@ -5,7 +5,7 @@ import 'package:furry_friend/service/prefs.dart';
 
 import '../api/api.dart';
 
-class User extends ChangeNotifier {
+class UserProvider extends ChangeNotifier {
   final _client = ApiRepositories();
   final prefs = Prefs();
 

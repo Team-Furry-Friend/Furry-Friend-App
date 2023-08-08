@@ -16,6 +16,8 @@ class UserClient {
     );
 
     dio = Dio(_options);
+    dio.options.headers["Authorization"] =
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2OTE0MTM0NjIsImV4cCI6MTY5MjAxODI2MiwibWVtYmVySWQiOjYsIm5hbWUiOiLthYzsiqTthYwifQ.h2y9_dxmsaRNJyFXiaiIbyPU5Alv1TyRTjTF1Dsj7GY";
     dio.interceptors.add(QueuedInterceptorsWrapper(onError: (e, handler) {
       if (e.response?.statusCode == 401) {}
     }, onResponse: (Response response, handler) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/domain/providers/post_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../widget/color.dart';
 import '../widget/home_widget.dart';
@@ -11,6 +13,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    context.read<PostProvider>().getPopularityPost();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,36 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: Column(
-                children: [
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '최근 등록된 상품 🚀',
-                          style: TextStyle(
-                            color: mainBlack,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      RoundBlueButton(text: '모두보기'),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 25),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      itemCount: 2,
-                      itemBuilder: (BuildContext context, int index) {
-                        return HomeListItem();
-                      },
-                    ),
-                  )
-                ],
-              ),
+              child: const SingleChildScrollView(child: PopularPostLayout()),
             ),
           ),
         ],

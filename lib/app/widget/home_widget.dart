@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/domain/model/post/post.dart';
+import 'package:furry_friend/domain/providers/post_provider.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'color.dart';
 
@@ -37,6 +41,50 @@ class HomeSearchWidget extends StatelessWidget {
   }
 }
 
+class PopularPostLayout extends StatelessWidget {
+  const PopularPostLayout({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final postList = context.select((PostProvider post) => post.postList);
+
+    return Column(
+      children: [
+        const Row(
+          children: [
+            Expanded(
+              child: Text(
+                '최근 인기 상품 🚀',
+                style: TextStyle(
+                  color: mainBlack,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            RoundBlueButton(text: '모두보기'),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 25),
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: postList.length,
+            itemBuilder: (BuildContext context, int index) {
+              final post = postList[index];
+              return HomeListItem(post: post);
+            },
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class RoundBlueButton extends StatelessWidget {
   const RoundBlueButton({super.key, required this.text});
 
@@ -69,7 +117,10 @@ class RoundBlueButton extends StatelessWidget {
 class HomeListItem extends StatelessWidget {
   const HomeListItem({
     super.key,
+    required this.post,
   });
+
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +134,7 @@ class HomeListItem extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(8),
         image: DecorationImage(
-            image: NetworkImage("https://via.placeholder.com/269x229"),
+            image: NetworkImage(post.imageDTOList.first.path),
             fit: BoxFit.cover),
       ),
       child: Container(
@@ -102,8 +153,8 @@ class HomeListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '건식 사료입니다.',
-                  style: TextStyle(
+                  post.pname,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -118,8 +169,8 @@ class HomeListItem extends StatelessWidget {
                     border: Border.all(width: 1, color: mainColor),
                   ),
                   child: Text(
-                    '사료',
-                    style: TextStyle(
+                    post.pcategory,
+                    style: const TextStyle(
                       color: Color(0xFF70A3F3),
                       fontSize: 14,
                     ),
@@ -139,8 +190,8 @@ class HomeListItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 9),
                   child: Text(
-                    '12,000원',
-                    style: TextStyle(
+                    '${NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0).format(post.pprice)}원',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w700,

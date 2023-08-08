@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/utils.dart';
 
-import '../../domain/providers/user.dart';
+import '../../domain/providers/user_provider.dart';
 import '../widget/color.dart';
 import '../widget/common_widget.dart';
 import '../widget/sign_up_widget.dart';
@@ -14,7 +14,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final User userProvider = User();
+  final UserProvider userProvider = UserProvider();
   final util = Utils();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();

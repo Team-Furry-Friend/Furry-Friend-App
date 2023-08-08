@@ -22,6 +22,7 @@ dependencies:
   flutter_naver_login: ^1.8.0
   google_sign_in: ^6.1.4
   provider: ^6.0.5
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

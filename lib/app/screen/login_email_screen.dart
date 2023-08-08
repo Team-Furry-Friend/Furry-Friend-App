@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../common/utils.dart';
-import '../../domain/providers/user.dart';
+import '../../domain/providers/user_provider.dart';
 import '../widget/color.dart';
 import '../widget/common_widget.dart';
 
@@ -13,7 +13,7 @@ class LoginEmailScreen extends StatefulWidget {
 }
 
 class _LoginEmailScreenState extends State<LoginEmailScreen> {
-  final User userProvider = User();
+  final UserProvider userProvider = UserProvider();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
@@ -26,7 +26,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
 
   @override
   void dispose() {
-    controllerListenerSetting(isDispose:true);
+    controllerListenerSetting(isDispose: true);
     super.dispose();
   }
 
