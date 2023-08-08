@@ -16,7 +16,7 @@ class PostProvider extends ChangeNotifier {
 
   void getPostKeyWord(int size, String type, String keyword) {
     _client.getPosts(page, size, type, keyword).then((value) {
-      postList.addAll(value.dtoList);
+      postList = value.dtoList;
       hasNextPage = value.next;
       page++;
       isLoadingPage = false;
@@ -26,7 +26,7 @@ class PostProvider extends ChangeNotifier {
 
   void getPopularityPost() {
     _client.getPopularityPost().then((value) {
-      postList.addAll(value);
+      postList = value;
       _notify();
     });
   }
