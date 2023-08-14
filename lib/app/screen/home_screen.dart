@@ -3,6 +3,7 @@ import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../widget/color.dart';
+import '../widget/common_widget.dart';
 import '../widget/home_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(24),
             child: Row(
               children: [
-                const Expanded(child: HomeSearchWidget()),
+                const Expanded(child: SearchWidget(isHomeScreen: true)),
                 GestureDetector(
                   onTap: () {},
                   child: Container(

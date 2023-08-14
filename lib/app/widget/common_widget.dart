@@ -169,3 +169,39 @@ class TextFieldRow extends StatelessWidget {
     );
   }
 }
+
+class SearchWidget extends StatelessWidget {
+  const SearchWidget({super.key, required this.isHomeScreen});
+
+  final bool isHomeScreen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minHeight: 56),
+      margin: EdgeInsets.symmetric(vertical: isHomeScreen ? 40 : 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+          border: Border.all(width: 1, color: const Color(0xFFD9D9D9)),
+          borderRadius: BorderRadius.circular(16),
+          color: isHomeScreen ? Colors.white : const Color(0xFFF2F2F2)),
+      child: Row(
+        children: [
+          Expanded(
+              child: TextField(
+            decoration: InputDecoration(
+                hintText: '건식 사료',
+                hintStyle: TextStyle(
+                    color: isHomeScreen ? lightGray : const Color(0xB26E6E6E)),
+                border: InputBorder.none),
+          )),
+          const Icon(
+            Icons.search,
+            color: mainColor,
+            size: 28,
+          )
+        ],
+      ),
+    );
+  }
+}

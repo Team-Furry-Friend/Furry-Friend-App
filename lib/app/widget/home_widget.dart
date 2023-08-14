@@ -6,41 +6,6 @@ import 'package:provider/provider.dart';
 
 import 'color.dart';
 
-class HomeSearchWidget extends StatelessWidget {
-  const HomeSearchWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 56),
-      margin: const EdgeInsets.symmetric(vertical: 40),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-          border: Border.all(width: 1, color: const Color(0xFFD9D9D9)),
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.white),
-      child: const Row(
-        children: [
-          Expanded(
-              child: TextField(
-            decoration: InputDecoration(
-                hintText: '건식 사료',
-                hintStyle: TextStyle(color: lightGray),
-                border: InputBorder.none),
-          )),
-          Icon(
-            Icons.search,
-            color: mainColor,
-            size: 28,
-          )
-        ],
-      ),
-    );
-  }
-}
-
 class PopularPostLayout extends StatelessWidget {
   const PopularPostLayout({
     super.key,
