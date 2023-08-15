@@ -7,23 +7,6 @@ class PostProvider extends ChangeNotifier {
 
   List<Post> postList = [];
 
-  int page = 1;
-  bool hasNextPage = true;
-  bool isFirstLoading = true;
-  bool isLoadingPage = false;
-
-  final limit = 20;
-
-  void getPostKeyWord(int size, String type, String keyword) {
-    _client.getPosts(page, size, type, keyword).then((value) {
-      postList = value.dtoList;
-      hasNextPage = value.next;
-      page++;
-      isLoadingPage = false;
-      _notify();
-    });
-  }
-
   void getPopularityPost() {
     _client.getPopularityPost().then((value) {
       postList = value;

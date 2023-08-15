@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'app/screen/login_screen.dart';
 import 'app/screen/main_screen.dart';
+import 'domain/providers/search_provider.dart';
 import 'domain/providers/user_provider.dart';
 
 Future<void> main() async {
@@ -16,6 +17,7 @@ Future<void> main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => UserProvider()),
       ChangeNotifierProvider(create: (_) => PostProvider()),
+      ChangeNotifierProvider(create: (_) => SearchProvider()),
     ],
     child: const MyApp(),
   ));

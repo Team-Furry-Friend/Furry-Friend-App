@@ -171,9 +171,16 @@ class TextFieldRow extends StatelessWidget {
 }
 
 class SearchWidget extends StatelessWidget {
-  const SearchWidget({super.key, required this.isHomeScreen});
+  const SearchWidget({
+    super.key,
+    required this.isHomeScreen,
+    required this.controller,
+    required this.searchOnTap,
+  });
 
+  final TextEditingController controller;
   final bool isHomeScreen;
+  final Function() searchOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -189,16 +196,20 @@ class SearchWidget extends StatelessWidget {
         children: [
           Expanded(
               child: TextField(
+            controller: controller,
             decoration: InputDecoration(
                 hintText: '건식 사료',
                 hintStyle: TextStyle(
                     color: isHomeScreen ? lightGray : const Color(0xB26E6E6E)),
                 border: InputBorder.none),
           )),
-          const Icon(
-            Icons.search,
-            color: mainColor,
-            size: 28,
+          GestureDetector(
+            onTap: () => searchOnTap(),
+            child: const Icon(
+              Icons.search,
+              color: mainColor,
+              size: 28,
+            ),
           )
         ],
       ),

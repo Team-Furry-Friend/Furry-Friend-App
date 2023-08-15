@@ -14,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _textController = TextEditingController();
+
   @override
   void initState() {
     context.read<PostProvider>().getPopularityPost();
@@ -30,7 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(24),
             child: Row(
               children: [
-                const Expanded(child: SearchWidget(isHomeScreen: true)),
+                Expanded(
+                    child: SearchWidget(
+                  controller: _textController,
+                  isHomeScreen: true,
+                  searchOnTap: () {},
+                )),
                 GestureDetector(
                   onTap: () {},
                   child: Container(
