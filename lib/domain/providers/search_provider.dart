@@ -11,7 +11,8 @@ class SearchProvider extends ChangeNotifier {
   bool hasNextPage = true;
   bool isLoadingPage = false;
 
-  void getPostKeyWord(String type, String keyword, {int? page}) {
+  void getPostKeyWord(String type, String keyword, String sortType,
+      {int? page}) {
     int newPage = page ?? this.page;
     _client.getPosts(newPage, 20, type, keyword).then((value) {
       if (newPage == 1) {
@@ -21,8 +22,24 @@ class SearchProvider extends ChangeNotifier {
       }
       hasNextPage = value.next;
       this.page = newPage++;
-      _notify();
+      listSort(sortType);
     });
+  }
+
+  void listSort(String sortType) {
+    switch (sortType) {
+      case '가격 낮은 순':
+        productList.sort((a, b) => a.pprice.compareTo(b.pprice));
+        break;
+      case '가격 높은 순':
+        productList.sort((b, a) => a.pprice.compareTo(b.pprice));
+        break;
+      case '최신순':
+        productList.sort((b, a) => a.regDate.compareTo(b.regDate));
+        break;
+      // case '선호순': productList.sort((b,a) => a.pprice.compareTo(b.pprice)); break;
+    }
+    _notify();
   }
 
   void _notify() {

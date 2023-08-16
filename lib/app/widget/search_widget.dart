@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/domain/model/post/post.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/providers/search_provider.dart';
@@ -56,20 +58,103 @@ class SearchListLayout extends StatelessWidget {
     return ListView.builder(
       controller: scrollController,
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       itemCount: productList.length + 1,
       itemBuilder: (context, index) {
         if (index < productList.length) {
-          final post = productList[index];
+          final product = productList[index];
 
-          return ListTile(
-            title: Text(post.pname),
-          );
+          return SearchListItem(product: product);
         } else {
           return isLoadingPage
               ? const CircularProgressIndicator()
               : const SizedBox();
         }
       },
+    );
+  }
+}
+
+class SearchListItem extends StatelessWidget {
+  const SearchListItem({
+    super.key,
+    required this.product,
+  });
+
+  final Post product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+          child: Row(
+            children: [
+              Container(
+                width: 108,
+                height: 108,
+                margin: const EdgeInsets.only(right: 18),
+                decoration: ShapeDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(product.imageDTOList.first.path),
+                      fit: BoxFit.cover),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  height: 108,
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: AlignmentDirectional.topStart,
+                          child: Text(
+                            product.pname,
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(
+                              color: mainBlack,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        child: const Padding(
+                          padding: EdgeInsets.only(bottom: 4),
+                          child: Icon(
+                            Icons.favorite_border_rounded,
+                            color: lightGray,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '${NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0).format(product.pprice)}원',
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(
+                          color: mainBlack,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        const Divider(
+          color: Colors.black45,
+          height: 1,
+        )
+      ],
     );
   }
 }

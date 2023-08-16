@@ -17,7 +17,7 @@ class _SearchScreenState extends State<SearchScreen> {
   late SearchProvider searchProvider;
   final _scrollController = ScrollController();
   final _textController = TextEditingController();
-  final dropdownList = ['최신순', '선호순', '가격순'];
+  final sortTypeList = ['최신순', '가격 낮은 순', '가격 높은 순'];
   final typeList = [
     '사료',
     '간식',
@@ -27,7 +27,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   int selectLabelIndex = 0;
   bool isLoading = false;
-  String dropdownValue = '최신순';
+  String sortType = '최신순';
 
   @override
   void initState() {
@@ -50,7 +50,8 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+            padding:
+                const EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 4),
             child: Column(
               children: [
                 Padding(
@@ -61,7 +62,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     searchOnTap: () {
                       if (_textController.text.isNotEmpty) {
                         searchProvider.getPostKeyWord(
-                            typeList[selectLabelIndex], _textController.text,
+                            typeList[selectLabelIndex],
+                            _textController.text,
+                            sortType,
                             page: 1);
                       }
                     },
@@ -84,24 +87,26 @@ class _SearchScreenState extends State<SearchScreen> {
                   padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          '전체',
-                          style: TextStyle(fontSize: 16, color: mainBlack),
+                          '전체 ${searchProvider.productList.isNotEmpty ? '${searchProvider.productList.length}개' : ''}',
+                          style:
+                              const TextStyle(fontSize: 16, color: mainBlack),
                         ),
                       ),
                       DropdownButton<String>(
-                        value: dropdownValue,
+                        value: sortType,
                         icon: const Icon(Icons.arrow_drop_down_rounded),
                         borderRadius: BorderRadius.circular(8),
                         elevation: 0,
                         underline: Container(),
                         onChanged: (String? value) {
                           setState(() {
-                            dropdownValue = value!;
+                            sortType = value!;
+                            searchProvider.listSort(sortType);
                           });
                         },
-                        items: dropdownList.map((String value) {
+                        items: sortTypeList.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -142,7 +147,7 @@ class _SearchScreenState extends State<SearchScreen> {
       setState(() {
         searchProvider.isLoadingPage = true;
       });
-      searchProvider.getPostKeyWord('사료', '');
+      searchProvider.getPostKeyWord('사료', '', sortType);
     }
   }
 }
