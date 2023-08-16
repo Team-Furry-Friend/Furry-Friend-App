@@ -6,6 +6,50 @@ import 'package:provider/provider.dart';
 
 import '../../domain/providers/search_provider.dart';
 
+class SearchWidget extends StatelessWidget {
+  const SearchWidget({
+    super.key,
+    required this.controller,
+    required this.searchOnTap,
+  });
+
+  final TextEditingController controller;
+  final Function() searchOnTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minHeight: 56),
+      margin: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+          border: Border.all(width: 1, color: lightGray),
+          borderRadius: BorderRadius.circular(16),
+          color: const Color(0xFFF2F2F2)),
+      child: Row(
+        children: [
+          Expanded(
+              child: TextField(
+            controller: controller,
+            decoration: const InputDecoration(
+                hintText: '건식 사료',
+                hintStyle: TextStyle(color: Color(0xB26E6E6E)),
+                border: InputBorder.none),
+          )),
+          GestureDetector(
+            onTap: () => searchOnTap(),
+            child: const Icon(
+              Icons.search,
+              color: mainColor,
+              size: 28,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class TypeLabel extends StatelessWidget {
   const TypeLabel({
     super.key,

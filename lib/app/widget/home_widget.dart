@@ -171,3 +171,52 @@ class HomeListItem extends StatelessWidget {
     );
   }
 }
+
+class TypeRowItem extends StatelessWidget {
+  const TypeRowItem({
+    super.key,
+    required this.type,
+  });
+
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+      decoration: BoxDecoration(
+          border: Border.all(color: lightGray, width: 1),
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: typeIcon(type),
+          ),
+          Text(
+            type,
+            style: const TextStyle(
+              color: mainBlack,
+              fontSize: 13,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Icon typeIcon(String type) {
+    switch (type) {
+      case '사료':
+        return const Icon(Icons.restaurant_rounded);
+      case '간식':
+        return const Icon(Icons.emoji_emotions_outlined);
+      case '용품':
+        return const Icon(Icons.card_travel_rounded);
+      case '의류':
+        return const Icon(Icons.checkroom_rounded);
+    }
+    return const Icon(Icons.wb_cloudy_sharp);
+  }
+}

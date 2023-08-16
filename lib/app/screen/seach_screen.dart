@@ -3,11 +3,12 @@ import 'package:furry_friend/app/widget/color.dart';
 import 'package:furry_friend/domain/providers/search_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../widget/common_widget.dart';
 import '../widget/search_widget.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  SearchScreen({super.key, this.selectLabelIndex = 0});
+
+  int selectLabelIndex;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -25,7 +26,6 @@ class _SearchScreenState extends State<SearchScreen> {
     '의류',
   ];
 
-  int selectLabelIndex = 0;
   bool isLoading = false;
   String sortType = '최신순';
 
@@ -57,12 +57,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: SearchWidget(
-                    isHomeScreen: false,
                     controller: _textController,
                     searchOnTap: () {
                       if (_textController.text.isNotEmpty) {
                         searchProvider.getPostKeyWord(
-                            typeList[selectLabelIndex],
+                            typeList[widget.selectLabelIndex],
                             _textController.text,
                             sortType,
                             page: 1);
@@ -77,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         padding: const EdgeInsets.only(right: 8),
                         child: TypeLabel(
                           type: typeList[index],
-                          isSelectedLabel: selectLabelIndex == index,
+                          isSelectedLabel: widget.selectLabelIndex == index,
                           onTap: () => labelOnTap(index),
                         ),
                       ),
@@ -132,9 +131,9 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void labelOnTap(int index) {
-    if (index != selectLabelIndex) {
+    if (index != widget.selectLabelIndex) {
       setState(() {
-        selectLabelIndex = index;
+        widget.selectLabelIndex = index;
       });
     }
   }

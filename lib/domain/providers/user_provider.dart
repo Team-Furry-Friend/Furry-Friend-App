@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/home_screen.dart';
+import 'package:furry_friend/app/screen/main_screen.dart';
 import 'package:furry_friend/domain/model/user/token.dart';
 import 'package:furry_friend/service/prefs.dart';
 
@@ -44,7 +45,7 @@ class UserProvider extends ChangeNotifier {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const MainScreen()),
     );
   }
 }

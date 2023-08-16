@@ -13,14 +13,20 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final bucket = PageStorageBucket();
-  final screens = [
-    const HomeScreen(),
-    const SearchScreen(),
+  List<Widget> screens = [
+    HomeScreen(typeOnTap: (index) {}),
+    SearchScreen(),
     Container(),
     Container()
   ];
 
   int currentTab = 0;
+
+  @override
+  void initState() {
+    screens[0] = HomeScreen(typeOnTap: typeOnTap);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,5 +80,12 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     return CupertinoIcons.home;
+  }
+
+  void typeOnTap(int index) {
+    setState(() {
+      screens[1] = SearchScreen(selectLabelIndex: index);
+      currentTab = 1;
+    });
   }
 }

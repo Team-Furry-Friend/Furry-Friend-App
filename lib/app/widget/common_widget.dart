@@ -23,55 +23,6 @@ PreferredSizeWidget DefaultAppBar(BuildContext context, {Widget? title}) {
   );
 }
 
-class BottomNavigator extends StatefulWidget {
-  const BottomNavigator({Key? key}) : super(key: key);
-
-  @override
-  State<BottomNavigator> createState() => _BottomNavigatorState();
-}
-
-class _BottomNavigatorState extends State<BottomNavigator> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _screenList = <Widget>[
-    const HomeScreen(),
-    Container(),
-    Container(),
-    Container(),
-  ];
-
-  void _onTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: _screenList.elementAt(_selectedIndex),
-      ),
-      // bottom navigation 선언
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart), label: 'cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'chat'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'user'),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: mainColor,
-        unselectedItemColor: lightGray,
-        onTap: _onTapped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-      ),
-    );
-  }
-}
-
 class BottomButton extends StatelessWidget {
   const BottomButton({
     super.key,
@@ -166,53 +117,6 @@ class TextFieldRow extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class SearchWidget extends StatelessWidget {
-  const SearchWidget({
-    super.key,
-    required this.isHomeScreen,
-    required this.controller,
-    required this.searchOnTap,
-  });
-
-  final TextEditingController controller;
-  final bool isHomeScreen;
-  final Function() searchOnTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 56),
-      margin: EdgeInsets.symmetric(vertical: isHomeScreen ? 40 : 20),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-          border: Border.all(width: 1, color: const Color(0xFFD9D9D9)),
-          borderRadius: BorderRadius.circular(16),
-          color: isHomeScreen ? Colors.white : const Color(0xFFF2F2F2)),
-      child: Row(
-        children: [
-          Expanded(
-              child: TextField(
-            controller: controller,
-            decoration: InputDecoration(
-                hintText: '건식 사료',
-                hintStyle: TextStyle(
-                    color: isHomeScreen ? lightGray : const Color(0xB26E6E6E)),
-                border: InputBorder.none),
-          )),
-          GestureDetector(
-            onTap: () => searchOnTap(),
-            child: const Icon(
-              Icons.search,
-              color: mainColor,
-              size: 28,
-            ),
-          )
-        ],
-      ),
     );
   }
 }

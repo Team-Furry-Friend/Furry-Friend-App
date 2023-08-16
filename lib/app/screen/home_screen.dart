@@ -3,18 +3,24 @@ import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../widget/color.dart';
-import '../widget/common_widget.dart';
 import '../widget/home_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key, required this.typeOnTap}) : super(key: key);
+
+  Function(int index) typeOnTap;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _textController = TextEditingController();
+  final typeList = [
+    '사료',
+    '간식',
+    '용품',
+    '의류',
+  ];
 
   @override
   void initState() {
@@ -29,14 +35,20 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.only(top: 40, left: 24, right: 24),
             child: Row(
               children: [
-                Expanded(
-                    child: SearchWidget(
-                  controller: _textController,
-                  isHomeScreen: true,
-                  searchOnTap: () {},
+                const Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  child: Text(
+                    'Furry Fruend',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
                 )),
                 GestureDetector(
                   onTap: () {},
@@ -55,8 +67,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                for (int index = 0; index < typeList.length; index++)
+                  GestureDetector(
+                    child: TypeRowItem(type: typeList[index]),
+                    onTap: () => widget.typeOnTap(index),
+                  )
+              ],
+            ),
+          ),
           Expanded(
             child: Container(
+              margin: const EdgeInsets.only(top: 33),
               padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
               decoration: const BoxDecoration(
                 color: Colors.white,
