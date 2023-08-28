@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/product_details_screen.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
@@ -41,7 +42,16 @@ class PopularPostLayout extends StatelessWidget {
             itemCount: postList.length,
             itemBuilder: (BuildContext context, int index) {
               final post = postList[index];
-              return HomeListItem(post: post);
+              return GestureDetector(
+                child: HomeListItem(post: post),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProductDetailsScreen(post: post)));
+                },
+              );
             },
           ),
         )
