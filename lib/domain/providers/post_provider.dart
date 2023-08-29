@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/domain/model/post/review.dart';
 import '../model/post/post.dart';
 import '../api/api.dart';
 
@@ -6,16 +7,23 @@ class PostProvider extends ChangeNotifier {
   final _client = ApiRepositories();
 
   List<Post> postList = [];
+  List<Review> reviewList = [];
 
   void getPopularityPost() {
     _client.getPopularityPost().then((value) {
-      postList = value;
+      postList = [...postList];
+      _notify();
+    });
+  }
+
+  void getReviews(int pid) {
+    _client.getReviews(pid).then((value) {
+      reviewList = [...value];
       _notify();
     });
   }
 
   void _notify() {
-    postList = [...postList];
     notifyListeners();
   }
 }

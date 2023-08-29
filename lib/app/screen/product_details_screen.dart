@@ -3,7 +3,9 @@ import 'package:furry_friend/app/widget/color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_details_widget.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
+import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.post});
@@ -15,6 +17,12 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  @override
+  void initState() {
+    context.read<PostProvider>().getReviews(widget.post.pid);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
