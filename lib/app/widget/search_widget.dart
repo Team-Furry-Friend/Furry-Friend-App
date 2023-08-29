@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/product_details_screen.dart';
 import 'package:furry_friend/app/widget/color.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:intl/intl.dart';
@@ -108,7 +109,15 @@ class SearchListLayout extends StatelessWidget {
         if (index < productList.length) {
           final product = productList[index];
 
-          return SearchListItem(product: product);
+          return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ProductDetailsScreen(post: product)));
+              },
+              child: SearchListItem(product: product));
         } else {
           return isLoadingPage
               ? const CircularProgressIndicator()

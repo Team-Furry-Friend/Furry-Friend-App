@@ -140,40 +140,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 )
               ],
             ),
-            ProductInfoFrame(dividerVisible: false, children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    child: Text(
-                      '상품 문의',
-                      style: TextStyle(
-                        color: mainBlack,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    child: const Text(
-                      '문의 작성하기',
-                      style: TextStyle(
-                        color: Color(0xFF868686),
-                        fontSize: 14,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Container(
-                constraints: const BoxConstraints(
-                  minHeight: 120,
-                ),
-              )
-            ])
+            const ProductReviewLayout()
           ],
         ),
       ),
     );
   }
 }
+
