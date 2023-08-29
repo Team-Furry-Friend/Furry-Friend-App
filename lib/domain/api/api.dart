@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:furry_friend/domain/model/post/review.dart';
 
 import '../model/post/page_post.dart';
 import '../model/post/post.dart';
@@ -177,6 +178,31 @@ class ApiRepositories {
   Future<Response> deletePost(pid) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response>(settingOptions('DELETE', 'products/$pid')));
+    return _result;
+  }
+
+  // 댓글 API
+  Future<List<Review>> getReviews(int pid) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, dynamic>>(
+            settingOptions('GET', 'reviews/$pid')));
+    final value = responseCheck(_result.data)!
+        .map((dynamic i) => Review.fromJson(i as Map<String, dynamic>))
+        .toList();
+
+    return List<Review>.from(value);
+  }
+
+  Future<Response> postReview(options) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response>(
+            settingOptions('POST', 'reviews', data: options)));
+    return _result;
+  }
+
+  Future<Response> deleteReview(int rid) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response>(settingOptions('DELETE', 'reviews/$rid')));
     return _result;
   }
 }
