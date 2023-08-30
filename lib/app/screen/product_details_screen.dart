@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:furry_friend/app/widget/color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_details_widget.dart';
+import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,8 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final _reviewTextController = TextEditingController();
+
   @override
   void initState() {
     context.read<PostProvider>().getReviews(widget.post.pid);
@@ -140,11 +143,60 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 )
               ],
             ),
-            const ProductReviewLayout()
+            ProductReviewLayout(
+              reviewWriteOnTap: () {
+                showModalBottomSheet(
+                    useSafeArea: true,
+                    context: context,
+                    builder: (_) {
+                      return SizedBox(
+                        height: 380,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(24),
+                              child: Text(
+                                '문의 작성하기',
+                                style: TextStyle(
+                                  color: mainBlack,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: GrayTextFieldLayout(
+                                textController: _reviewTextController,
+                                hintText: '궁금하신 사항을 적어주세요.',
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12),
+                              child: BottomButtonLayout(
+                                  text: "완료",
+                                  onTap: () {
+                                    if (_reviewTextController.text.isEmpty) {
+                                      Utils.showSnackBar(
+                                          context, "문의사항을 입력해주세요.");
+                                      return;
+                                    }
+
+                                    context.read<PostProvider>().postReviews(
+                                        widget.post.pid,
+                                        _reviewTextController.text);
+                                  },
+                                  backgroundColor: mainColor),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              },
+            )
           ],
         ),
       ),
     );
   }
 }
-

@@ -16,7 +16,7 @@ class Utils {
     return (prefs.sharedPrefs.getString(prefs.email) ?? '').isNotEmpty;
   }
 
-  void showSnackBar(BuildContext context, String text) {
+  static void showSnackBar(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       behavior: SnackBarBehavior.floating,
       duration: const Duration(milliseconds: 2000),

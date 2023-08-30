@@ -196,7 +196,7 @@ class ApiRepositories {
   Future<Response> postReview(options) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response>(
-            settingOptions('POST', 'reviews', data: options)));
+            settingOptions('POST', 'reviews/', data: options)));
     return _result;
   }
 

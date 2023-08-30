@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ProductInfoFrame extends StatelessWidget {
+  final List<Widget> children;
+
+  final bool dividerVisible;
   const ProductInfoFrame(
       {super.key, required this.children, this.dividerVisible = true});
-
-  final List<Widget> children;
-  final bool dividerVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +36,14 @@ class ProductInfoFrame extends StatelessWidget {
 }
 
 class ProductReviewLayout extends StatelessWidget {
-  const ProductReviewLayout({
-    super.key,
-  });
+  const ProductReviewLayout({super.key, required this.reviewWriteOnTap});
+
+  final Function() reviewWriteOnTap;
 
   @override
   Widget build(BuildContext context) {
-    final reviews = context.select((PostProvider postProvider) => postProvider.reviewList);
+    final reviews =
+        context.select((PostProvider postProvider) => postProvider.reviewList);
 
     return ProductInfoFrame(dividerVisible: false, children: [
       Row(
@@ -59,11 +60,15 @@ class ProductReviewLayout extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            child: const Text(
-              '문의 작성하기',
-              style: TextStyle(
-                color: Color(0xFF868686),
-                fontSize: 14,
+            onTap: () => reviewWriteOnTap(),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                '문의 작성하기',
+                style: TextStyle(
+                  color: Color(0xFF868686),
+                  fontSize: 14,
+                ),
               ),
             ),
           )
@@ -77,15 +82,15 @@ class ProductReviewLayout extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: reviews.length,
-            itemBuilder: (context, index){
+            itemBuilder: (context, index) {
               final review = reviews[index];
               return Container(
                 decoration: BoxDecoration(
                     color: backgroundColor,
-                    borderRadius: BorderRadius.circular(16)
-                ),
+                    borderRadius: BorderRadius.circular(16)),
                 margin: const EdgeInsets.only(top: 24),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -23,6 +23,38 @@ PreferredSizeWidget DefaultAppBar(BuildContext context, {Widget? title}) {
   );
 }
 
+class BottomButtonLayout extends StatelessWidget {
+  const BottomButtonLayout({
+    super.key,
+    required this.onTap,
+    required this.text,
+    required this.backgroundColor,
+  });
+
+  final Function() onTap;
+  final String text;
+  final Color backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Divider(
+          color: deepGray,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: BottomButton(
+            text: text,
+            onTap: () => onTap(),
+            backgroundColor: backgroundColor,
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class BottomButton extends StatelessWidget {
   const BottomButton({
     super.key,
@@ -117,6 +149,38 @@ class TextFieldRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class GrayTextFieldLayout extends StatelessWidget {
+  const GrayTextFieldLayout({
+    super.key,
+    required this.textController,
+    required this.hintText,
+  });
+
+  final TextEditingController textController;
+  final String hintText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+      decoration: BoxDecoration(
+          color: backgroundColor, borderRadius: BorderRadius.circular(16)),
+      child: TextField(
+          controller: textController,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: hintText,
+            contentPadding: EdgeInsets.zero,
+            hintStyle: const TextStyle(
+              color: Color(0xFFB8B8B8),
+              fontWeight: FontWeight.w500,
+            ),
+          )),
     );
   }
 }

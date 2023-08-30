@@ -23,6 +23,17 @@ class PostProvider extends ChangeNotifier {
     });
   }
 
+  void postReviews(int pid, String text) {
+    final data = {
+      "pid": pid,
+      "text": text,
+    };
+
+    _client.postReview(data).then((value) {
+      _notify();
+    });
+  }
+
   void _notify() {
     notifyListeners();
   }

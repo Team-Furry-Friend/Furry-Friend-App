@@ -72,10 +72,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: "별명",
                     controller: nameController,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 24, horizontal: 40),
-                    child: const Divider(),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+                    child: Divider(),
                   ),
                   TextFieldRow(
                     icon: Icons.map_outlined,
@@ -117,17 +116,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                 ),
-                const Divider(
-                  color: deepGray,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: BottomButton(
-                    text: "다음",
+                BottomButtonLayout(
                     onTap: completeButtonOnTap,
-                    backgroundColor: completeCheck() ? mainColor : deepGray,
-                  ),
-                )
+                    text: "다음",
+                    backgroundColor: completeCheck() ? mainColor : deepGray),
               ],
             )),
           ],
@@ -190,10 +182,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void completeButtonOnTap() {
     if (!completeCheck()) {
-      util.showSnackBar(context, "입력란 및 이용약관 동의를 확인해주세요.");
+      Utils.showSnackBar(context, "입력란 및 이용약관 동의를 확인해주세요.");
     } else {
       if (!util.isValidEmailFormat(emailController.text)) {
-        util.showSnackBar(context, "이메일 유형을 맞춰주세요.");
+        Utils.showSnackBar(context, "이메일 유형을 맞춰주세요.");
         return;
       }
 
