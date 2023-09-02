@@ -10,6 +10,10 @@ import 'client.dart';
 class ApiRepositories {
   static final Dio _dio = UserClient().dio;
 
+  void setClientRefreshToken(String token) {
+    _dio.options.headers["Authorization"] = token;
+  }
+
   RequestOptions settingOptions(String method, String path,
       {Map<String, dynamic>? headers,
       Map<String, dynamic>? extra,

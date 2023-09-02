@@ -7,20 +7,23 @@ import '../api/api.dart';
 class PostProvider extends ChangeNotifier {
   final _client = ApiRepositories();
 
-  List<Post> postList = [];
-  List<Review> reviewList = [];
+  List<Post> _post = [];
+  List<Review> _review = [];
+
+  List<Post> get postList => _post;
+  List<Review> get reviewList => _review;
 
   void getPopularityPost() {
     _client.getPopularityPost().then((value) {
-      postList = [...postList];
-      _notify();
+      _post = [...value];
+      notifyListeners();
     });
   }
 
   void getReviews(int pid) {
     _client.getReviews(pid).then((value) {
-      reviewList = [...value];
-      _notify();
+      _review = [...value];
+      notifyListeners();
     });
   }
 
@@ -32,11 +35,7 @@ class PostProvider extends ChangeNotifier {
     };
 
     _client.postReview(data).then((value) {
-      _notify();
+      notifyListeners();
     });
-  }
-
-  void _notify() {
-    notifyListeners();
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
+import 'package:furry_friend/domain/providers/user_provider.dart';
+import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../widget/color.dart';

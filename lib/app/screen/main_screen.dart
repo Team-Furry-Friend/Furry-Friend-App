@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/home_screen.dart';
 import 'package:furry_friend/app/screen/seach_screen.dart';
 import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/domain/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -24,6 +27,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    context.read<UserProvider>().loginUser(
+        context,
+        PrefsUtils.getString(PrefsUtils.utils.email),
+        PrefsUtils.getString(PrefsUtils.utils.password));
     screens[0] = HomeScreen(typeOnTap: typeOnTap);
     super.initState();
   }
