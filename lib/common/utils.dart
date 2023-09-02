@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/service/prefs.dart';
+import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakao;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils {
+  static final Utils util = Utils();
+
   Future<void> serviceSetting() async {
-    Prefs().sharedPrefs = await SharedPreferences.getInstance();
+    await PrefsUtils.init();
     kakao.KakaoSdk.init(
       nativeAppKey: '2b171fd1be0956ce61a994f5d910834e',
     );
   }
 
   bool isLogin() {
-    final prefs = Prefs();
-    return (prefs.sharedPrefs.getString(prefs.email) ?? '').isNotEmpty;
+    return (PrefsUtils.getString(PrefsUtils.utils.email) ?? '').isNotEmpty;
   }
 
-  static void showSnackBar(BuildContext context, String text) {
+  void showSnackBar(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       behavior: SnackBarBehavior.floating,
       duration: const Duration(milliseconds: 2000),

@@ -177,7 +177,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   text: "완료",
                                   onTap: () {
                                     if (_reviewTextController.text.isEmpty) {
-                                      Utils.showSnackBar(
+                                      Utils.util.showSnackBar(
                                           context, "문의사항을 입력해주세요.");
                                       return;
                                     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/domain/model/post/review.dart';
 import '../model/post/post.dart';
 import '../api/api.dart';
@@ -27,6 +28,7 @@ class PostProvider extends ChangeNotifier {
     final data = {
       "pid": pid,
       "text": text,
+      "access_token": PrefsUtils.getString(PrefsUtils.utils.refreshToken)
     };
 
     _client.postReview(data).then((value) {

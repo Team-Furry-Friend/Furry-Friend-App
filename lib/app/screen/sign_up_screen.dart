@@ -182,10 +182,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void completeButtonOnTap() {
     if (!completeCheck()) {
-      Utils.showSnackBar(context, "입력란 및 이용약관 동의를 확인해주세요.");
+      Utils.util.showSnackBar(context, "입력란 및 이용약관 동의를 확인해주세요.");
     } else {
       if (!util.isValidEmailFormat(emailController.text)) {
-        Utils.showSnackBar(context, "이메일 유형을 맞춰주세요.");
+        Utils.util.showSnackBar(context, "이메일 유형을 맞춰주세요.");
         return;
       }
 

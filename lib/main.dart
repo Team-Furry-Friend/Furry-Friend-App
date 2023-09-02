@@ -10,8 +10,7 @@ import 'domain/providers/user_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Utils().serviceSetting();
+  await Utils.util.serviceSetting();
 
   runApp(MultiProvider(
     providers: [
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Furry Friend',
       theme: ThemeData(fontFamily: 'Pretendard'),
-      home: Utils().isLogin() ? const MainScreen() : LoginScreen(),
+      home: Utils.util.isLogin() ? const MainScreen() : LoginScreen(),
     );
   }
 }

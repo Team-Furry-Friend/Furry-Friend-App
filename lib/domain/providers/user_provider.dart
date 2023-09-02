@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/home_screen.dart';
 import 'package:furry_friend/app/screen/main_screen.dart';
 import 'package:furry_friend/domain/model/user/token.dart';
-import 'package:furry_friend/service/prefs.dart';
+import 'package:furry_friend/common/prefs_utils.dart';
 
 import '../api/api.dart';
 
 class UserProvider extends ChangeNotifier {
   final _client = ApiRepositories();
-  final prefs = Prefs();
 
   void signUpUser(BuildContext context, String email, String password,
       String name, String address, String phone) {
@@ -18,9 +17,14 @@ class UserProvider extends ChangeNotifier {
     });
   }
 
-  void loginUser(BuildContext context, String email, String password) {
+  void loginUser(BuildContext context, String email, String password,
+      {bool isLoginScreen = false}) {
     _client.login(email, password).then((value) {
-      setPrefsUser(context, true, email, password, token: value);
+      _client.setClientRefreshToken(value.refreshToken);
+
+      if (isLoginScreen) {
+        setPrefsUser(context, true, email, password, token: value);
+      }
     });
   }
 
@@ -30,17 +34,17 @@ class UserProvider extends ChangeNotifier {
       String address = '',
       String phone = '',
       Token? token}) {
-    final sharedPrefs = prefs.sharedPrefs;
+    final prefs = PrefsUtils.utils;
 
-    sharedPrefs.setString(prefs.email, email);
-    sharedPrefs.setString(prefs.password, password);
+    PrefsUtils.setString(prefs.email, email);
+    PrefsUtils.setString(prefs.password, password);
     if (!isLogin) {
-      sharedPrefs.setString(prefs.phoneNumber, phone);
-      sharedPrefs.setString(prefs.nickName, name);
-      sharedPrefs.setString(prefs.address, address);
+      PrefsUtils.setString(prefs.phoneNumber, phone);
+      PrefsUtils.setString(prefs.nickName, name);
+      PrefsUtils.setString(prefs.address, address);
     } else if (isLogin && token != null) {
-      sharedPrefs.setString(prefs.refreshToken, token.refreshToken);
-      sharedPrefs.setString(prefs.accessToken, token.accessToken);
+      PrefsUtils.setString(prefs.refreshToken, token.refreshToken);
+      PrefsUtils.setString(prefs.accessToken, token.accessToken);
     }
 
     Navigator.pushReplacement(

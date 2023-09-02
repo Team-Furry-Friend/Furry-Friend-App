@@ -94,9 +94,10 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
 
   void completeButtonOnTap() {
     if (!completeCheck()) {
-      Utils.showSnackBar(context, "이메일과 비밀번호를 입력해주세요.");
+      Utils.util.showSnackBar(context, "이메일과 비밀번호를 입력해주세요.");
     } else {
-      userProvider.loginUser(context, emailController.text, pwController.text);
+      userProvider.loginUser(context, emailController.text, pwController.text,
+          isLoginScreen: true);
     }
   }
 }

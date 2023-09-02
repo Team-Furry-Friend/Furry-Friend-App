@@ -14,7 +14,8 @@ class PopularPostLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postList = context.select((PostProvider post) => post.postList);
+    final postList =
+        context.select((PostProvider provider) => provider.postList);
 
     return Column(
       children: [
