@@ -86,13 +86,13 @@ class ApiRepositories {
   }
 
   Future<Token> login(username, password) async {
-    final queryParameters = <String, dynamic>{
+    final body = <String, dynamic>{
       'username': username,
       'password': password,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Token>(settingOptions('POST', 'member/login',
-            queryParameters: queryParameters)));
+        _setStreamType<Token>(
+            settingOptions('POST', 'member/login', data: body)));
     final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
