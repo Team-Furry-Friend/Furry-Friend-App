@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../screen/home_screen.dart';
 import 'color.dart';
@@ -158,20 +159,25 @@ class GrayTextFieldLayout extends StatelessWidget {
     super.key,
     required this.textController,
     required this.hintText,
+    this.marginValue = 24,
+    this.maxLines = 1,
   });
 
   final TextEditingController textController;
   final String hintText;
+  final double marginValue;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+      margin: EdgeInsets.symmetric(horizontal: marginValue),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
       decoration: BoxDecoration(
           color: backgroundColor, borderRadius: BorderRadius.circular(16)),
       child: TextField(
           controller: textController,
+          maxLines: maxLines,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
@@ -181,6 +187,79 @@ class GrayTextFieldLayout extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           )),
+    );
+  }
+}
+
+class TextLabelLayout extends StatelessWidget {
+  const TextLabelLayout({
+    super.key,
+    required this.selectLabelIndex,
+    required this.labelOnTap,
+  });
+
+  final int selectLabelIndex;
+  final Function(int) labelOnTap;
+  final typeList = const [
+    '사료',
+    '간식',
+    '용품',
+    '의류',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 32,
+      child: ListView.builder(
+          padding: EdgeInsets.zero,
+          scrollDirection: Axis.horizontal,
+          itemCount: typeList.length,
+          itemBuilder: (context, index) {
+            final type = typeList[index];
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: TypeLabel(
+                type: type,
+                isSelectedLabel: selectLabelIndex == index,
+                onTap: () => labelOnTap(index),
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class TypeLabel extends StatelessWidget {
+  const TypeLabel({
+    super.key,
+    required this.type,
+    required this.isSelectedLabel,
+    required this.onTap,
+  });
+
+  final String type;
+  final bool isSelectedLabel;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+        decoration: BoxDecoration(
+            color: isSelectedLabel ? mainColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: const Color(0xFF70A3F3), width: 1)),
+        child: Text(
+          type,
+          style: TextStyle(
+            fontSize: 15,
+            color: isSelectedLabel ? Colors.white : const Color(0xFF70A3F3),
+          ),
+        ),
+      ),
     );
   }
 }

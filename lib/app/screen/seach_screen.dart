@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/domain/providers/search_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -69,18 +70,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     },
                   ),
                 ),
-                Row(
-                  children: [
-                    for (int index = 0; index < typeList.length; index++)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: TypeLabel(
-                          type: typeList[index],
-                          isSelectedLabel: widget.selectLabelIndex == index,
-                          onTap: () => labelOnTap(index),
-                        ),
-                      ),
-                  ],
+                TextLabelLayout(
+                  selectLabelIndex: widget.selectLabelIndex,
+                  labelOnTap: labelOnTap,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),

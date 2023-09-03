@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/product_write_screen.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:furry_friend/domain/providers/user_provider.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
@@ -53,7 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ProductWriteScreen()));
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(14),
                     margin: const EdgeInsets.only(left: 15),
