@@ -12,17 +12,18 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  flutter_svg: ^2.0.7
-  kakao_flutter_sdk: ^1.5.0
-  dio: ^5.3.0
-  json_annotation: ^4.8.1
-  package_info_plus: ^4.0.2
-  shared_preferences: ^2.2.0
-  flutter_naver_login: ^1.8.0
-  google_sign_in: ^6.1.4
-  provider: ^6.0.5
-  intl: ^0.18.1
+  cupertino_icons:
+  flutter_svg:
+  kakao_flutter_sdk:
+  dio:
+  json_annotation:
+  package_info_plus:
+  shared_preferences:
+  flutter_naver_login:
+  google_sign_in:
+  provider:
+  image_picker:
+  intl:
 
 dev_dependencies:
   flutter_test:

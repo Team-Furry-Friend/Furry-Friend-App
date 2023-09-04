@@ -89,9 +89,9 @@ class _MainScreenState extends State<MainScreen> {
     return CupertinoIcons.home;
   }
 
-  void typeOnTap(int index) {
+  void typeOnTap(String type) {
     setState(() {
-      screens[1] = SearchScreen(selectLabelIndex: index);
+      screens[1] = SearchScreen(selectLabel: type);
       currentTab = 1;
     });
   }

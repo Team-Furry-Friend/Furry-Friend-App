@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 import '../widget/search_widget.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({super.key, this.selectLabelIndex = 0});
+  SearchScreen({super.key, this.selectLabel = '사료'});
 
-  int selectLabelIndex;
+  String selectLabel;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -62,16 +62,14 @@ class _SearchScreenState extends State<SearchScreen> {
                     searchOnTap: () {
                       if (_textController.text.isNotEmpty) {
                         searchProvider.getPostKeyWord(
-                            typeList[widget.selectLabelIndex],
-                            _textController.text,
-                            sortType,
+                            widget.selectLabel, _textController.text, sortType,
                             page: 1);
                       }
                     },
                   ),
                 ),
                 TextLabelLayout(
-                  selectLabelIndex: widget.selectLabelIndex,
+                  selectLabel: widget.selectLabel,
                   labelOnTap: labelOnTap,
                 ),
                 Padding(
@@ -122,10 +120,10 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  void labelOnTap(int index) {
-    if (index != widget.selectLabelIndex) {
+  void labelOnTap(String type) {
+    if (type != widget.selectLabel) {
       setState(() {
-        widget.selectLabelIndex = index;
+        widget.selectLabel = type;
       });
     }
   }

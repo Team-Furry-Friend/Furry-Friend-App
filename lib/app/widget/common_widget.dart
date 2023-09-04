@@ -194,12 +194,12 @@ class GrayTextFieldLayout extends StatelessWidget {
 class TextLabelLayout extends StatelessWidget {
   const TextLabelLayout({
     super.key,
-    required this.selectLabelIndex,
+    required this.selectLabel,
     required this.labelOnTap,
   });
 
-  final int selectLabelIndex;
-  final Function(int) labelOnTap;
+  final String selectLabel;
+  final Function(String) labelOnTap;
   final typeList = const [
     '사료',
     '간식',
@@ -221,8 +221,8 @@ class TextLabelLayout extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8),
               child: TypeLabel(
                 type: type,
-                isSelectedLabel: selectLabelIndex == index,
-                onTap: () => labelOnTap(index),
+                isSelectedLabel: selectLabel == type,
+                onTap: () => labelOnTap(type),
               ),
             );
           }),

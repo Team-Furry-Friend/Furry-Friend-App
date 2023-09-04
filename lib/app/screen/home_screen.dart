@@ -11,7 +11,7 @@ import '../widget/home_widget.dart';
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key, required this.typeOnTap}) : super(key: key);
 
-  Function(int index) typeOnTap;
+  Function(String) typeOnTap;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 for (int index = 0; index < typeList.length; index++)
                   GestureDetector(
                     child: TypeRowItem(type: typeList[index]),
-                    onTap: () => widget.typeOnTap(index),
+                    onTap: () => widget.typeOnTap(typeList[index]),
                   )
               ],
             ),
