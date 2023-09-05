@@ -50,7 +50,7 @@ class PopularPostLayout extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ProductDetailsScreen(post: post)));
+                              ProductDetailsScreen(pid: post.pid)));
                 },
               );
             },

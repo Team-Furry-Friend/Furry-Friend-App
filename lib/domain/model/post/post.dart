@@ -8,7 +8,7 @@ class Post {
   int pprice = 0;
   bool del = false;
   int reviewCnt = 0;
-  dynamic? mid;
+  int? mid;
   String mname = '';
   String regDate = '';
   String modDate = '';
@@ -36,7 +36,7 @@ class Post {
     pprice = json['pprice'];
     del = json['del'];
     reviewCnt = json['reviewCnt'] ?? 0;
-    mid = json['mid'];
+    mid = json['mid'] ?? 0;
     mname = json['mname'] ?? '';
     regDate = json['regDate'];
     modDate = json['modDate'];

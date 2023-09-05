@@ -4,7 +4,8 @@ import 'package:flutter/rendering.dart';
 import '../screen/home_screen.dart';
 import 'color.dart';
 
-PreferredSizeWidget DefaultAppBar(BuildContext context, {Widget? title}) {
+PreferredSizeWidget DefaultAppBar(BuildContext context,
+    {Widget? title, List<Widget>? actions}) {
   return AppBar(
     elevation: 0,
     title: title,
@@ -21,6 +22,7 @@ PreferredSizeWidget DefaultAppBar(BuildContext context, {Widget? title}) {
         ),
       ),
     ),
+    actions: actions,
   );
 }
 

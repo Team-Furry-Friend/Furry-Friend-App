@@ -3,6 +3,7 @@ import 'package:furry_friend/app/widget/color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_write_widget.dart';
 import 'package:furry_friend/common/utils.dart';
+import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:furry_friend/domain/model/post/post_image.dart';
 import 'package:furry_friend/domain/model/post/product.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
@@ -10,7 +11,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProductWriteScreen extends StatefulWidget {
-  const ProductWriteScreen({super.key});
+  const ProductWriteScreen({super.key, this.post});
+
+  final Post? post;
 
   @override
   State<ProductWriteScreen> createState() => _ProductWriteScreenState();
@@ -24,6 +27,20 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
   final List<PostImage> imageList = [];
 
   String selectType = '사료';
+
+  @override
+  void initState() {
+    if (widget.post != null) {
+      imageList.addAll(widget.post!.imageDTOList);
+
+      _productNameController.text = widget.post!.pname;
+      _priceController.text = widget.post!.pprice.toString();
+      _descriptionController.text = widget.post!.pexplain;
+
+      selectType = widget.post!.pcategory;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +205,7 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
           ),
           BottomButtonLayout(
               onTap: () => completeButtonOnTap(),
-              text: "다음",
+              text: "완료",
               backgroundColor: mainColor),
         ],
       ),
@@ -211,7 +228,12 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
         pprice: int.parse(_priceController.text),
         imageDTOList: imageList,
       );
-      context.read<PostProvider>().postProduct(context, product.toJson());
+
+      if (widget.post != null) {
+        context.read<PostProvider>().putPost(context, product);
+      } else {
+        context.read<PostProvider>().postProduct(context, product.toJson());
+      }
     } else {
       Utils.util.showSnackBar(context, '모든 정보를 입력해주세요.');
     }

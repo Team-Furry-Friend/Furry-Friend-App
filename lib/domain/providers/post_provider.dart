@@ -10,9 +10,11 @@ class PostProvider extends ChangeNotifier {
   final _client = ApiRepositories();
 
   List<Post> _post = [];
+  Post _postDetail = Post();
   List<Review> _review = [];
 
   List<Post> get postList => _post;
+  Post get postDetail => _postDetail;
   List<Review> get reviewList => _review;
 
   void getPopularityPost() {
@@ -31,9 +33,44 @@ class PostProvider extends ChangeNotifier {
     };
 
     _client.postPost(options).then((value) {
-      if ((value.statusCode ?? 0) / 100 == 2) {
+      if ((value.data["statusCode"] ?? 400) / 100 == 2) {
         Utils.util.showSnackBar(context, '상품이 게시되었습니다!');
         Navigator.pop(context);
+      } else {
+        Utils.util.showSnackBar(context, '오류가 발생하였습니다.');
+      }
+    });
+  }
+
+  void putPost(BuildContext context, Product product) {
+    final updateProduct = product.toJson();
+    updateProduct.remove('imageDTOList');
+    updateProduct['mid'] = _postDetail.mid;
+    updateProduct['regDate'] = _postDetail.regDate;
+
+    final options = {
+      "productDTO": updateProduct,
+      "jwtRequest": {
+        "access_token": PrefsUtils.getString(PrefsUtils.utils.refreshToken)
+      }
+    };
+
+    _client.putPost(options).then((value) {
+      if ((value.data["statusCode"] ?? 400) / 100 == 2) {
+        Map<String, dynamic> detail = _postDetail.toJson();
+
+        for (var element in updateProduct.entries) {
+          if (detail.containsKey(element.key)) {
+            detail[element.key] = element.value;
+          }
+        }
+        _postDetail = Post.fromJson(detail);
+        notifyListeners();
+
+        Utils.util.showSnackBar(context, '상품이 수정되었습니다!');
+        Navigator.pop(context);
+      } else {
+        Utils.util.showSnackBar(context, '오류가 발생하였습니다.');
       }
     });
   }
@@ -42,6 +79,26 @@ class PostProvider extends ChangeNotifier {
     _client.getReviews(pid).then((value) {
       _review = [...value];
       notifyListeners();
+    });
+  }
+
+  void getPostDetail(int pid) {
+    _client.getPostDetail(pid).then((value) {
+      _postDetail = value;
+      notifyListeners();
+    });
+  }
+
+  void deletePost(int pid, BuildContext context) {
+    _client.deletePost(pid).then((value) {
+      if ((value.data["statusCode"] ?? 400) / 100 == 2) {
+        _post.removeWhere((element) => element.pid == pid);
+
+        Utils.util.showSnackBar(context, '상품이 삭제되었습니다.');
+        Navigator.pop(context);
+        Navigator.pop(context);
+        notifyListeners();
+      }
     });
   }
 

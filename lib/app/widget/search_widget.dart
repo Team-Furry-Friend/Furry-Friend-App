@@ -81,7 +81,7 @@ class SearchListLayout extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            ProductDetailsScreen(post: product)));
+                            ProductDetailsScreen(pid: product.pid)));
               },
               child: SearchListItem(product: product));
         } else {

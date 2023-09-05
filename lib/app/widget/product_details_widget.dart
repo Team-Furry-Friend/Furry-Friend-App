@@ -131,3 +131,67 @@ class ProductReviewLayout extends StatelessWidget {
     ]);
   }
 }
+
+class ProductEditItem extends StatelessWidget {
+  const ProductEditItem({
+    super.key,
+    required this.text,
+    required this.iconData,
+    required this.onTap,
+  });
+
+  final String text;
+  final IconData iconData;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onTap(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Icon(iconData),
+            ),
+            Text(
+              text,
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProductDeleteAlertDialog extends StatelessWidget {
+  const ProductDeleteAlertDialog({super.key, required this.deleteTap});
+
+  final Function() deleteTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: const Text("정말 삭제하시겠습니까?"),
+      actions: <Widget>[
+        TextButton(
+          child: const Text("취소"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        TextButton(
+          child: const Text(
+            "삭제",
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () => deleteTap(),
+        ),
+      ],
+    );
+  }
+}

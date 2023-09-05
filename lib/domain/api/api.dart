@@ -120,7 +120,7 @@ class ApiRepositories {
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
             Token>(
-        settingOptions('PUT', '/oauth2', queryParameters: queryParameters)));
+        settingOptions('PATCH', '/oauth2', queryParameters: queryParameters)));
     final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
@@ -157,13 +157,17 @@ class ApiRepositories {
   Future<Response> putPost(options) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response>(
-            settingOptions('PUT', 'products', data: options)));
+            settingOptions('PATCH', 'products', data: options)));
     return _result;
   }
 
   Future<Post> getPostDetail(pid) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Post>(settingOptions('GET', 'products/$pid')));
+    final queryParameters = <String, dynamic>{
+      'pid': pid,
+    };
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Post>(
+        settingOptions('GET', 'products/detail',
+            queryParameters: queryParameters)));
     final value = Post.fromJson(responseCheck(_result.data)!);
     return value;
   }

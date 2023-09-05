@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/product_write_screen.dart';
 import 'package:furry_friend/app/widget/color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_details_widget.dart';
 import 'package:furry_friend/common/utils.dart';
-import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key, required this.post});
+  const ProductDetailsScreen({super.key, required this.pid});
 
-  final Post post;
+  final int pid;
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -22,12 +22,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   void initState() {
-    context.read<PostProvider>().getReviews(widget.post.pid);
+    context.read<PostProvider>().getPostDetail(widget.pid);
+    context.read<PostProvider>().getReviews(widget.pid);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final product =
+        context.select((PostProvider provider) => provider.postDetail);
+
     return Scaffold(
       appBar: DefaultAppBar(context,
           title: const Text(
@@ -37,7 +41,64 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               color: mainBlack,
               fontWeight: FontWeight.w600,
             ),
-          )),
+          ),
+          actions: [
+            InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                    useSafeArea: true,
+                    context: context,
+                    builder: (_) {
+                      return Container(
+                        height: 200,
+                        margin: const EdgeInsets.only(top: 8),
+                        child: Column(
+                          children: [
+                            ProductEditItem(
+                              text: '수정하기',
+                              iconData: Icons.edit,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProductWriteScreen(
+                                              post: product,
+                                            )));
+                              },
+                            ),
+                            ProductEditItem(
+                              text: '삭제하기',
+                              iconData: Icons.delete_forever,
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return ProductDeleteAlertDialog(
+                                        deleteTap: () {
+                                          Navigator.pop(dialogContext);
+                                          context
+                                              .read<PostProvider>()
+                                              .deletePost(widget.pid, context);
+                                        },
+                                      );
+                                    });
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 14),
+                child: Icon(
+                  Icons.more_vert,
+                  color: mainBlack,
+                ),
+              ),
+            )
+          ]),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -48,9 +109,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: widget.post.imageDTOList.length,
+                    itemCount: product.imageDTOList.length,
                     itemBuilder: (_, index) {
-                      final image = widget.post.imageDTOList[index];
+                      final image = product.imageDTOList[index];
                       return ClipRRect(
                           borderRadius: BorderRadius.circular(16),
                           child: Image.network(image.path, fit: BoxFit.cover,
@@ -77,7 +138,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),
                           child: Text(
-                            widget.post.pname,
+                            product.pname,
                             style: const TextStyle(
                               color: mainBlack,
                               fontSize: 18,
@@ -86,7 +147,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                         ),
                         Text(
-                          '${NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0).format(widget.post.pprice)}원',
+                          '${NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0).format(product.pprice)}원',
                           style: const TextStyle(
                             color: mainBlack,
                             fontSize: 24,
@@ -130,15 +191,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Text(widget.post.pexplain,
+                  child: Text(product.pexplain,
                       style: const TextStyle(
                         color: mainBlack,
                         height: 1.40,
                       )),
                 ),
                 Text(
-                  DateFormat('yyyy.MM.dd')
-                      .format(DateTime.parse(widget.post.regDate)),
+                  DateFormat('yyyy.MM.dd').format(DateTime.parse(
+                      product.regDate.isNotEmpty
+                          ? product.regDate
+                          : DateTime.now().toString())),
                   style: const TextStyle(color: Colors.grey),
                 )
               ],
@@ -183,7 +246,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     }
 
                                     context.read<PostProvider>().postReviews(
-                                        widget.post.pid,
+                                        product.pid,
                                         _reviewTextController.text);
                                   },
                                   backgroundColor: mainColor),
