@@ -3,6 +3,7 @@ import 'package:furry_friend/app/screen/product_write_screen.dart';
 import 'package:furry_friend/app/widget/color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_details_widget.dart';
+import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
@@ -42,63 +43,66 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          actions: [
-            InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                    useSafeArea: true,
-                    context: context,
-                    builder: (_) {
-                      return Container(
-                        height: 200,
-                        margin: const EdgeInsets.only(top: 8),
-                        child: Column(
-                          children: [
-                            ProductEditItem(
-                              text: '수정하기',
-                              iconData: Icons.edit,
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProductWriteScreen(
-                                              post: product,
-                                            )));
-                              },
-                            ),
-                            ProductEditItem(
-                              text: '삭제하기',
-                              iconData: Icons.delete_forever,
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return ProductDeleteAlertDialog(
-                                        deleteTap: () {
-                                          Navigator.pop(dialogContext);
-                                          context
-                                              .read<PostProvider>()
-                                              .deletePost(widget.pid, context);
-                                        },
-                                      );
-                                    });
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 14),
-                child: Icon(
-                  Icons.more_vert,
-                  color: mainBlack,
-                ),
-              ),
-            )
-          ]),
+          actions: product.mid == PrefsUtils.getInt(PrefsUtils.utils.userId)
+              ? [
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                          useSafeArea: true,
+                          context: context,
+                          builder: (_) {
+                            return Container(
+                              height: 200,
+                              margin: const EdgeInsets.only(top: 8),
+                              child: Column(
+                                children: [
+                                  ProductEditItem(
+                                    text: '수정하기',
+                                    iconData: Icons.edit,
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProductWriteScreen(
+                                                    post: product,
+                                                  )));
+                                    },
+                                  ),
+                                  ProductEditItem(
+                                    text: '삭제하기',
+                                    iconData: Icons.delete_forever,
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return ProductDeleteAlertDialog(
+                                              deleteTap: () {
+                                                Navigator.pop(dialogContext);
+                                                context
+                                                    .read<PostProvider>()
+                                                    .deletePost(
+                                                        widget.pid, context);
+                                              },
+                                            );
+                                          });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 14),
+                      child: Icon(
+                        Icons.more_vert,
+                        color: mainBlack,
+                      ),
+                    ),
+                  )
+                ]
+              : null),
       body: SingleChildScrollView(
         child: Column(
           children: [

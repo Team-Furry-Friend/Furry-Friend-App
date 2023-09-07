@@ -44,4 +44,5 @@ class PrefsUtils {
   final String phoneNumber = "PHONENUMBER";
   final String nickName = "NICKNAME";
   final String address = "ADRESS";
+  final String userId = "userid";
 }

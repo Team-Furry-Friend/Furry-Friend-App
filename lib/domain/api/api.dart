@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:furry_friend/domain/model/post/review.dart';
+import 'package:furry_friend/domain/model/user/verify_user.dart';
 
 import '../model/post/page_post.dart';
 import '../model/post/post.dart';
@@ -67,10 +68,11 @@ class ApiRepositories {
   }
 
   // 토큰 검증
-  Future<User> userVerify(header) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<User>(
-        settingOptions('GET', 'gateway/isvalid', headers: header)));
-    final value = User.fromJson(responseCheck(_result.data)!);
+  Future<VerifyUser> userVerify(header) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<VerifyUser>(
+            settingOptions('GET', 'gateway/isvalid', headers: header)));
+    final value = VerifyUser.fromJson(responseCheck(_result.data)!);
     return value;
   }
 

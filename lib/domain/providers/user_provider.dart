@@ -23,6 +23,10 @@ class UserProvider extends ChangeNotifier {
       _client.setClientRefreshToken(value.refreshToken);
 
       if (isLoginScreen) {
+        _client.userVerify({"Authorization": value.refreshToken}).then((value) {
+          PrefsUtils.setString(PrefsUtils.utils.nickName, value.memberName);
+          PrefsUtils.setInt(PrefsUtils.utils.userId, value.memberId);
+        });
         setPrefsUser(context, true, email, password, token: value);
       }
     });
