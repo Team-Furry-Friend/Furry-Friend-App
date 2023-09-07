@@ -115,9 +115,11 @@ class SearchListItem extends StatelessWidget {
                 height: 108,
                 margin: const EdgeInsets.only(right: 18),
                 decoration: ShapeDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(product.imageDTOList.first.path),
-                      fit: BoxFit.cover),
+                  image: product.imageDTOList.isNotEmpty
+                      ? DecorationImage(
+                          image: NetworkImage(product.imageDTOList.first.path),
+                          fit: BoxFit.cover)
+                      : null,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),

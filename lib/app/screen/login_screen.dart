@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/login_email_screen.dart';
 import 'package:furry_friend/app/screen/sign_up_screen.dart';
-
-import '../../service/login_service.dart';
-import '../widget/color.dart';
+import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/service/login_service.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Image.asset(
-                        'images/btn_${element}_login.png',
+                        'assets/images/btn_${element}_login.png',
                         width: 55,
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../common/utils.dart';
 import '../../domain/providers/user_provider.dart';
@@ -13,8 +14,6 @@ class LoginEmailScreen extends StatefulWidget {
 }
 
 class _LoginEmailScreenState extends State<LoginEmailScreen> {
-  final UserProvider userProvider = UserProvider();
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
 
@@ -96,7 +95,8 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
     if (!completeCheck()) {
       Utils.util.showSnackBar(context, "이메일과 비밀번호를 입력해주세요.");
     } else {
-      userProvider.loginUser(context, emailController.text, pwController.text,
+      context.read<UserProvider>().loginUser(
+          context, emailController.text, pwController.text,
           isLoginScreen: true);
     }
   }

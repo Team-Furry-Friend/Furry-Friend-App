@@ -16,7 +16,7 @@ class UserClient {
     dio.options.headers["Authorization"] =
         PrefsUtils.getString(PrefsUtils.utils.refreshToken);
     dio.interceptors.add(QueuedInterceptorsWrapper(onError: (e, handler) {
-      if (e.response?.statusCode == 401) {}
+      return handler.reject(e);
     }, onResponse: (Response response, handler) {
       if (response.data.toString().contains('error')) {
         return handler.reject(DioException(
