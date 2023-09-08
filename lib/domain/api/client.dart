@@ -14,9 +14,9 @@ class UserClient {
 
     dio = Dio(_options);
     final token = PrefsUtils.getString(PrefsUtils.utils.refreshToken);
-    if(token.isNotEmpty ) {
+    if (token.isNotEmpty) {
       dio.options.headers["Authorization"] =
-        PrefsUtils.getString(PrefsUtils.utils.refreshToken);
+          PrefsUtils.getString(PrefsUtils.utils.refreshToken);
     }
     dio.interceptors.add(QueuedInterceptorsWrapper(onError: (e, handler) {
       return handler.reject(e);
