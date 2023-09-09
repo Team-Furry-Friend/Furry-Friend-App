@@ -220,7 +220,7 @@ class ApiRepositories {
   }
 
   // 채팅 API
-  Future<List<Chat>> getChats(int pid) async {
+  Future<List<Chat>> getChats() async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'chats')));
     final value = responseCheck(_result.data)!

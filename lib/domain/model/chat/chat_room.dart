@@ -13,8 +13,8 @@ class ChatRoom {
   ChatRoom.fromJson(Map<String, dynamic> json) {
     chatRoomId = json['chatRoomId'];
     chatName = json['chatName'];
-    chatCreator = json['chatCreator'];
-    chatDel = json['chatDel'];
+    chatCreator = json['chatCreator'] ?? 0;
+    chatDel = json['chatDel'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
