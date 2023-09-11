@@ -19,8 +19,14 @@ class ChatRoomItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ChatDetailsScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatDetailsScreen(
+                      roomId: chatRoom.chatParticipantsResponseDTO
+                              ?.chatRoomResponseDTO?.chatRoomId ??
+                          0,
+                    )));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
