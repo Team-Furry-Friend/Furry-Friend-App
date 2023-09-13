@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../common/utils.dart';
 import '../../domain/providers/user_provider.dart';
-import '../widget/color.dart';
+import '../widget/widget_color.dart';
 import '../widget/common_widget.dart';
 
 class LoginEmailScreen extends StatefulWidget {
@@ -33,9 +33,10 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(context,
-          title: const Text(
+          title: Text(
             "로그인",
-            style: TextStyle(color: mainBlack, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                color: WidgetColor.mainBlack, fontWeight: FontWeight.w500),
           )),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 25),
@@ -63,7 +64,8 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
             BottomButton(
               text: "로그인",
               onTap: completeButtonOnTap,
-              backgroundColor: completeCheck() ? mainColor : deepGray,
+              backgroundColor:
+                  completeCheck() ? WidgetColor.mainColor : deepGray,
             ),
           ],
         ),

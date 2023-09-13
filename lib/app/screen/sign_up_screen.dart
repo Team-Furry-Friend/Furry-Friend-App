@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:furry_friend/common/utils.dart';
 
 import '../../domain/providers/user_provider.dart';
-import '../widget/color.dart';
+import '../widget/widget_color.dart';
 import '../widget/common_widget.dart';
 import '../widget/sign_up_widget.dart';
 
@@ -44,9 +44,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: DefaultAppBar(context,
-          title: const Text(
+          title: Text(
             "회원가입",
-            style: TextStyle(color: mainBlack, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                color: WidgetColor.mainBlack, fontWeight: FontWeight.w500),
           )),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 25),
@@ -107,11 +108,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           (states) => const BorderSide(
                               width: 1.0, color: Color(0xffB9B9B9)),
                         ),
-                        activeColor: mainColor,
+                        activeColor: WidgetColor.mainColor,
                       ),
-                      const Text(
+                      Text(
                         "이용약관 및 개인정보 처리방침에 동의합니다.",
-                        style: TextStyle(fontSize: 16, color: mainBlack),
+                        style: TextStyle(
+                            fontSize: 16, color: WidgetColor.mainBlack),
                       )
                     ],
                   ),
@@ -119,7 +121,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 BottomButtonLayout(
                     onTap: completeButtonOnTap,
                     text: "다음",
-                    backgroundColor: completeCheck() ? mainColor : deepGray),
+                    backgroundColor:
+                        completeCheck() ? WidgetColor.mainColor : deepGray),
               ],
             )),
           ],

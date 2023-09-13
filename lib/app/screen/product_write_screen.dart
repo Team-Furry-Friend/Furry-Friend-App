@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_write_widget.dart';
 import 'package:furry_friend/common/utils.dart';
@@ -46,11 +46,11 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(context,
-          title: const Text(
+          title: Text(
             '상품 등록',
             style: TextStyle(
               fontSize: 18,
-              color: mainBlack,
+              color: WidgetColor.mainBlack,
               fontWeight: FontWeight.w600,
             ),
           )),
@@ -60,7 +60,7 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
             child: SingleChildScrollView(
               child: Container(
                 width: double.infinity,
-                color: backgroundColor,
+                color: WidgetColor.backgroundColor,
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
                 child: Column(
@@ -127,18 +127,18 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 24),
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: WidgetColor.cleanWhite,
                           borderRadius: BorderRadius.circular(16)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Row(
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
                                 '상품정보',
                                 style: TextStyle(
-                                  color: mainBlack,
+                                  color: WidgetColor.mainBlack,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -146,7 +146,7 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
                               Text(
                                 '  필수',
                                 style: TextStyle(
-                                  color: mainColor,
+                                  color: WidgetColor.mainColor,
                                   fontWeight: FontWeight.w600,
                                 ),
                               )
@@ -206,7 +206,7 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
           BottomButtonLayout(
               onTap: () => completeButtonOnTap(),
               text: "완료",
-              backgroundColor: mainColor),
+              backgroundColor: WidgetColor.mainColor),
         ],
       ),
     );

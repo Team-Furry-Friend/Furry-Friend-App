@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/product_details_screen.dart';
-import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -39,9 +39,9 @@ class SearchWidget extends StatelessWidget {
           )),
           GestureDetector(
             onTap: () => searchOnTap(),
-            child: const Icon(
+            child: Icon(
               Icons.search,
-              color: mainColor,
+              color: WidgetColor.mainColor,
               size: 28,
             ),
           )
@@ -138,8 +138,8 @@ class SearchListItem extends StatelessWidget {
                           child: Text(
                             product.pname,
                             textAlign: TextAlign.start,
-                            style: const TextStyle(
-                              color: mainBlack,
+                            style: TextStyle(
+                              color: WidgetColor.mainBlack,
                               fontSize: 17,
                               fontWeight: FontWeight.w500,
                             ),
@@ -158,8 +158,8 @@ class SearchListItem extends StatelessWidget {
                       Text(
                         '${NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0).format(product.pprice)}원',
                         textAlign: TextAlign.right,
-                        style: const TextStyle(
-                          color: mainBlack,
+                        style: TextStyle(
+                          color: WidgetColor.mainBlack,
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),

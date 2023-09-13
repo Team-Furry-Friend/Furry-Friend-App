@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'color.dart';
+import 'widget_color.dart';
 import 'common_widget.dart';
 
 class BottomSheetLayout extends StatelessWidget {
@@ -42,7 +42,9 @@ class BottomSheetLayout extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 12),
             child: BottomButton(
-                onTap: () => onTap(), text: "확인", backgroundColor: mainBlack),
+                onTap: () => onTap(),
+                text: "확인",
+                backgroundColor: WidgetColor.mainBlack),
           )
         ],
       );

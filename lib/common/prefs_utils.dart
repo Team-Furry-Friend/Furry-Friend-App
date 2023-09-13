@@ -45,4 +45,5 @@ class PrefsUtils {
   final String nickName = "NICKNAME";
   final String address = "ADRESS";
   final String userId = "userid";
+  final String darkMode = "darkmode";
 }

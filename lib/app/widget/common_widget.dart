@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../screen/home_screen.dart';
-import 'color.dart';
+import 'widget_color.dart';
 
 PreferredSizeWidget DefaultAppBar(BuildContext context,
     {Widget? title, List<Widget>? actions}) {
@@ -147,7 +146,7 @@ class TextFieldRow extends StatelessWidget {
                   border: InputBorder.none,
                   hintText: hintText,
                   hintStyle: textStyle,
-                  focusColor: mainColor),
+                  focusColor: WidgetColor.mainColor),
             ),
           ),
         ),
@@ -176,7 +175,8 @@ class GrayTextFieldLayout extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: marginValue),
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
       decoration: BoxDecoration(
-          color: backgroundColor, borderRadius: BorderRadius.circular(16)),
+          color: WidgetColor.backgroundColor,
+          borderRadius: BorderRadius.circular(16)),
       child: TextField(
           controller: textController,
           maxLines: maxLines,
@@ -251,14 +251,16 @@ class TypeLabel extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
         decoration: BoxDecoration(
-            color: isSelectedLabel ? mainColor : Colors.transparent,
+            color: isSelectedLabel ? WidgetColor.mainColor : Colors.transparent,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(color: const Color(0xFF70A3F3), width: 1)),
         child: Text(
           type,
           style: TextStyle(
             fontSize: 15,
-            color: isSelectedLabel ? Colors.white : const Color(0xFF70A3F3),
+            color: isSelectedLabel
+                ? WidgetColor.cleanWhite
+                : const Color(0xFF70A3F3),
           ),
         ),
       ),

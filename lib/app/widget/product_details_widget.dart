@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -25,9 +25,9 @@ class ProductInfoFrame extends StatelessWidget {
             )),
         Visibility(
           visible: dividerVisible,
-          child: const Divider(
+          child: Divider(
             thickness: 14,
-            color: backgroundColor,
+            color: WidgetColor.backgroundColor,
           ),
         )
       ],
@@ -49,11 +49,11 @@ class ProductReviewLayout extends StatelessWidget {
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Expanded(
+          Expanded(
             child: Text(
               '상품 문의',
               style: TextStyle(
-                color: mainBlack,
+                color: WidgetColor.mainBlack,
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
@@ -86,7 +86,7 @@ class ProductReviewLayout extends StatelessWidget {
               final review = reviews[index];
               return Container(
                 decoration: BoxDecoration(
-                    color: backgroundColor,
+                    color: WidgetColor.backgroundColor,
                     borderRadius: BorderRadius.circular(16)),
                 margin: const EdgeInsets.only(top: 24),
                 padding:

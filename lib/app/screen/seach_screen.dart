@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/domain/providers/search_provider.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
     searchProvider = Provider.of<SearchProvider>(context, listen: true);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: WidgetColor.cleanWhite,
       body: Column(
         children: [
           Padding(
@@ -79,8 +79,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       Expanded(
                         child: Text(
                           '전체 ${searchProvider.productList.isNotEmpty ? '${searchProvider.productList.length}개' : ''}',
-                          style:
-                              const TextStyle(fontSize: 16, color: mainBlack),
+                          style: TextStyle(
+                              fontSize: 16, color: WidgetColor.mainBlack),
                         ),
                       ),
                       DropdownButton<String>(

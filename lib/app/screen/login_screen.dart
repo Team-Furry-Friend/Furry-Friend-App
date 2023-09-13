@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/login_email_screen.dart';
 import 'package:furry_friend/app/screen/sign_up_screen.dart';
-import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/service/login_service.dart';
 
 class LoginScreen extends StatefulWidget {

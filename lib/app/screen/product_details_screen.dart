@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/product_write_screen.dart';
-import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_details_widget.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
@@ -35,11 +35,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     return Scaffold(
       appBar: DefaultAppBar(context,
-          title: const Text(
+          title: Text(
             '상품 상세',
             style: TextStyle(
               fontSize: 18,
-              color: mainBlack,
+              color: WidgetColor.mainBlack,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -93,11 +93,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             );
                           });
                     },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Icon(
                         Icons.more_vert,
-                        color: mainBlack,
+                        color: WidgetColor.mainBlack,
                       ),
                     ),
                   )
@@ -143,8 +143,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           padding: const EdgeInsets.only(bottom: 16),
                           child: Text(
                             product.pname,
-                            style: const TextStyle(
-                              color: mainBlack,
+                            style: TextStyle(
+                              color: WidgetColor.mainBlack,
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                             ),
@@ -152,8 +152,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         Text(
                           '${NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0).format(product.pprice)}원',
-                          style: const TextStyle(
-                            color: mainBlack,
+                          style: TextStyle(
+                            color: WidgetColor.mainBlack,
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
                           ),
@@ -185,10 +185,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ]),
             ProductInfoFrame(
               children: [
-                const Text(
+                Text(
                   '상품정보',
                   style: TextStyle(
-                    color: mainBlack,
+                    color: WidgetColor.mainBlack,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
@@ -196,8 +196,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Text(product.pexplain,
-                      style: const TextStyle(
-                        color: mainBlack,
+                      style: TextStyle(
+                        color: WidgetColor.mainBlack,
                         height: 1.40,
                       )),
                 ),
@@ -221,12 +221,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.all(24),
+                            Padding(
+                              padding: const EdgeInsets.all(24),
                               child: Text(
                                 '문의 작성하기',
                                 style: TextStyle(
-                                  color: mainBlack,
+                                  color: WidgetColor.mainBlack,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -253,7 +253,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         product.pid,
                                         _reviewTextController.text);
                                   },
-                                  backgroundColor: mainColor),
+                                  backgroundColor: WidgetColor.mainColor),
                             ),
                           ],
                         ),

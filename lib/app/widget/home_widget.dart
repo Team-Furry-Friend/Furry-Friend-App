@@ -5,7 +5,7 @@ import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'color.dart';
+import 'widget_color.dart';
 
 class PopularPostLayout extends StatelessWidget {
   const PopularPostLayout({
@@ -19,19 +19,19 @@ class PopularPostLayout extends StatelessWidget {
 
     return Column(
       children: [
-        const Row(
+        Row(
           children: [
             Expanded(
               child: Text(
                 '최근 인기 상품 🚀',
                 style: TextStyle(
-                  color: mainBlack,
+                  color: WidgetColor.mainBlack,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ),
-            RoundBlueButton(text: '모두보기'),
+            const RoundBlueButton(text: '모두보기'),
           ],
         ),
         Padding(
@@ -73,14 +73,14 @@ class RoundBlueButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
         decoration: ShapeDecoration(
-          color: lightMainColor,
+          color: WidgetColor.lightMainColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: mainColor,
+          style: TextStyle(
+            color: WidgetColor.mainColor,
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),
@@ -142,7 +142,7 @@ class HomeListItem extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    border: Border.all(width: 1, color: mainColor),
+                    border: Border.all(width: 1, color: WidgetColor.mainColor),
                   ),
                   child: Text(
                     post.pcategory,
@@ -198,7 +198,7 @@ class TypeRowItem extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(color: lightGray, width: 1),
           borderRadius: BorderRadius.circular(12),
-          color: Colors.white),
+          color: WidgetColor.cleanWhite),
       child: Column(
         children: [
           Padding(
@@ -207,8 +207,8 @@ class TypeRowItem extends StatelessWidget {
           ),
           Text(
             type,
-            style: const TextStyle(
-              color: mainBlack,
+            style: TextStyle(
+              color: WidgetColor.mainBlack,
               fontSize: 13,
             ),
           ),

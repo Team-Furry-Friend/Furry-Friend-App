@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/home_screen.dart';
 import 'package:furry_friend/app/screen/seach_screen.dart';
-import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/screen/setting_screen.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/domain/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(typeOnTap: (index) {}),
     SearchScreen(),
     Container(),
-    Container()
+    const SettingScreen()
   ];
 
   int currentTab = 0;
@@ -64,7 +65,9 @@ class _MainScreenState extends State<MainScreen> {
                     icon: Icon(
                       tabIcon(index),
                       size: 32,
-                      color: index == currentTab ? mainColor : deepGray,
+                      color: index == currentTab
+                          ? WidgetColor.mainColor
+                          : deepGray,
                     ),
                     label: '')
             ],

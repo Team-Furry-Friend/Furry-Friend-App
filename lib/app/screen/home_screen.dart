@@ -5,7 +5,7 @@ import 'package:furry_friend/domain/providers/user_provider.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:provider/provider.dart';
 
-import '../widget/color.dart';
+import '../widget/widget_color.dart';
 import '../widget/home_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: WidgetColor.backgroundColor,
       body: Column(
         children: <Widget>[
           Padding(
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(14),
                     margin: const EdgeInsets.only(left: 15),
                     decoration: BoxDecoration(
-                        color: mainColor,
+                        color: WidgetColor.mainColor,
                         borderRadius: BorderRadius.circular(16)),
                     child: const Icon(
                       Icons.edit,
@@ -92,8 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               margin: const EdgeInsets.only(top: 33),
               padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: WidgetColor.cleanWhite,
               ),
               child: const SingleChildScrollView(child: PopularPostLayout()),
             ),

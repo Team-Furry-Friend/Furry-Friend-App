@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/app/widget/color.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
 
 class ProductTextField extends StatelessWidget {
   const ProductTextField(
@@ -44,8 +44,8 @@ class ProductWriteFrame extends StatelessWidget {
           padding: const EdgeInsets.only(top: 24),
           child: Text(
             titleText,
-            style: const TextStyle(
-              color: mainBlack,
+            style: TextStyle(
+              color: WidgetColor.mainBlack,
               fontSize: 16,
             ),
           ),
