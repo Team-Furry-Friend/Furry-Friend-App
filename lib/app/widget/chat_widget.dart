@@ -88,3 +88,46 @@ class ChatRoomItem extends StatelessWidget {
     );
   }
 }
+
+class ChatMessageItem extends StatelessWidget {
+  const ChatMessageItem({
+    super.key,
+    required this.isMyMessage,
+    required this.message,
+  });
+
+  final bool isMyMessage;
+  final ChatMessage message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 24),
+      child: Column(
+        crossAxisAlignment:
+            isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                color: isMyMessage ? lightGray : Colors.white,
+                borderRadius: BorderRadius.circular(12)),
+            margin: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+            child: Text(
+              message.chatMessageContent,
+              style: const TextStyle(height: 1.4),
+            ),
+          ),
+          Text(
+            Utils.util.formatDate(DateTime.parse(message.modDate)),
+            textAlign: TextAlign.right,
+            style: const TextStyle(
+              color: Color(0xFF868686),
+              fontSize: 14,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

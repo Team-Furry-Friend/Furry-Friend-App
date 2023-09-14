@@ -25,8 +25,8 @@ class ChatMessage {
     chatMessageContent = json['chatMessageContent'];
     chatMessageRead = json['chatMessageRead'];
     chatMessageDel = json['chatMessageDel'];
-    regDate = json['regDate'];
-    modDate = json['modDate'];
+    regDate = json['regDate'] ?? '';
+    modDate = json['modDate'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
