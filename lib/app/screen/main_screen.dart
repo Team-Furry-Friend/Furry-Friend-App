@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/chat_list_screen.dart';
 import 'package:furry_friend/app/screen/home_screen.dart';
 import 'package:furry_friend/app/screen/seach_screen.dart';
 import 'package:furry_friend/app/screen/setting_screen.dart';
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> screens = [
     HomeScreen(typeOnTap: (index) {}),
     SearchScreen(),
-    Container(),
+    const ChatListScreen(),
     const SettingScreen()
   ];
 

@@ -24,6 +24,8 @@ dependencies:
   provider:
   image_picker:
   intl:
+  stomp_dart_client:
+
 
 dev_dependencies:
   flutter_test:

@@ -162,18 +162,20 @@ class GrayTextFieldLayout extends StatelessWidget {
     required this.hintText,
     this.marginValue = 24,
     this.maxLines = 1,
+    this.verticalPadding = 14,
   });
 
   final TextEditingController textController;
   final String hintText;
   final double marginValue;
+  final double verticalPadding;
   final int maxLines;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: marginValue),
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+      padding: EdgeInsets.symmetric(vertical: verticalPadding, horizontal: 18),
       decoration: BoxDecoration(
           color: WidgetColor.backgroundColor,
           borderRadius: BorderRadius.circular(16)),

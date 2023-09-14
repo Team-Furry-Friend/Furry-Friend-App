@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:furry_friend/domain/model/chat/chat.dart';
+import 'package:furry_friend/domain/model/chat/chat_message_page.dart';
+import 'package:furry_friend/domain/model/chat/chat_participants.dart';
 import 'package:furry_friend/domain/model/post/review.dart';
 import 'package:furry_friend/domain/model/user/verify_user.dart';
 
@@ -213,6 +216,43 @@ class ApiRepositories {
   Future<Response> deleteReview(int rid) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response>(settingOptions('DELETE', 'reviews/$rid')));
+    return _result;
+  }
+
+  // 채팅 API
+  Future<List<Chat>> getChats() async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'chats')));
+    final value = responseCheck(_result.data)!
+        .map((dynamic i) => Chat.fromJson(i as Map<String, dynamic>))
+        .toList();
+
+    return List<Chat>.from(value);
+  }
+
+  Future<ChatMessagePage> getMessages(int roomId, time) async {
+    final queryParameters = <String, dynamic>{
+      'time': time,
+    };
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, dynamic>>(settingOptions(
+            'GET', 'chats/$roomId',
+            queryParameters: queryParameters)));
+    final value = ChatMessagePage.fromJson(responseCheck(_result.data)!);
+    return value;
+  }
+
+  Future<ChatParticipants> postChat(options) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ChatParticipants>(
+            settingOptions('POST', 'chats', data: options)));
+    final value = ChatParticipants.fromJson(responseCheck(_result.data)!);
+    return value;
+  }
+
+  Future<Response> deleteChat(int roomId) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response>(settingOptions('DELETE', 'chats/$roomId')));
     return _result;
   }
 }
