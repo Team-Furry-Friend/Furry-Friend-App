@@ -33,13 +33,16 @@ class ChatProvider extends ChangeNotifier {
     });
   }
 
-  void getNewMessage(StompFrame frame) {
+  void getNewMessage(StompFrame frame, {ChatMessage? message}) {
     if (frame.body != null) {
       Map<String, dynamic> obj = json.decode(frame.body!);
-      final newMessage = ChatMessage.fromJson(obj);
-      _chatMessagePage.dtoList = [..._chatMessagePage.dtoList, newMessage];
-      notifyListeners();
+      message = ChatMessage.fromJson(obj);
     }
+
+    message ??= ChatMessage();
+
+    _chatMessagePage.dtoList = [..._chatMessagePage.dtoList, message];
+    notifyListeners();
   }
 
   void sendNewMessage() {}

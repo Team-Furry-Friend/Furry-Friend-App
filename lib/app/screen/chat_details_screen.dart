@@ -5,6 +5,7 @@ import 'package:furry_friend/app/widget/chat_widget.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/domain/model/chat/chat_message.dart';
 import 'package:furry_friend/domain/providers/chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:stomp_dart_client/stomp.dart';
@@ -37,9 +38,11 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
 
   @override
   void dispose() {
+    if (stompClient?.connected ?? false) {
+      stompClient?.send(
+          destination: '', body: json.encode({'type': 'disconnect'}));
+    }
     stompClient?.deactivate();
-    stompClient?.send(
-        destination: '', body: json.encode({'type': 'disconnect'}));
     super.dispose();
   }
 
@@ -130,6 +133,12 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
           body: json.encode({
             "content": _messageTextController.text,
           }));
+      context.read<ChatProvider>().getNewMessage(
+          StompFrame(command: 'sendMessage'),
+          message: ChatMessage(
+              chatMessageSenderId: userId,
+              chatMessageContent: _messageTextController.text,
+              modDate: DateTime.now().toString()));
       _messageTextController.clear();
     });
   }
@@ -143,7 +152,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
         webSocketConnectHeaders: {
           'Upgrade': 'websocket',
           'Connection': 'Upgrade',
-          'transports': ['polling', 'websocket'],
+          'transports': ['websocket'],
         },
         stompConnectHeaders: {
           'Authorization': PrefsUtils.getString(PrefsUtils.utils.refreshToken),
