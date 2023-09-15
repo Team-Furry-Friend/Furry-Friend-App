@@ -1,4 +1,4 @@
-import 'post_image.dart';
+import 'product_image.dart';
 
 class Post {
   int pid = 0;
@@ -12,7 +12,7 @@ class Post {
   String mname = '';
   String regDate = '';
   String modDate = '';
-  List<PostImage> imageDTOList = [];
+  List<ProductImage> imageDTOList = [];
 
   Post(
       {this.pid = 0,
@@ -41,9 +41,9 @@ class Post {
     regDate = json['regDate'];
     modDate = json['modDate'];
     if (json['imageDTOList'] != null) {
-      imageDTOList = <PostImage>[];
+      imageDTOList = <ProductImage>[];
       json['imageDTOList'].forEach((v) {
-        imageDTOList!.add(PostImage.fromJson(v));
+        imageDTOList!.add(ProductImage.fromJson(v));
       });
     }
   }

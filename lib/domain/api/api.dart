@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:furry_friend/domain/model/basket/basket.dart';
 import 'package:furry_friend/domain/model/chat/chat.dart';
 import 'package:furry_friend/domain/model/chat/chat_message_page.dart';
 import 'package:furry_friend/domain/model/chat/chat_participants.dart';
@@ -253,6 +254,40 @@ class ApiRepositories {
   Future<Response> deleteChat(int roomId) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response>(settingOptions('DELETE', 'chats/$roomId')));
+    return _result;
+  }
+
+  // 찜 목록 API
+  Future<List<Basket>> getBaskets() async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'baskets')));
+    final value = responseCheck(_result.data)!
+        .map((dynamic i) => Basket.fromJson(i as Map<String, dynamic>))
+        .toList();
+
+    return List<Basket>.from(value);
+  }
+
+  Future<List<Basket>> getMyBasketProducts() async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'baskets/member')));
+    final value = responseCheck(_result.data)!
+        .map((dynamic i) => Basket.fromJson(i as Map<String, dynamic>))
+        .toList();
+
+    return List<Basket>.from(value);
+  }
+
+  Future<Response> postBasket(options) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response>(
+        settingOptions('POST', 'baskets',
+            data: options)));
+    return _result;
+  }
+
+  Future<Response> deleteBasket(int bid) async {
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response>(settingOptions('DELETE', 'baskets/$bid')));
     return _result;
   }
 }

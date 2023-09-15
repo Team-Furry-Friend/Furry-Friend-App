@@ -1,10 +1,10 @@
-class PostImage {
+class ProductImage {
   String imgName = "";
   String path = "";
 
-  PostImage({this.imgName = '', this.path = ''});
+  ProductImage({this.imgName = '', this.path = ''});
 
-  PostImage.fromJson(Map<String, dynamic> json) {
+  ProductImage.fromJson(Map<String, dynamic> json) {
     imgName = json['imgName'];
     path = json['path'];
   }

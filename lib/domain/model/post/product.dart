@@ -1,11 +1,11 @@
-import 'package:furry_friend/domain/model/post/post_image.dart';
+import 'package:furry_friend/domain/model/post/product_image.dart';
 
 class Product {
   String pcategory = '';
   String pname = '';
   String pexplain = '';
   int pprice = 0;
-  List<PostImage>? imageDTOList = [];
+  List<ProductImage>? imageDTOList = [];
 
   Product(
       {this.pcategory = '',
@@ -20,9 +20,9 @@ class Product {
     pexplain = json['pexplain'];
     pprice = json['pprice'];
     if (json['imageDTOList'] != null) {
-      imageDTOList = <PostImage>[];
+      imageDTOList = <ProductImage>[];
       json['imageDTOList'].forEach((v) {
-        imageDTOList!.add(PostImage.fromJson(v));
+        imageDTOList!.add(ProductImage.fromJson(v));
       });
     }
   }

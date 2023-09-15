@@ -4,7 +4,7 @@ import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_write_widget.dart';
 import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
-import 'package:furry_friend/domain/model/post/post_image.dart';
+import 'package:furry_friend/domain/model/post/product_image.dart';
 import 'package:furry_friend/domain/model/post/product.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +24,7 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
   final _priceController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  final List<PostImage> imageList = [];
+  final List<ProductImage> imageList = [];
 
   String selectType = '사료';
 
@@ -244,7 +244,7 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
     await _picker.pickMultiImage().then((value) {
       setState(() {
         for (final image in value) {
-          imageList.add(PostImage(imgName: image.name, path: image.path));
+          imageList.add(ProductImage(imgName: image.name, path: image.path));
         }
       });
     });
