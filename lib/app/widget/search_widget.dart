@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/product_details_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
+import 'package:furry_friend/domain/model/basket/basket.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
+import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -65,6 +67,8 @@ class SearchListLayout extends StatelessWidget {
         context.select((SearchProvider provider) => provider.productList);
     final isLoadingPage =
         context.select((SearchProvider provider) => provider.isLoadingPage);
+    final myBasketProduct = context
+        .select((BasketProvider basketProvider) => basketProvider.myBasket);
 
     return ListView.builder(
       controller: scrollController,
@@ -74,7 +78,8 @@ class SearchListLayout extends StatelessWidget {
       itemBuilder: (context, index) {
         if (index < productList.length) {
           final product = productList[index];
-
+          final basket =
+              myBasketProduct.where((element) => element.pid == product.pid);
           return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -83,7 +88,10 @@ class SearchListLayout extends StatelessWidget {
                         builder: (context) =>
                             ProductDetailsScreen(pid: product.pid)));
               },
-              child: SearchListItem(product: product));
+              child: SearchListItem(
+                product: product,
+                basket: basket.firstOrNull,
+              ));
         } else {
           return isLoadingPage
               ? const CircularProgressIndicator()
@@ -95,12 +103,10 @@ class SearchListLayout extends StatelessWidget {
 }
 
 class SearchListItem extends StatelessWidget {
-  const SearchListItem({
-    super.key,
-    required this.product,
-  });
+  const SearchListItem({super.key, required this.product, this.basket});
 
   final Post product;
+  final Basket? basket;
 
   @override
   Widget build(BuildContext context) {
@@ -147,11 +153,26 @@ class SearchListItem extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        child: const Padding(
-                          padding: EdgeInsets.only(bottom: 4),
+                        onTap: () {
+                          if (basket != null) {
+                            context
+                                .read<BasketProvider>()
+                                .deleteBasket(basket!.bid);
+                          } else {
+                            context
+                                .read<BasketProvider>()
+                                .postBasket(product.pid);
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
                           child: Icon(
-                            Icons.favorite_border_rounded,
-                            color: lightGray,
+                            basket != null
+                                ? Icons.favorite
+                                : Icons.favorite_border_rounded,
+                            color: basket != null
+                                ? WidgetColor.mainColor
+                                : lightGray,
                           ),
                         ),
                       ),

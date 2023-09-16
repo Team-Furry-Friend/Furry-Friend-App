@@ -270,7 +270,8 @@ class ApiRepositories {
 
   Future<List<Basket>> getMyBasketProducts() async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'baskets/member')));
+        _setStreamType<Map<String, dynamic>>(
+            settingOptions('GET', 'baskets/member')));
     final value = responseCheck(_result.data)!
         .map((dynamic i) => Basket.fromJson(i as Map<String, dynamic>))
         .toList();
@@ -279,9 +280,9 @@ class ApiRepositories {
   }
 
   Future<Response> postBasket(options) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response>(
-        settingOptions('POST', 'baskets',
-            data: options)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response>(
+            settingOptions('POST', 'baskets', data: options)));
     return _result;
   }
 

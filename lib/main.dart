@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
+import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/chat_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_) => PostProvider()),
       ChangeNotifierProvider(create: (_) => SearchProvider()),
       ChangeNotifierProvider(create: (_) => ChatProvider()),
+      ChangeNotifierProvider(create: (_) => BasketProvider()),
     ],
     child: const MyApp(),
   ));

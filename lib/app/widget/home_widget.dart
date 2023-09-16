@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/product_details_screen.dart';
+import 'package:furry_friend/domain/model/basket/basket.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
+import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,8 @@ class PopularPostLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final postList =
         context.select((PostProvider provider) => provider.postList);
+    final myBasketProduct = context
+        .select((BasketProvider basketProvider) => basketProvider.myBasket);
 
     return Column(
       children: [
@@ -43,8 +47,14 @@ class PopularPostLayout extends StatelessWidget {
             itemCount: postList.length,
             itemBuilder: (BuildContext context, int index) {
               final post = postList[index];
+              final basket =
+                  myBasketProduct.where((element) => element.pid == post.pid);
+
               return GestureDetector(
-                child: HomeListItem(post: post),
+                child: HomeListItem(
+                  post: post,
+                  basket: basket.firstOrNull,
+                ),
                 onTap: () {
                   Navigator.push(
                       context,
@@ -91,12 +101,10 @@ class RoundBlueButton extends StatelessWidget {
 }
 
 class HomeListItem extends StatelessWidget {
-  const HomeListItem({
-    super.key,
-    required this.post,
-  });
+  const HomeListItem({super.key, required this.post, this.basket});
 
   final Post post;
+  final Basket? basket;
 
   @override
   Widget build(BuildContext context) {
@@ -158,8 +166,17 @@ class HomeListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 GestureDetector(
-                  child: const Icon(
-                    Icons.favorite_border_rounded,
+                  onTap: () {
+                    if (basket != null) {
+                      context.read<BasketProvider>().deleteBasket(basket!.bid);
+                    } else {
+                      context.read<BasketProvider>().postBasket(post.pid);
+                    }
+                  },
+                  child: Icon(
+                    basket != null
+                        ? Icons.favorite
+                        : Icons.favorite_border_rounded,
                     color: lightGray,
                   ),
                 ),

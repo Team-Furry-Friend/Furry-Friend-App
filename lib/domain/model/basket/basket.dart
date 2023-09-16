@@ -15,16 +15,16 @@ class Basket {
 
   Basket(
       {this.bid = 0,
-        this.pid = 0,
-        this.pcategory = '',
-        this.pname = '',
-        this.pexplain = '',
-        this.pprice = 0,
-        this.del = false,
-        this.mid = 0,
-        this.regDate = '',
-        this.modDate = '',
-        this.image});
+      this.pid = 0,
+      this.pcategory = '',
+      this.pname = '',
+      this.pexplain = '',
+      this.pprice = 0,
+      this.del = false,
+      this.mid = 0,
+      this.regDate = '',
+      this.modDate = '',
+      this.image});
 
   Basket.fromJson(Map<String, dynamic> json) {
     bid = json['bid'];

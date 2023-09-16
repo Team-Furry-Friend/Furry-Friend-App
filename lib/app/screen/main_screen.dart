@@ -6,6 +6,7 @@ import 'package:furry_friend/app/screen/seach_screen.dart';
 import 'package:furry_friend/app/screen/setting_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    context.read<BasketProvider>().getMyBasketProducts();
     context.read<UserProvider>().loginUser(
         context,
         PrefsUtils.getString(PrefsUtils.utils.email),
