@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/product_details_screen.dart';
+import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/domain/model/basket/basket.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:furry_friend/domain/providers/basket_provider.dart';
@@ -144,22 +145,7 @@ class HomeListItem extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: 14),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(width: 1, color: WidgetColor.mainColor),
-                  ),
-                  child: Text(
-                    post.pcategory,
-                    style: const TextStyle(
-                      color: Color(0xFF70A3F3),
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
+                SquareTypeLabel(category: post.pcategory),
               ],
             ),
             Column(

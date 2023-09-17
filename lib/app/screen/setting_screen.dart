@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/basket_list_screen.dart';
 import 'package:furry_friend/app/screen/login_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
@@ -23,6 +24,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: WidgetColor.cleanWhite,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,6 +50,37 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ),
                 ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BasketListScreen()));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Icon(
+                            Icons.favorite_border_rounded,
+                            size: 19,
+                            color: WidgetColor.mainBlack,
+                          ),
+                        ),
+                        Text(
+                          '내 찜 목록 보기',
+                          style: TextStyle(
+                            color: WidgetColor.mainBlack,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),

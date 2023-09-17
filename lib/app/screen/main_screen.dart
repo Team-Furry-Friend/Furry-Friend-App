@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    context.read<BasketProvider>().getMyBasketProducts();
+    context.read<BasketProvider>().getMyBaskets();
     context.read<UserProvider>().loginUser(
         context,
         PrefsUtils.getString(PrefsUtils.utils.email),

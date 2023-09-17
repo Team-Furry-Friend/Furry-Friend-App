@@ -23,6 +23,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     final chatList =
         context.select((ChatProvider provider) => provider.chatList);
     return Scaffold(
+      backgroundColor: WidgetColor.cleanWhite,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

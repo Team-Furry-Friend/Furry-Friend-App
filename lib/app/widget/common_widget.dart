@@ -269,3 +269,31 @@ class TypeLabel extends StatelessWidget {
     );
   }
 }
+
+class SquareTypeLabel extends StatelessWidget {
+  const SquareTypeLabel({
+    super.key,
+    required this.category,
+  });
+
+  final String category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 14),
+      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(width: 1, color: WidgetColor.mainColor),
+      ),
+      child: Text(
+        category,
+        style: const TextStyle(
+          color: Color(0xFF70A3F3),
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+}

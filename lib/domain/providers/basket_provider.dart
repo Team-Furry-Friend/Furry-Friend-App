@@ -9,8 +9,8 @@ class BasketProvider extends ChangeNotifier {
   List<Basket> _myBasket = [];
   List<Basket> get myBasket => _myBasket;
 
-  void getMyBasketProducts() {
-    _client.getMyBasketProducts().then((value) {
+  void getMyBaskets() {
+    _client.getBaskets().then((value) {
       _myBasket = value;
       notifyListeners();
     });
@@ -24,7 +24,7 @@ class BasketProvider extends ChangeNotifier {
       }
     };
     _client.postBasket(options).then((value) {
-      getMyBasketProducts();
+      getMyBaskets();
     });
   }
 
