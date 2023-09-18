@@ -3,11 +3,15 @@ import 'package:furry_friend/app/screen/home_screen.dart';
 import 'package:furry_friend/app/screen/main_screen.dart';
 import 'package:furry_friend/domain/model/user/token.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/domain/model/user/user.dart';
 
 import '../api/api.dart';
 
 class UserProvider extends ChangeNotifier {
   final _client = ApiRepositories();
+
+  User _socialUser = User();
+  User get socialUser => _socialUser;
 
   void signUpUser(BuildContext context, String email, String password,
       String name, String address, String phone) {
@@ -29,6 +33,21 @@ class UserProvider extends ChangeNotifier {
         });
         setPrefsUser(context, true, email, password, token: value);
       }
+    });
+  }
+
+  void socialLogin(BuildContext context, String social, String kakaoCode) {
+    _client.socialLogin(social, kakaoCode).then((value) {
+      _socialUser = value;
+      PrefsUtils.setInt(PrefsUtils.utils.userId, _socialUser.mid);
+    });
+  }
+
+  void userInfoPatch(BuildContext context, int mid, String name, String address,
+      String phone) {
+    _client.userInfoPatch(mid, name, address, phone).then((value) {
+      setPrefsUser(context, false, _socialUser.email, _socialUser.mpw,
+          token: value, name: name, address: address, phone: phone);
     });
   }
 

@@ -4,15 +4,16 @@ import 'package:flutter/rendering.dart';
 import 'widget_color.dart';
 
 PreferredSizeWidget DefaultAppBar(BuildContext context,
-    {Widget? title, List<Widget>? actions}) {
+    {Widget? title, List<Widget>? actions, Function()? onTap}) {
   return AppBar(
     elevation: 0,
     title: title,
     backgroundColor: Colors.transparent,
     leading: GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
+      onTap: onTap ??
+          () {
+            Navigator.pop(context);
+          },
       child: const Padding(
         padding: EdgeInsets.only(left: 18),
         child: Icon(

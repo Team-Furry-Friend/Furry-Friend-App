@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/utils.dart';
+import 'package:provider/provider.dart';
 
 import '../../domain/providers/user_provider.dart';
 import '../widget/widget_color.dart';
@@ -7,7 +8,14 @@ import '../widget/common_widget.dart';
 import '../widget/sign_up_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({
+    Key? key,
+    required this.isSocialSign,
+    required this.loginType,
+  }) : super(key: key);
+
+  final bool isSocialSign;
+  final String loginType;
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -29,6 +37,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
+    if (widget.isSocialSign) {
+      String type = widget.loginType;
+      String kakaoCode = '';
+      if (widget.loginType.startsWith('kakao')) {
+        type = widget.loginType.split('|').first;
+        kakaoCode = widget.loginType.split('|').last;
+      }
+      print('type:$type _ kakaoCode:$kakaoCode');
+      userProvider.socialLogin(context, type, kakaoCode);
+    }
     controllerListenerSetting();
     super.initState();
   }
@@ -55,41 +73,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Column(
-                children: [
-                  TextFieldRow(
-                    icon: Icons.alternate_email_rounded,
-                    hintText: "이메일",
-                    controller: emailController,
-                    inputType: TextInputType.emailAddress,
-                  ),
-                  TextFieldRow(
-                    icon: Icons.vpn_key_outlined,
-                    hintText: "비밀번호",
-                    controller: pwController,
-                  ),
-                  TextFieldRow(
-                    icon: Icons.person,
-                    hintText: "별명",
-                    controller: nameController,
-                  ),
-                  const Padding(
+              child: Column(children: [
+                Visibility(
+                    visible: !widget.isSocialSign,
+                    child: Column(children: [
+                      TextFieldRow(
+                        icon: Icons.alternate_email_rounded,
+                        hintText: "이메일",
+                        controller: emailController,
+                        inputType: TextInputType.emailAddress,
+                      ),
+                      TextFieldRow(
+                        icon: Icons.vpn_key_outlined,
+                        hintText: "비밀번호",
+                        controller: pwController,
+                      ),
+                    ])),
+                TextFieldRow(
+                  icon: Icons.person,
+                  hintText: "별명",
+                  controller: nameController,
+                ),
+                Visibility(
+                  visible: !widget.isSocialSign,
+                  child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 24, horizontal: 40),
                     child: Divider(),
                   ),
-                  TextFieldRow(
-                    icon: Icons.map_outlined,
-                    hintText: "주소",
-                    controller: addressController,
-                  ),
-                  TextFieldRow(
-                    icon: Icons.phone_outlined,
-                    hintText: "전화번호",
-                    controller: phoneController,
-                    inputType: TextInputType.phone,
-                  ),
-                ],
-              ),
+                ),
+                TextFieldRow(
+                  icon: Icons.map_outlined,
+                  hintText: "주소",
+                  controller: addressController,
+                ),
+                TextFieldRow(
+                  icon: Icons.phone_outlined,
+                  hintText: "전화번호",
+                  controller: phoneController,
+                  inputType: TextInputType.phone,
+                ),
+              ]),
             ),
             Expanded(
                 child: Column(
@@ -132,12 +155,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   bool completeCheck() {
+    bool notSocialSignCheck =
+        pwController.text.isNotEmpty && emailController.text.isNotEmpty;
+    if (widget.isSocialSign) notSocialSignCheck = true;
+
     return isCheckToS &&
-        pwController.text.isNotEmpty &&
+        notSocialSignCheck &&
         phoneController.text.isNotEmpty &&
         nameController.text.isNotEmpty &&
-        addressController.text.isNotEmpty &&
-        emailController.text.isNotEmpty;
+        addressController.text.isNotEmpty;
   }
 
   void checkBoxOnChanged(bool? isCheck) {
@@ -169,14 +195,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void controllerListenerSetting({bool isDispose = false}) {
     if (isDispose) {
-      emailController.removeListener(textFieldOnChanged);
-      pwController.removeListener(textFieldOnChanged);
+      if (widget.isSocialSign) {
+        emailController.removeListener(textFieldOnChanged);
+        pwController.removeListener(textFieldOnChanged);
+      }
       phoneController.removeListener(textFieldOnChanged);
       nameController.removeListener(textFieldOnChanged);
       addressController.removeListener(textFieldOnChanged);
     } else {
-      emailController.addListener(textFieldOnChanged);
-      pwController.addListener(textFieldOnChanged);
+      if (widget.isSocialSign) {
+        emailController.addListener(textFieldOnChanged);
+        pwController.addListener(textFieldOnChanged);
+      }
       phoneController.addListener(textFieldOnChanged);
       nameController.addListener(textFieldOnChanged);
       addressController.addListener(textFieldOnChanged);
@@ -187,13 +217,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (!completeCheck()) {
       Utils.util.showSnackBar(context, "입력란 및 이용약관 동의를 확인해주세요.");
     } else {
-      if (!util.isValidEmailFormat(emailController.text)) {
-        Utils.util.showSnackBar(context, "이메일 유형을 맞춰주세요.");
-        return;
-      }
+      if (widget.loginType == 'email') {
+        if (!util.isValidEmailFormat(emailController.text)) {
+          Utils.util.showSnackBar(context, "이메일 유형을 맞춰주세요.");
+          return;
+        }
 
-      userProvider.signUpUser(context, emailController.text, pwController.text,
-          nameController.text, addressController.text, phoneController.text);
+        userProvider.signUpUser(
+            context,
+            emailController.text,
+            pwController.text,
+            nameController.text,
+            addressController.text,
+            phoneController.text);
+      } else {
+        final user = context.read<UserProvider>().socialUser;
+        userProvider.signUpUser(context, user.email, user.mpw,
+            nameController.text, addressController.text, phoneController.text);
+      }
     }
   }
 }

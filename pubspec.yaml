@@ -25,6 +25,7 @@ dependencies:
   image_picker:
   intl:
   stomp_dart_client:
+  webview_flutter:
 
 
 dev_dependencies:
