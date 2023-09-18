@@ -3,7 +3,6 @@ import 'package:furry_friend/app/screen/login_email_screen.dart';
 import 'package:furry_friend/app/screen/sign_up_screen.dart';
 import 'package:furry_friend/app/screen/web_view_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
-import 'package:furry_friend/service/login_service.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -22,8 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 120),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 120),
               child: Text(
                 "Furry Friend",
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
@@ -78,8 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginOnTap(String type) {
     if (type == "mail") {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const LoginEmailScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginEmailScreen()));
+      return;
     }
     final redirectUrl = 'https://furry-friend-kappa.vercel.app/oauth2/$type';
     String socialLoginUrl = '';

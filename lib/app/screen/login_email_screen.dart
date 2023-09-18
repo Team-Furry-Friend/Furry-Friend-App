@@ -35,8 +35,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
       appBar: DefaultAppBar(context,
           title: Text(
             "로그인",
-            style: TextStyle(
-                color: WidgetColor.mainBlack, fontWeight: FontWeight.w500),
+            style: TextStyle(color: WidgetColor.mainBlack, fontWeight: FontWeight.w500),
           )),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 25),
@@ -64,8 +63,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
             BottomButton(
               text: "로그인",
               onTap: completeButtonOnTap,
-              backgroundColor:
-                  completeCheck() ? WidgetColor.mainColor : deepGray,
+              backgroundColor: completeCheck() ? WidgetColor.mainColor : deepGray,
             ),
           ],
         ),
@@ -98,8 +96,10 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
       Utils.util.showSnackBar(context, "이메일과 비밀번호를 입력해주세요.");
     } else {
       context.read<UserProvider>().loginUser(
-          context, emailController.text, pwController.text,
-          isLoginScreen: true);
+            context,
+            emailController.text,
+            pwController.text,
+          );
     }
   }
 }

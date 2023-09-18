@@ -31,10 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     context.read<BasketProvider>().getMyBaskets();
-    context.read<UserProvider>().loginUser(
-        context,
-        PrefsUtils.getString(PrefsUtils.utils.email),
-        PrefsUtils.getString(PrefsUtils.utils.password));
+    context.read<UserProvider>().userTokenRefresh();
     screens[0] = HomeScreen(typeOnTap: typeOnTap);
     super.initState();
   }
@@ -68,9 +65,7 @@ class _MainScreenState extends State<MainScreen> {
                     icon: Icon(
                       tabIcon(index),
                       size: 32,
-                      color: index == currentTab
-                          ? WidgetColor.mainColor
-                          : deepGray,
+                      color: index == currentTab ? WidgetColor.mainColor : deepGray,
                     ),
                     label: '')
             ],

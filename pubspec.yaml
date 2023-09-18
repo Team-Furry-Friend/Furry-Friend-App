@@ -14,13 +14,10 @@ dependencies:
 
   cupertino_icons:
   flutter_svg:
-  kakao_flutter_sdk:
   dio:
   json_annotation:
   package_info_plus:
   shared_preferences:
-  flutter_naver_login:
-  google_sign_in:
   provider:
   image_picker:
   intl:

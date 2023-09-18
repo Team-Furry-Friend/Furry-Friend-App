@@ -38,10 +38,7 @@ class _WebViewState extends State<WebViewScreen> {
                 child: Stack(
                   children: [
                     WebViewWidget(controller: _controller),
-                    if (progress < 1.0)
-                      LinearProgressIndicator(value: progress)
-                    else
-                      Container(),
+                    if (progress < 1.0) LinearProgressIndicator(value: progress) else Container(),
                   ],
                 ))));
   }
@@ -59,8 +56,6 @@ class _WebViewState extends State<WebViewScreen> {
   void setWebViewController() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..runJavaScriptReturningResult("document.documentElement.innerText")
-          .then((value) {})
       ..setNavigationDelegate(NavigationDelegate(
         onPageStarted: (url) {},
         onNavigationRequest: (request) {

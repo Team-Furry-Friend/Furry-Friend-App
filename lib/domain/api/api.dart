@@ -40,20 +40,14 @@ class ApiRepositories {
       }
     }
 
-    return Options(
-            method: method,
-            headers: _headers,
-            extra: _extra,
-            receiveTimeout: _dio.options.receiveTimeout)
-        .compose(_dio.options, path,
-            queryParameters: _queryParameters, data: _data)
+    return Options(method: method, headers: _headers, extra: _extra, receiveTimeout: _dio.options.receiveTimeout)
+        .compose(_dio.options, path, queryParameters: _queryParameters, data: _data)
         .copyWith(baseUrl: _dio.options.baseUrl);
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes ||
-            requestOptions.responseType == ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes || requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
         requestOptions.responseType = ResponseType.plain;
       } else {
@@ -74,8 +68,7 @@ class ApiRepositories {
   // 토큰 검증
   Future<VerifyUser> userVerify(header) async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<VerifyUser>(
-            settingOptions('GET', 'gateway/isvalid', headers: header)));
+        _setStreamType<VerifyUser>(settingOptions('GET', 'gateway/isvalid', headers: header)));
     final value = VerifyUser.fromJson(responseCheck(_result.data)!);
     return value;
   }
@@ -90,8 +83,7 @@ class ApiRepositories {
       'phone': phone,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(settingOptions('POST', 'member/join',
-            queryParameters: queryParameters)));
+        _setStreamType<Response>(settingOptions('POST', 'member/join', queryParameters: queryParameters)));
     return _result;
   }
 
@@ -100,9 +92,8 @@ class ApiRepositories {
       'username': username,
       'password': password,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Token>(
-            settingOptions('POST', 'member/login', data: body)));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Token>(settingOptions('POST', 'member/login', data: body)));
     final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
@@ -114,31 +105,28 @@ class ApiRepositories {
         'code': kakaoCode,
       };
     }
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<User>(
-        settingOptions('GET', 'oauth2/$social',
-            queryParameters: queryParameters)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<User>(settingOptions('GET', 'oauth2/$social', queryParameters: queryParameters)));
     final value = User.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
   Future<Token> userInfoPatch(mid, name, address, phone) async {
-    final queryParameters = <String, dynamic>{
+    final options = <String, dynamic>{
       'mid': mid,
       'name': name,
       'address': address,
       'phone': phone,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
-            Token>(
-        settingOptions('PATCH', '/oauth2', queryParameters: queryParameters)));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Token>(settingOptions('PATCH', '/oauth2', data: options)));
     final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
-  Future<Token> userRefreshToken(header) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Token>(
-            settingOptions('POST', 'member/refresh-token', headers: header)));
+  Future<Token> userRefreshToken() async {
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Token>(settingOptions('POST', 'member/refresh-token')));
     final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
@@ -150,24 +138,21 @@ class ApiRepositories {
       'type': type,
       'keyword': keyword,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
-            PagePost>(
-        settingOptions('GET', 'products', queryParameters: queryParameters)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PagePost>(settingOptions('GET', 'products', queryParameters: queryParameters)));
     final value = PagePost.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
   Future<Response> postPost(options) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(
-            settingOptions('POST', 'products', data: options)));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Response>(settingOptions('POST', 'products', data: options)));
     return _result;
   }
 
   Future<Response> putPost(options) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(
-            settingOptions('PATCH', 'products', data: options)));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Response>(settingOptions('PATCH', 'products', data: options)));
     return _result;
   }
 
@@ -175,62 +160,52 @@ class ApiRepositories {
     final queryParameters = <String, dynamic>{
       'pid': pid,
     };
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Post>(
-        settingOptions('GET', 'products/detail',
-            queryParameters: queryParameters)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Post>(settingOptions('GET', 'products/detail', queryParameters: queryParameters)));
     final value = Post.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
   Future<List<Post>> getPopularityPost() async {
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Map<String, dynamic>>(
-            settingOptions('GET', 'products/popularity')));
-    final value = responseCheck(_result.data)!
-        .map((dynamic i) => Post.fromJson(i as Map<String, dynamic>))
-        .toList();
+        _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'products/popularity')));
+    final value = responseCheck(_result.data)!.map((dynamic i) => Post.fromJson(i as Map<String, dynamic>)).toList();
 
     return List<Post>.from(value);
   }
 
   Future<Response> deletePost(pid) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(settingOptions('DELETE', 'products/$pid')));
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response>(settingOptions('DELETE', 'products/$pid')));
     return _result;
   }
 
   // 댓글 API
   Future<List<Review>> getReviews(int pid) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Map<String, dynamic>>(
-            settingOptions('GET', 'reviews/$pid')));
-    final value = responseCheck(_result.data)!
-        .map((dynamic i) => Review.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Map<String, dynamic>>(settingOptions('GET', 'reviews/$pid')));
+    final value = responseCheck(_result.data)!.map((dynamic i) => Review.fromJson(i as Map<String, dynamic>)).toList();
 
     return List<Review>.from(value);
   }
 
   Future<Response> postReview(options) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(
-            settingOptions('POST', 'reviews/', data: options)));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Response>(settingOptions('POST', 'reviews/', data: options)));
     return _result;
   }
 
   Future<Response> deleteReview(int rid) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(settingOptions('DELETE', 'reviews/$rid')));
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response>(settingOptions('DELETE', 'reviews/$rid')));
     return _result;
   }
 
   // 채팅 API
   Future<List<Chat>> getChats() async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'chats')));
-    final value = responseCheck(_result.data)!
-        .map((dynamic i) => Chat.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Map<String, dynamic>>(settingOptions('GET', 'chats')));
+    final value = responseCheck(_result.data)!.map((dynamic i) => Chat.fromJson(i as Map<String, dynamic>)).toList();
 
     return List<Chat>.from(value);
   }
@@ -240,59 +215,50 @@ class ApiRepositories {
       'time': time,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Map<String, dynamic>>(settingOptions(
-            'GET', 'chats/$roomId',
-            queryParameters: queryParameters)));
+        _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'chats/$roomId', queryParameters: queryParameters)));
     final value = ChatMessagePage.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
   Future<ChatParticipants> postChat(options) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ChatParticipants>(
-            settingOptions('POST', 'chats', data: options)));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ChatParticipants>(settingOptions('POST', 'chats', data: options)));
     final value = ChatParticipants.fromJson(responseCheck(_result.data)!);
     return value;
   }
 
   Future<Response> deleteChat(int roomId) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(settingOptions('DELETE', 'chats/$roomId')));
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response>(settingOptions('DELETE', 'chats/$roomId')));
     return _result;
   }
 
   // 찜 목록 API
   Future<List<Basket>> getBaskets() async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Map<String, dynamic>>(settingOptions('GET', 'baskets')));
-    final value = responseCheck(_result.data)!
-        .map((dynamic i) => Basket.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Map<String, dynamic>>(settingOptions('GET', 'baskets')));
+    final value = responseCheck(_result.data)!.map((dynamic i) => Basket.fromJson(i as Map<String, dynamic>)).toList();
 
     return List<Basket>.from(value);
   }
 
   Future<List<Basket>> getMyBasketProducts() async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Map<String, dynamic>>(
-            settingOptions('GET', 'baskets/member')));
-    final value = responseCheck(_result.data)!
-        .map((dynamic i) => Basket.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Map<String, dynamic>>(settingOptions('GET', 'baskets/member')));
+    final value = responseCheck(_result.data)!.map((dynamic i) => Basket.fromJson(i as Map<String, dynamic>)).toList();
 
     return List<Basket>.from(value);
   }
 
   Future<Response> postBasket(options) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(
-            settingOptions('POST', 'baskets', data: options)));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Response>(settingOptions('POST', 'baskets', data: options)));
     return _result;
   }
 
   Future<Response> deleteBasket(int bid) async {
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response>(settingOptions('DELETE', 'baskets/$bid')));
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response>(settingOptions('DELETE', 'baskets/$bid')));
     return _result;
   }
 }
