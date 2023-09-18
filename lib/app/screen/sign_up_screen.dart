@@ -37,16 +37,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
-    if (widget.isSocialSign) {
-      String type = widget.loginType;
-      String kakaoCode = '';
-      if (widget.loginType.startsWith('kakao')) {
-        type = widget.loginType.split('|').first;
-        kakaoCode = widget.loginType.split('|').last;
-      }
-      print('type:$type _ kakaoCode:$kakaoCode');
-      userProvider.socialLogin(context, type, kakaoCode);
-    }
     controllerListenerSetting();
     super.initState();
   }

@@ -22,35 +22,8 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>kakao2b171fd1be0956ce61a994f5d910834e</string>
-			</array>
-		</dict>
-		<dict/>
-        <dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>google</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.924496460871-14rdl5hmpiq3vg9u3ainpkbkkrm6qt6m</string>
-			</array>
-		</dict>
-	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>kakaokompassauth</string>
-		<string>kakaolink</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -74,14 +47,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>naverConsumerKey</key>
-	<string>qv81SiyPKtr7tDVEBsmW</string>
-	<key>naverConsumerSecret</key>
-	<string>kEDueC9v4P</string>
-	<key>naverServiceAppName</key>
-	<string>Furry_friends</string>
-	<key>naverServiceAppUrlScheme</key>
-	<string>naver</string>
     <key>NSCameraUsageDescription</key>
 	<string>이미지 업로드를 위해 카메라 사용을 허용해주세요.</string>
 	<key>NSMicrophoneUsageDescription</key>

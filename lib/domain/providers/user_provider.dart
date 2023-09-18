@@ -37,12 +37,16 @@ class UserProvider extends ChangeNotifier {
     });
   }
 
-  void socialLogin(BuildContext context, String social, String kakaoCode) {
-    _client.socialLogin(social, kakaoCode).then((value) {
-      _socialUser = value;
-      PrefsUtils.setInt(PrefsUtils.utils.userId, _socialUser.mid);
-      notifyListeners();
-    });
+  Future<bool> socialLogin(BuildContext context, String social, String code) async {
+    final result = await _client.socialLogin(social, code);
+    _socialUser = result;
+    notifyListeners();
+    if(result.refreshToken.isNotEmpty){
+      userVerify(result.refreshToken);
+      navigateHome(context);
+      return false;
+    }
+    return true;
   }
 
   void userVerify(String refreshToken) {
@@ -72,10 +76,12 @@ class UserProvider extends ChangeNotifier {
     }
     if (token != null) setTokenPrefs(token);
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainScreen()),
-    );
+    navigateHome(context);
+  }
+
+  void navigateHome(BuildContext context){
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => const MainScreen()), (route) => false);
   }
 
   void setTokenPrefs(Token token) {

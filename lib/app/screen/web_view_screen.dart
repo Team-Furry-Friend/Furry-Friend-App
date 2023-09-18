@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/sign_up_screen.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
+import 'package:furry_friend/app/widget/widget_color.dart';
+import 'package:furry_friend/domain/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewScreen extends StatefulWidget {
@@ -29,6 +32,7 @@ class _WebViewState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: WidgetColor.cleanWhite,
         appBar: DefaultAppBar(context, onTap: () {
           backAction();
         }),
@@ -56,23 +60,14 @@ class _WebViewState extends State<WebViewScreen> {
   void setWebViewController() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setUserAgent(widget.socialType == 'google' ?
+      "Mozilla/5.0 AppleWebKit/535.19 Chrome/56.0.0 Mobile Safari/535.19" : null)
       ..setNavigationDelegate(NavigationDelegate(
         onPageStarted: (url) {},
         onNavigationRequest: (request) {
           final url = request.url;
           if (url.startsWith('https://furry-friend-kappa.vercel.app/oauth2/')) {
-            String socialType = widget.socialType;
-            if (socialType == 'kakao') {
-              socialType = url.substring(url.indexOf('code=') + 5);
-            }
-
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SignUpScreen(
-                          loginType: 'kakao|$socialType',
-                          isSocialSign: true,
-                        )));
+            socialSignUpRoute(url);
             return NavigationDecision.prevent;
           }
           return NavigationDecision.navigate;
@@ -86,5 +81,37 @@ class _WebViewState extends State<WebViewScreen> {
         },
       ))
       ..loadRequest(Uri.parse(widget.siteUrl));
+  }
+
+  void socialSignUpRoute(String url){
+    String socialType = widget.socialType;
+    String code = '';
+    switch (socialType) {
+      case "kakao":
+        {
+          code = url.substring(url.indexOf('code=') + 5);
+          break;
+        }
+      case "naver":
+        {
+          break;
+        }
+      case "google":
+        {
+          code = Uri.decodeComponent(url.substring(url.indexOf('code=') + 5).split('&').first);
+          break;
+        }
+    }
+    context.read<UserProvider>().socialLogin(context, socialType, code).then((isSign){
+      if(isSign){
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SignUpScreen(
+                  loginType: socialType,
+                  isSocialSign: true,
+                )));
+      }
+    });
   }
 }

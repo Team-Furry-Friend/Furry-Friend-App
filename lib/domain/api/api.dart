@@ -98,13 +98,11 @@ class ApiRepositories {
     return value;
   }
 
-  Future<User> socialLogin(social, String kakaoCode) async {
+  Future<User> socialLogin(social, String code) async {
     Map<String, dynamic> queryParameters = {};
-    if (kakaoCode.isNotEmpty) {
-      queryParameters = <String, dynamic>{
-        'code': kakaoCode,
-      };
-    }
+    queryParameters = <String, dynamic>{
+      'code': code,
+    };
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<User>(settingOptions('GET', 'oauth2/$social', queryParameters: queryParameters)));
     final value = User.fromJson(responseCheck(_result.data)!);
