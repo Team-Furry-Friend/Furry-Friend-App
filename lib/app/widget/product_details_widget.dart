@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/product_write_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
+import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/domain/model/post/post.dart';
+import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -154,7 +158,7 @@ class ProductEditItem extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: Icon(iconData),
+              child: Icon(iconData, color: WidgetColor.mainBlack,),
             ),
             Text(
               text,
@@ -192,6 +196,104 @@ class ProductDeleteAlertDialog extends StatelessWidget {
           onPressed: () => deleteTap(),
         ),
       ],
+    );
+  }
+}
+
+class ProductEditModalBody extends StatelessWidget {
+  const ProductEditModalBody({
+    super.key,
+    required this.product,
+  });
+
+  final Post product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      margin: const EdgeInsets.only(top: 8),
+      child: Column(
+        children: [
+          ProductEditItem(
+            text: '수정하기',
+            iconData: Icons.edit,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProductWriteScreen(
+                            post: product,
+                          )));
+            },
+          ),
+          ProductEditItem(
+            text: '삭제하기',
+            iconData: Icons.delete_forever,
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (dialogContext) {
+                    return ProductDeleteAlertDialog(
+                      deleteTap: () {
+                        Navigator.pop(dialogContext);
+                        context
+                            .read<PostProvider>()
+                            .deletePost(
+                            product.pid, context);
+                      },
+                    );
+                  });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProductDetailsAction extends StatelessWidget {
+  const ProductDetailsAction({
+    super.key,
+    required this.product,
+  });
+
+  final Post product;
+
+  @override
+  Widget build(BuildContext context) {
+    final myBasketProduct = context
+        .select((BasketProvider basketProvider) => basketProvider.myBasket);
+    final basket =  myBasketProduct.where((element) => element.pid == product.pid).firstOrNull;
+    final isMyProduct = product.mid == PrefsUtils.getInt(PrefsUtils.utils.userId);
+
+    return InkWell(
+      onTap: () {
+        if(isMyProduct) {
+          showModalBottomSheet(
+              useSafeArea: true,
+              context: context,
+              builder: (_) {
+                return ProductEditModalBody(product: product);
+              });
+        }else{
+          if (basket != null) {
+            context.read<BasketProvider>().deleteBasket(basket!.bid);
+          } else {
+            context.read<BasketProvider>().postBasket(product.pid);
+          }
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        child: Icon(
+          isMyProduct ? Icons.more_vert :
+          (basket != null ? Icons.favorite : Icons.favorite_border_rounded),
+          color: isMyProduct ? WidgetColor.mainBlack :
+          (basket != null ? WidgetColor.mainColor : WidgetColor.mainBlack),
+        ),
+      ),
     );
   }
 }

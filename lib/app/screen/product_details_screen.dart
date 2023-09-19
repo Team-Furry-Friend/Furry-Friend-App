@@ -5,6 +5,9 @@ import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_details_widget.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
+import 'package:furry_friend/domain/model/basket/basket.dart';
+import 'package:furry_friend/domain/model/post/post.dart';
+import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -43,66 +46,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          actions: product.mid == PrefsUtils.getInt(PrefsUtils.utils.userId)
-              ? [
-                  InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                          useSafeArea: true,
-                          context: context,
-                          builder: (_) {
-                            return Container(
-                              height: 200,
-                              margin: const EdgeInsets.only(top: 8),
-                              child: Column(
-                                children: [
-                                  ProductEditItem(
-                                    text: '수정하기',
-                                    iconData: Icons.edit,
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProductWriteScreen(
-                                                    post: product,
-                                                  )));
-                                    },
-                                  ),
-                                  ProductEditItem(
-                                    text: '삭제하기',
-                                    iconData: Icons.delete_forever,
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return ProductDeleteAlertDialog(
-                                              deleteTap: () {
-                                                Navigator.pop(dialogContext);
-                                                context
-                                                    .read<PostProvider>()
-                                                    .deletePost(
-                                                        widget.pid, context);
-                                              },
-                                            );
-                                          });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: Icon(
-                        Icons.more_vert,
-                        color: WidgetColor.mainBlack,
-                      ),
-                    ),
-                  )
-                ]
-              : null),
+          actions: [
+                  ProductDetailsAction(product: product,)
+                ]),
       body: SingleChildScrollView(
         child: Column(
           children: [
