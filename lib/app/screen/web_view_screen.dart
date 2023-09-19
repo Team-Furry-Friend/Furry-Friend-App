@@ -32,7 +32,7 @@ class _WebViewState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: WidgetColor.cleanWhite,
+        backgroundColor: WidgetColor.cleanWhite,
         appBar: DefaultAppBar(context, onTap: () {
           backAction();
         }),
@@ -60,8 +60,9 @@ class _WebViewState extends State<WebViewScreen> {
   void setWebViewController() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setUserAgent(widget.socialType == 'google' ?
-      "Mozilla/5.0 AppleWebKit/535.19 Chrome/56.0.0 Mobile Safari/535.19" : null)
+      ..setUserAgent(
+          widget.socialType == 'google' ?
+          "Mozilla/5.0 AppleWebKit/535.19 Chrome/56.0.0 Mobile Safari/535.19" : null)
       ..setNavigationDelegate(NavigationDelegate(
         onPageStarted: (url) {},
         onNavigationRequest: (request) {
@@ -83,7 +84,7 @@ class _WebViewState extends State<WebViewScreen> {
       ..loadRequest(Uri.parse(widget.siteUrl));
   }
 
-  void socialSignUpRoute(String url){
+  void socialSignUpRoute(String url) {
     String socialType = widget.socialType;
     String code = '';
     switch (socialType) {
@@ -93,24 +94,21 @@ class _WebViewState extends State<WebViewScreen> {
           break;
         }
       case "naver":
-        {
-          break;
-        }
       case "google":
         {
           code = Uri.decodeComponent(url.substring(url.indexOf('code=') + 5).split('&').first);
           break;
         }
     }
-    context.read<UserProvider>().socialLogin(context, socialType, code).then((isSign){
-      if(isSign){
+    context.read<UserProvider>().socialLogin(context, socialType, code).then((isSign) {
+      if (isSign) {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => SignUpScreen(
-                  loginType: socialType,
-                  isSocialSign: true,
-                )));
+                      loginType: socialType,
+                      isSocialSign: true,
+                    )));
       }
     });
   }

@@ -41,7 +41,13 @@ class UserProvider extends ChangeNotifier {
     final result = await _client.socialLogin(social, code);
     _socialUser = result;
     notifyListeners();
+
     if(result.refreshToken.isNotEmpty){
+      _client.setClientRefreshToken(result.refreshToken);
+      setTokenPrefs(Token(
+        refreshToken: result.refreshToken,
+        accessToken: result.accessToken
+      ));
       userVerify(result.refreshToken);
       navigateHome(context);
       return false;
@@ -58,6 +64,7 @@ class UserProvider extends ChangeNotifier {
 
   void userInfoPatch(BuildContext context, String name, String address, String phone) {
     _client.userInfoPatch(_socialUser.mid, name, address, phone).then((value) {
+      _client.setClientRefreshToken(value.refreshToken);
       setPrefsUser(context, false, _socialUser.email, _socialUser.mpw,
           token: value, name: name, address: address, phone: phone);
     });
