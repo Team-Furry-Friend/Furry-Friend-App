@@ -117,7 +117,7 @@ class ApiRepositories {
       'phone': phone,
     };
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<Token>(settingOptions('PATCH', '/oauth2', data: options)));
+        .fetch<Map<String, dynamic>>(_setStreamType<Token>(settingOptions('PATCH', 'oauth2', data: options)));
     final value = Token.fromJson(responseCheck(_result.data)!);
     return value;
   }
