@@ -10,9 +10,11 @@ class SearchProvider extends ChangeNotifier {
   int page = 1;
   bool hasNextPage = true;
   bool isLoadingPage = false;
+  bool startSearch = false;
 
   void getPostKeyWord(String type, String keyword, String sortType,
       {int? page}) {
+    if (!startSearch) startSearch = true;
     int newPage = page ?? this.page;
     _client.getPosts(newPage, 20, type, keyword).then((value) {
       if (newPage == 1) {
@@ -37,7 +39,6 @@ class SearchProvider extends ChangeNotifier {
       case '최신순':
         productList.sort((b, a) => a.regDate.compareTo(b.regDate));
         break;
-      // case '선호순': productList.sort((b,a) => a.pprice.compareTo(b.pprice)); break;
     }
     _notify();
   }

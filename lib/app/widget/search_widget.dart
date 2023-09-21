@@ -67,38 +67,47 @@ class SearchListLayout extends StatelessWidget {
         context.select((SearchProvider provider) => provider.productList);
     final isLoadingPage =
         context.select((SearchProvider provider) => provider.isLoadingPage);
+    final startSearch =
+        context.select((SearchProvider provider) => provider.startSearch);
     final myBasketProduct = context
         .select((BasketProvider basketProvider) => basketProvider.myBasket);
 
-    return ListView.builder(
-      controller: scrollController,
-      shrinkWrap: true,
-      padding: EdgeInsets.zero,
-      itemCount: productList.length + 1,
-      itemBuilder: (context, index) {
-        if (index < productList.length) {
-          final product = productList[index];
-          final basket =
-              myBasketProduct.where((element) => element.pid == product.pid);
-          return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetailsScreen(pid: product.pid)));
-              },
-              child: SearchListItem(
-                product: product,
-                basket: basket.firstOrNull,
-              ));
-        } else {
-          return isLoadingPage
-              ? const CircularProgressIndicator()
-              : const SizedBox();
-        }
-      },
-    );
+    return startSearch && productList.isNotEmpty
+        ? ListView.builder(
+            controller: scrollController,
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            itemCount: productList.length + 1,
+            itemBuilder: (context, index) {
+              if (index < productList.length) {
+                final product = productList[index];
+                final basket = myBasketProduct
+                    .where((element) => element.pid == product.pid);
+                return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductDetailsScreen(pid: product.pid)));
+                    },
+                    child: SearchListItem(
+                      product: product,
+                      basket: basket.firstOrNull,
+                    ));
+              } else {
+                return isLoadingPage
+                    ? const CircularProgressIndicator()
+                    : const SizedBox();
+              }
+            },
+          )
+        : Center(
+            child: Text(
+              startSearch ? "검색 결과가 비어있습니다." : "검색어를 입력해주세요.",
+              style: const TextStyle(color: deepGray),
+            ),
+          );
   }
 }
 

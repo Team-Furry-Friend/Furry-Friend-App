@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
+import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/domain/providers/search_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -64,6 +65,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         searchProvider.getPostKeyWord(
                             widget.selectLabel, _textController.text, sortType,
                             page: 1);
+                      } else {
+                        Utils.util.showSnackBar(context, '검색어를 입력해 주세요.');
                       }
                     },
                   ),
@@ -112,8 +115,10 @@ class _SearchScreenState extends State<SearchScreen> {
             height: 1,
             color: Colors.black45,
           ),
-          SearchListLayout(
-            scrollController: _scrollController,
+          Expanded(
+            child: SearchListLayout(
+              scrollController: _scrollController,
+            ),
           )
         ],
       ),
@@ -136,7 +141,11 @@ class _SearchScreenState extends State<SearchScreen> {
       setState(() {
         searchProvider.isLoadingPage = true;
       });
-      searchProvider.getPostKeyWord('사료', '', sortType);
+      searchProvider.getPostKeyWord(
+        widget.selectLabel,
+        _textController.text,
+        sortType,
+      );
     }
   }
 }
