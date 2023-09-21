@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/domain/api/private_values.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Utils {
   static final Utils util = Utils();
 
   Future<void> serviceSetting() async {
     await PrefsUtils.init();
+    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
   }
 
   bool isLogin() {
@@ -21,7 +24,9 @@ class Utils {
   }
 
   bool isValidEmailFormat(String text) {
-    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(text);
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(text);
   }
 
   String formatDate(DateTime date) {

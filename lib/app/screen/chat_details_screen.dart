@@ -5,6 +5,7 @@ import 'package:furry_friend/app/widget/chat_widget.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/domain/api/private_values.dart';
 import 'package:furry_friend/domain/model/chat/chat_message.dart';
 import 'package:furry_friend/domain/providers/chat_provider.dart';
 import 'package:provider/provider.dart';
@@ -144,24 +145,24 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
   }
 
   void sokectEventSetting() {
-    if (stompClient == null) {
-      stompClient = StompClient(
-          config: StompConfig.sockJS(
-        url: 'http://howstheairtoday.site/chats/furry',
-        onConnect: onConnect,
-        webSocketConnectHeaders: {
-          'Upgrade': 'websocket',
-          'Connection': 'Upgrade',
-          'transports': ['websocket'],
-        },
-        stompConnectHeaders: {
-          'Authorization': PrefsUtils.getString(PrefsUtils.utils.refreshToken),
-        },
-        onWebSocketError: (dynamic error) {
-          print('onWebSocketError ${error.toString()}');
-        },
-      ));
-      stompClient!.activate();
-    }
+    stompClient ??= StompClient(
+        config: StompConfig.sockJS(
+            url: '${baseUrl}chats/furry',
+            onConnect: onConnect,
+            webSocketConnectHeaders: {
+              'Upgrade': 'websocket',
+              'Connection': 'Upgrade',
+              'transports': ['websocket'],
+            },
+            stompConnectHeaders: {
+              'Authorization':
+                  PrefsUtils.getString(PrefsUtils.utils.refreshToken),
+            },
+            onWebSocketError: (dynamic error) {
+              print('onWebSocketError ${error.toString()}');
+            },
+            beforeConnect: () async {
+              stompClient!.activate();
+            }));
   }
 }

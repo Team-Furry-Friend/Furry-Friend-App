@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/domain/api/private_values.dart';
 
 class UserClient {
   Dio dio = Dio();
 
   UserClient() {
     BaseOptions _options = BaseOptions(
-      baseUrl: 'https://howstheairtoday.site/',
+      baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       sendTimeout: const Duration(seconds: 10),

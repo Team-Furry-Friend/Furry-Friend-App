@@ -23,6 +23,7 @@ dependencies:
   intl:
   stomp_dart_client:
   webview_flutter:
+  supabase_flutter:
 
 
 dev_dependencies:

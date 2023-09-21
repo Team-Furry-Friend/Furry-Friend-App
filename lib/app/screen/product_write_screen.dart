@@ -65,11 +65,12 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: () => getImageOnTap(),
-                      child: imageList.isEmpty
-                          ? Container(
-                              height: 280,
+                    Visibility(
+                      visible: imageList.length < 4,
+                      child: GestureDetector(
+                          onTap: () => getImageOnTap(),
+                          child: Container(
+                              height: imageList.isEmpty ? 280 : 140,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: const Color(0xFFE1E1E1),
@@ -91,39 +92,67 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
                                     ),
                                   )
                                 ],
-                              ))
-                          : Container(
-                              width: double.infinity,
-                              height: 280,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16)),
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: imageList.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    final image = imageList[index];
-                                    return Stack(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 8),
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                              child: Image.asset(
-                                                image.path,
-                                                fit: BoxFit.cover,
-                                              )),
-                                        ),
-                                      ],
-                                    );
-                                  }),
+                              ))),
+                    ),
+                    Visibility(
+                      visible: imageList.isNotEmpty,
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16)),
+                        child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
                             ),
+                            itemCount: imageList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final image = imageList[index];
+                              return Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(16),
+                                        child: Image.asset(
+                                          image.path,
+                                          fit: BoxFit.cover,
+                                        )),
+                                  ),
+                                  Positioned(
+                                    right: 10,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          imageList.remove(image);
+                                        });
+                                      },
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            color: Colors.black54,
+                                            shape: BoxShape.circle),
+                                        padding: const EdgeInsets.all(2),
+                                        margin: const EdgeInsets.all(8),
+                                        child: const Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }),
+                      ),
                     ),
                     Container(
                       width: double.infinity,
-                      margin: const EdgeInsets.only(top: 25),
+                      margin:
+                          EdgeInsets.only(top: imageList.isNotEmpty ? 0 : 25),
                       padding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 24),
                       decoration: BoxDecoration(
@@ -190,6 +219,7 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
                               child: GrayTextFieldLayout(
                                 marginValue: 0,
                                 maxLines: 6,
+                                maxLength: 300,
                                 textController: _descriptionController,
                                 hintText: '상품에 관한 설명을 적어주세요',
                               ),
@@ -226,13 +256,13 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
         pexplain: _descriptionController.text,
         pname: _productNameController.text,
         pprice: int.parse(_priceController.text),
-        imageDTOList: imageList,
+        imageDTOList: [],
       );
 
       if (widget.post != null) {
         context.read<PostProvider>().putPost(context, product);
       } else {
-        context.read<PostProvider>().postProduct(context, product.toJson());
+        context.read<PostProvider>().postImages(context, imageList, product);
       }
     } else {
       Utils.util.showSnackBar(context, '모든 정보를 입력해주세요.');

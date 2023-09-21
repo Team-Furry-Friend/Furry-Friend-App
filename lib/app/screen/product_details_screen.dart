@@ -47,8 +47,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ),
           ),
           actions: [
-                  ProductDetailsAction(product: product,)
-                ]),
+            ProductDetailsAction(
+              product: product,
+            )
+          ]),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/domain/model/post/product.dart';
+import 'package:furry_friend/domain/model/post/product_image.dart';
 import 'package:furry_friend/domain/model/post/review.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../model/post/post.dart';
 import '../api/api.dart';
 
@@ -112,5 +116,28 @@ class PostProvider extends ChangeNotifier {
     _client.postReview(data).then((value) {
       notifyListeners();
     });
+  }
+
+  Future<void> postImages(BuildContext context, List<ProductImage> imageList,
+      Product product) async {
+    final file = File(imageList.first.path);
+    DateTime dateTimeLastModified = await file.lastModified();
+    final response = await Supabase.instance.client.storage.from('products').upload(
+        '${PrefsUtils.getInt(PrefsUtils.utils.userId)}/${dateTimeLastModified.millisecondsSinceEpoch}-${DateTime.now().millisecondsSinceEpoch}',
+        file);
+
+    final publicUrls = Supabase.instance.client.storage
+        .from('products')
+        .getPublicUrl(response.toString().replaceAll('products/', ''));
+
+    product.imageDTOList
+        ?.add(ProductImage(imgName: publicUrls, path: publicUrls));
+
+    imageList.removeAt(0);
+    if (imageList.isNotEmpty) {
+      postImages(context, imageList, product);
+    } else {
+      postProduct(context, product.toJson());
+    }
   }
 }

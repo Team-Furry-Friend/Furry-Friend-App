@@ -157,20 +157,21 @@ class TextFieldRow extends StatelessWidget {
 }
 
 class GrayTextFieldLayout extends StatelessWidget {
-  const GrayTextFieldLayout({
-    super.key,
-    required this.textController,
-    required this.hintText,
-    this.marginValue = 24,
-    this.maxLines = 1,
-    this.verticalPadding = 14,
-  });
+  const GrayTextFieldLayout(
+      {super.key,
+      required this.textController,
+      required this.hintText,
+      this.marginValue = 24,
+      this.maxLines = 1,
+      this.verticalPadding = 14,
+      this.maxLength});
 
   final TextEditingController textController;
   final String hintText;
   final double marginValue;
   final double verticalPadding;
   final int maxLines;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +184,7 @@ class GrayTextFieldLayout extends StatelessWidget {
       child: TextField(
           controller: textController,
           maxLines: maxLines,
+          maxLength: maxLength,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
