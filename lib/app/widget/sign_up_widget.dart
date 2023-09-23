@@ -34,13 +34,18 @@ class BottomSheetLayout extends StatelessWidget {
               ),
             ),
           ),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: SingleChildScrollView(
+                    child: Text(noticeText),
+                  )),
+            ),
+          ),
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: SingleChildScrollView(
-                child: Text(noticeText),
-              )),
-          Padding(
-            padding: const EdgeInsets.only(top: 12),
+            padding: const EdgeInsets.only(top: 12, bottom: 12),
             child: BottomButton(
                 onTap: () => onTap(),
                 text: "확인",

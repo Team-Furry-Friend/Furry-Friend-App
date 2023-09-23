@@ -32,11 +32,9 @@ class BasketListLayout extends StatelessWidget {
                       builder: (context) =>
                           ProductDetailsScreen(pid: basket.pid)));
             },
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: BasketListItem(
-                  basket: basket,
-                )));
+            child: BasketListItem(
+              basket: basket,
+            ));
       },
     );
   }
@@ -49,80 +47,88 @@ class BasketListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 82,
-            height: 82,
-            margin: const EdgeInsets.only(right: 18),
-            decoration: ShapeDecoration(
-              image: basket.image != null && basket.image!.path.isNotEmpty
-                  ? DecorationImage(
-                      image: NetworkImage(basket.image!.path),
-                      fit: BoxFit.cover)
-                  : null,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 84,
+                height: 84,
+                margin: const EdgeInsets.only(right: 18),
+                decoration: BoxDecoration(
+                  image: basket.image != null && basket.image!.path.isNotEmpty
+                      ? DecorationImage(
+                          image: NetworkImage(basket.image!.path),
+                          fit: BoxFit.cover)
+                      : null,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(width: 1, color: lightGray),
+                ),
               ),
-            ),
-          ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
+              Expanded(
+                child: Container(
+                  constraints: const BoxConstraints(minHeight: 84),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Text(
-                          basket.pname,
-                          style: const TextStyle(fontSize: 17),
-                        ),
+                      Text(
+                        basket.pname,
+                        style: const TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w500),
                       ),
-                      SquareTypeLabel(
-                        category: basket.pcategory,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SquareTypeLabel(
+                                category: basket.pcategory,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 6),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context
+                                        .read<BasketProvider>()
+                                        .deleteBasket(basket!.bid);
+                                  },
+                                  child: Icon(
+                                    Icons.favorite,
+                                    color: WidgetColor.mainColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: Text(
+                              '${NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0).format(basket.pprice)}원',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: WidgetColor.mainBlack,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 6),
-                      child: GestureDetector(
-                        onTap: () {
-                          context
-                              .read<BasketProvider>()
-                              .deleteBasket(basket!.bid);
-                        },
-                        child: Icon(
-                          Icons.favorite,
-                          color: WidgetColor.mainColor,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      '${NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0).format(basket.pprice)}원',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: WidgetColor.mainBlack,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
+        ),
+        Divider()
+      ],
     );
   }
 }

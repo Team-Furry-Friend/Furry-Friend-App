@@ -3,6 +3,7 @@ import 'package:furry_friend/app/screen/product_write_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
+import 'package:furry_friend/domain/model/post/product_image.dart';
 import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
@@ -158,7 +159,10 @@ class ProductEditItem extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: Icon(iconData, color: WidgetColor.mainBlack,),
+              child: Icon(
+                iconData,
+                color: WidgetColor.mainBlack,
+              ),
             ),
             Text(
               text,
@@ -222,8 +226,7 @@ class ProductEditModalBody extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          ProductWriteScreen(
+                      builder: (context) => ProductWriteScreen(
                             post: product,
                           )));
             },
@@ -240,8 +243,7 @@ class ProductEditModalBody extends StatelessWidget {
                         Navigator.pop(dialogContext);
                         context
                             .read<PostProvider>()
-                            .deletePost(
-                            product.pid, context);
+                            .deletePost(product.pid, context);
                       },
                     );
                   });
@@ -265,19 +267,22 @@ class ProductDetailsAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final myBasketProduct = context
         .select((BasketProvider basketProvider) => basketProvider.myBasket);
-    final basket =  myBasketProduct.where((element) => element.pid == product.pid).firstOrNull;
-    final isMyProduct = product.mid == PrefsUtils.getInt(PrefsUtils.utils.userId);
+    final basket = myBasketProduct
+        .where((element) => element.pid == product.pid)
+        .firstOrNull;
+    final isMyProduct =
+        product.mid == PrefsUtils.getInt(PrefsUtils.utils.userId);
 
     return InkWell(
       onTap: () {
-        if(isMyProduct) {
+        if (isMyProduct) {
           showModalBottomSheet(
               useSafeArea: true,
               context: context,
               builder: (_) {
                 return ProductEditModalBody(product: product);
               });
-        }else{
+        } else {
           if (basket != null) {
             context.read<BasketProvider>().deleteBasket(basket!.bid);
           } else {
@@ -288,10 +293,16 @@ class ProductDetailsAction extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Icon(
-          isMyProduct ? Icons.more_vert :
-          (basket != null ? Icons.favorite : Icons.favorite_border_rounded),
-          color: isMyProduct ? WidgetColor.mainBlack :
-          (basket != null ? WidgetColor.mainColor : WidgetColor.mainBlack),
+          isMyProduct
+              ? Icons.more_vert
+              : (basket != null
+                  ? Icons.favorite
+                  : Icons.favorite_border_rounded),
+          color: isMyProduct
+              ? WidgetColor.mainBlack
+              : (basket != null
+                  ? WidgetColor.mainColor
+                  : WidgetColor.mainBlack),
         ),
       ),
     );

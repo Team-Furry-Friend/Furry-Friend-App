@@ -96,57 +96,14 @@ class _ProductWriteScreenState extends State<ProductWriteScreen> {
                     ),
                     Visibility(
                       visible: imageList.isNotEmpty,
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16)),
-                        child: GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                            ),
-                            itemCount: imageList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final image = imageList[index];
-                              return Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(16),
-                                        child: Image.asset(
-                                          image.path,
-                                          fit: BoxFit.cover,
-                                        )),
-                                  ),
-                                  Positioned(
-                                    right: 10,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          imageList.remove(image);
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            color: Colors.black54,
-                                            shape: BoxShape.circle),
-                                        padding: const EdgeInsets.all(2),
-                                        margin: const EdgeInsets.all(8),
-                                        child: const Icon(
-                                          Icons.close,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
+                      child: ImageGridView(
+                        imageList: imageList,
+                        onTap: (image) {
+                          setState(() {
+                            imageList.remove(image);
+                          });
+                        },
+                        isWriteScreen: widget.post == null,
                       ),
                     ),
                     Container(

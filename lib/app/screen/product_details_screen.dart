@@ -23,6 +23,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final _reviewTextController = TextEditingController();
+  int selectImageIndex = 0;
 
   @override
   void initState() {
@@ -55,31 +56,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         child: Column(
           children: [
             ProductInfoFrame(children: [
-              Container(
-                constraints: const BoxConstraints(minHeight: 180),
-                margin: const EdgeInsets.only(bottom: 33),
-                child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: product.imageDTOList.length,
-                    itemBuilder: (_, index) {
-                      final image = product.imageDTOList[index];
-                      return ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: Image.network(image.path, fit: BoxFit.cover,
-                              loadingBuilder: (
-                            _,
-                            child,
-                            loadingProgress,
-                          ) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }));
-                    }),
+              SizedBox(
+                  width: double.infinity,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: NetWorkImage(
+                        image: product.imageDTOList.elementAt(selectImageIndex),
+                      ))),
+              ImageGridView(
+                imageList: product.imageDTOList,
+                onTap: (image) {
+                  setState(() {
+                    selectImageIndex = product.imageDTOList.indexOf(image);
+                  });
+                },
               ),
               Row(
                 children: [

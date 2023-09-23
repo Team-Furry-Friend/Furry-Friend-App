@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:furry_friend/domain/model/post/product_image.dart';
 
 import 'widget_color.dart';
 
@@ -298,5 +299,122 @@ class SquareTypeLabel extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ImageGridView extends StatelessWidget {
+  const ImageGridView(
+      {super.key,
+      required this.imageList,
+      required this.onTap,
+      this.isWriteScreen = false});
+
+  final List<ProductImage> imageList;
+  final Function(ProductImage) onTap;
+  final bool isWriteScreen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 20),
+      width: double.infinity,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+      child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+          ),
+          itemCount: imageList.length,
+          itemBuilder: (BuildContext context, int index) {
+            final image = imageList[index];
+            return ProductGridItem(
+              image: image,
+              onTap: onTap,
+              isWriteScreen: isWriteScreen,
+            );
+          }),
+    );
+  }
+}
+
+class ProductGridItem extends StatelessWidget {
+  const ProductGridItem(
+      {super.key,
+      required this.image,
+      required this.onTap,
+      this.isWriteScreen = false});
+
+  final ProductImage image;
+  final Function(ProductImage) onTap;
+  final bool isWriteScreen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () {
+            if (!isWriteScreen) onTap(image);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: isWriteScreen
+                    ? Image.asset(
+                        image.path,
+                        fit: BoxFit.cover,
+                      )
+                    : NetWorkImage(image: image)),
+          ),
+        ),
+        Visibility(
+          visible: isWriteScreen,
+          child: Positioned(
+            right: 10,
+            child: GestureDetector(
+              onTap: () => onTap(image),
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.black54, shape: BoxShape.circle),
+                padding: const EdgeInsets.all(2),
+                margin: const EdgeInsets.all(8),
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class NetWorkImage extends StatelessWidget {
+  const NetWorkImage({
+    super.key,
+    required this.image,
+  });
+
+  final ProductImage image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(image.path, fit: BoxFit.cover, loadingBuilder: (
+      _,
+      child,
+      loadingProgress,
+    ) {
+      if (loadingProgress == null) {
+        return child;
+      }
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    });
   }
 }
