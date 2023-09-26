@@ -19,14 +19,14 @@ class ChatMessage {
       this.modDate = ''});
 
   ChatMessage.fromJson(Map<String, dynamic> json) {
-    chatMessageId = json['chatMessageId'];
-    chatMessageSenderId = json['chatMessageSenderId'];
-    chatMessageSerderName = json['chatMessageSerderName'];
-    chatMessageContent = json['chatMessageContent'];
-    chatMessageRead = json['chatMessageRead'];
-    chatMessageDel = json['chatMessageDel'];
+    chatMessageId = json['chatMessageId'] ?? 0;
+    chatMessageSenderId = json['chatMessageSenderId'] ?? 0;
+    chatMessageSerderName = json['chatMessageSerderName'] ?? '';
+    chatMessageContent = json['chatMessageContent'] ?? '';
+    chatMessageRead = json['chatMessageRead'] ?? false;
+    chatMessageDel = json['chatMessageDel'] ?? false;
     regDate = json['regDate'] ?? '';
-    modDate = json['modDate'] ?? '';
+    modDate = json['modDate'] ?? DateTime.now().toString();
   }
 
   Map<String, dynamic> toJson() {

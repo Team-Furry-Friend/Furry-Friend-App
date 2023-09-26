@@ -5,6 +5,7 @@ import 'package:furry_friend/app/widget/chat_widget.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/domain/api/private_values.dart';
 import 'package:furry_friend/domain/model/chat/chat_message.dart';
 import 'package:furry_friend/domain/providers/chat_provider.dart';
@@ -49,8 +50,9 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final chatMessage =
-        context.select((ChatProvider provider) => provider.chatMessagePage);
+    final chatMessage = context
+        .select((ChatProvider provider) => provider.chatMessagePage.dtoList);
+
     return Scaffold(
         appBar: DefaultAppBar(context,
             title: Text(
@@ -65,9 +67,9 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                   controller: _scrollController,
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: chatMessage.dtoList.length,
+                  itemCount: chatMessage.length,
                   itemBuilder: (context, index) {
-                    final message = chatMessage.dtoList[index];
+                    final message = chatMessage[index];
                     final isMyMessage = userId == message.chatMessageSenderId;
                     return ChatMessageItem(
                         isMyMessage: isMyMessage, message: message);
@@ -93,7 +95,13 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => sendMessage(),
+                        onTap: () {
+                          if (_messageTextController.text.isNotEmpty) {
+                            sendMessage();
+                          } else {
+                            Utils.util.showSnackBar(context, '메세지를 적어주세요.');
+                          }
+                        },
                         child: Container(
                           margin: const EdgeInsets.only(right: 24),
                           padding: const EdgeInsets.all(14),
@@ -123,46 +131,39 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     );
     stompClient!.subscribe(
         destination: '/sub/chats/${widget.roomId}',
+        headers: {
+          'Authorization': PrefsUtils.getString(PrefsUtils.utils.refreshToken),
+        },
         callback: (StompFrame frame) =>
             context.read<ChatProvider>().getNewMessage(frame));
   }
 
   void sendMessage() {
-    setState(() {
-      stompClient!.send(
-          destination: '/pub/chats/${widget.roomId}',
-          body: json.encode({
-            "content": _messageTextController.text,
-          }));
-      context.read<ChatProvider>().getNewMessage(
-          StompFrame(command: 'sendMessage'),
-          message: ChatMessage(
-              chatMessageSenderId: userId,
-              chatMessageContent: _messageTextController.text,
-              modDate: DateTime.now().toString()));
-      _messageTextController.clear();
-    });
+    stompClient!.send(
+        destination: '/pub/chats/${widget.roomId}',
+        headers: {
+          'Authorization': PrefsUtils.getString(PrefsUtils.utils.refreshToken),
+        },
+        body: json.encode({
+          "content": _messageTextController.text,
+        }));
+    _messageTextController.clear();
   }
 
   void sokectEventSetting() {
-    stompClient ??= StompClient(
+    stompClient = StompClient(
         config: StompConfig.sockJS(
-            url: '${baseUrl}chats/furry',
-            onConnect: onConnect,
-            webSocketConnectHeaders: {
-              'Upgrade': 'websocket',
-              'Connection': 'Upgrade',
-              'transports': ['websocket'],
-            },
-            stompConnectHeaders: {
-              'Authorization':
-                  PrefsUtils.getString(PrefsUtils.utils.refreshToken),
-            },
-            onWebSocketError: (dynamic error) {
-              print('onWebSocketError ${error.toString()}');
-            },
-            beforeConnect: () async {
-              stompClient!.activate();
-            }));
+      url: '${baseUrl}chats/furry',
+      onConnect: onConnect,
+      webSocketConnectHeaders: {
+        'Upgrade': 'websocket',
+        'Connection': 'Upgrade',
+        'transports': ['websocket'],
+      },
+      stompConnectHeaders: {
+        'Authorization': PrefsUtils.getString(PrefsUtils.utils.refreshToken),
+      },
+    ));
+    stompClient!.activate();
   }
 }

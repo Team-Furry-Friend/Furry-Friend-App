@@ -18,7 +18,7 @@ class Chat {
     chatParticipantsResponseDTO = json['chatParticipantsResponseDTO'] != null
         ? ChatParticipants.fromJson(json['chatParticipantsResponseDTO'])
         : null;
-    notReadCount = json['notReadCount'];
+    notReadCount = json['notReadCount'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

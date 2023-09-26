@@ -36,7 +36,9 @@ class ChatProvider extends ChangeNotifier {
   void getNewMessage(StompFrame frame, {ChatMessage? message}) {
     if (frame.body != null) {
       Map<String, dynamic> obj = json.decode(frame.body!);
-      message = ChatMessage.fromJson(obj);
+      if (obj["statusCode"] / 100 == 2) {
+        message = ChatMessage.fromJson(obj["data"]);
+      }
     }
 
     message ??= ChatMessage();
