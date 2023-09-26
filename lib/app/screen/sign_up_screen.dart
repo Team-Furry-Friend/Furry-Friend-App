@@ -54,7 +54,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: DefaultAppBar(context,
           title: Text(
             "회원가입",
-            style: TextStyle(color: WidgetColor.mainBlack, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                color: WidgetColor.mainBlack, fontWeight: FontWeight.w500),
           )),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 25),
@@ -114,15 +115,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Checkbox(
                         value: isCheckToS,
                         onChanged: checkBoxOnChanged,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.3)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.3)),
                         side: MaterialStateBorderSide.resolveWith(
-                          (states) => const BorderSide(width: 1.0, color: Color(0xffB9B9B9)),
+                          (states) => const BorderSide(
+                              width: 1.0, color: Color(0xffB9B9B9)),
                         ),
                         activeColor: WidgetColor.mainColor,
                       ),
                       Text(
                         "이용약관 및 개인정보 처리방침에 동의합니다.",
-                        style: TextStyle(fontSize: 16, color: WidgetColor.mainBlack),
+                        style: TextStyle(
+                            fontSize: 16, color: WidgetColor.mainBlack),
                       )
                     ],
                   ),
@@ -130,7 +134,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 BottomButtonLayout(
                     onTap: completeButtonOnTap,
                     text: "다음",
-                    backgroundColor: completeCheck() ? WidgetColor.mainColor : deepGray),
+                    backgroundColor:
+                        completeCheck() ? WidgetColor.mainColor : deepGray),
               ],
             )),
           ],
@@ -140,7 +145,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   bool completeCheck() {
-    bool notSocialSignCheck = pwController.text.isNotEmpty && emailController.text.isNotEmpty;
+    bool notSocialSignCheck =
+        pwController.text.isNotEmpty && emailController.text.isNotEmpty;
     if (widget.isSocialSign) notSocialSignCheck = true;
 
     return isCheckToS &&
@@ -207,10 +213,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return;
         }
 
-        userProvider.signUpUser(context, emailController.text, pwController.text, nameController.text,
-            addressController.text, phoneController.text);
+        userProvider.signUpUser(
+            context,
+            emailController.text,
+            pwController.text,
+            nameController.text,
+            addressController.text,
+            phoneController.text);
       } else {
-        userProvider.userInfoPatch(context, nameController.text, addressController.text, phoneController.text);
+        userProvider.userInfoPatch(context, nameController.text,
+            addressController.text, phoneController.text);
       }
     }
   }

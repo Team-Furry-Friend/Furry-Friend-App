@@ -42,7 +42,10 @@ class _WebViewState extends State<WebViewScreen> {
                 child: Stack(
                   children: [
                     WebViewWidget(controller: _controller),
-                    if (progress < 1.0) LinearProgressIndicator(value: progress) else Container(),
+                    if (progress < 1.0)
+                      LinearProgressIndicator(value: progress)
+                    else
+                      Container(),
                   ],
                 ))));
   }
@@ -60,9 +63,9 @@ class _WebViewState extends State<WebViewScreen> {
   void setWebViewController() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setUserAgent(
-          widget.socialType == 'google' ?
-          "Mozilla/5.0 AppleWebKit/535.19 Chrome/56.0.0 Mobile Safari/535.19" : null)
+      ..setUserAgent(widget.socialType == 'google'
+          ? "Mozilla/5.0 AppleWebKit/535.19 Chrome/56.0.0 Mobile Safari/535.19"
+          : null)
       ..setNavigationDelegate(NavigationDelegate(
         onPageStarted: (url) {},
         onNavigationRequest: (request) {
@@ -96,11 +99,15 @@ class _WebViewState extends State<WebViewScreen> {
       case "naver":
       case "google":
         {
-          code = Uri.decodeComponent(url.substring(url.indexOf('code=') + 5).split('&').first);
+          code = Uri.decodeComponent(
+              url.substring(url.indexOf('code=') + 5).split('&').first);
           break;
         }
     }
-    context.read<UserProvider>().socialLogin(context, socialType, code).then((isSign) {
+    context
+        .read<UserProvider>()
+        .socialLogin(context, socialType, code)
+        .then((isSign) {
       if (isSign) {
         Navigator.pushReplacement(
             context,

@@ -65,7 +65,9 @@ class _MainScreenState extends State<MainScreen> {
                     icon: Icon(
                       tabIcon(index),
                       size: 32,
-                      color: index == currentTab ? WidgetColor.mainColor : deepGray,
+                      color: index == currentTab
+                          ? WidgetColor.mainColor
+                          : deepGray,
                     ),
                     label: '')
             ],

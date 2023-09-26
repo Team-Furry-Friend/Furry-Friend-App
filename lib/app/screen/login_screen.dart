@@ -77,7 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginOnTap(String type) {
     if (type == "mail") {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginEmailScreen()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const LoginEmailScreen()));
       return;
     }
     final redirectUrl = 'https://furry-friend-kappa.vercel.app/oauth2/$type';
