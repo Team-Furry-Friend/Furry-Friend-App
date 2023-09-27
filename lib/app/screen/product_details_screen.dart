@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:furry_friend/app/screen/product_write_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/product_details_widget.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
-import 'package:furry_friend/domain/model/basket/basket.dart';
-import 'package:furry_friend/domain/model/post/post.dart';
-import 'package:furry_friend/domain/providers/basket_provider.dart';
+import 'package:furry_friend/domain/providers/chat_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +21,11 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final _reviewTextController = TextEditingController();
   int selectImageIndex = 0;
+  int myId = 0;
 
   @override
   void initState() {
+    myId = PrefsUtils.getInt(PrefsUtils.utils.userId);
     context.read<PostProvider>().getPostDetail(widget.pid);
     context.read<PostProvider>().getReviews(widget.pid);
     super.initState();
@@ -60,9 +59,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   width: double.infinity,
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(16),
-                      child: NetWorkImage(
-                        image: product.imageDTOList.elementAt(selectImageIndex),
-                      ))),
+                      child: product.imageDTOList.isNotEmpty
+                          ? NetWorkImage(
+                              image: product.imageDTOList
+                                  .elementAt(selectImageIndex),
+                            )
+                          : Container())),
               ImageGridView(
                 imageList: product.imageDTOList,
                 onTap: (image) {
@@ -99,24 +101,38 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ],
                     ),
                   ),
-                  const VerticalDivider(),
-                  const Column(
-                    children: [
-                      Icon(
-                        Icons.chat_rounded,
-                        color: lightGray,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 6),
-                        child: Text(
-                          '채팅 문의',
-                          style: TextStyle(
-                            color: lightGray,
-                            fontSize: 12,
+                  Visibility(
+                    visible: product.mid != myId,
+                    child: Column(
+                      children: [
+                        const VerticalDivider(),
+                        GestureDetector(
+                          onTap: () {
+                            context
+                                .read<ChatProvider>()
+                                .createChatRoom(context, myId);
+                          },
+                          child: const Column(
+                            children: [
+                              Icon(
+                                Icons.chat_rounded,
+                                color: lightGray,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 6),
+                                child: Text(
+                                  '채팅 문의',
+                                  style: TextStyle(
+                                    color: lightGray,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   )
                 ],
               )

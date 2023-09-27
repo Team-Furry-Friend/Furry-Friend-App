@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/screen/chat_details_screen.dart';
+import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/domain/api/api.dart';
 import 'package:furry_friend/domain/model/chat/chat.dart';
 import 'package:furry_friend/domain/model/chat/chat_message.dart';
@@ -20,6 +22,8 @@ class ChatProvider extends ChangeNotifier {
     _client.getChats().then((value) {
       value.sort((b, a) => a.chatMessageResponseDTO!.modDate
           .compareTo(b.chatMessageResponseDTO!.modDate));
+      value.removeWhere(
+          (element) => element.chatMessageResponseDTO?.chatMessageId == 0);
       _chatList = value;
       notifyListeners();
     });
@@ -45,6 +49,27 @@ class ChatProvider extends ChangeNotifier {
 
     _chatMessagePage.dtoList = [..._chatMessagePage.dtoList, message];
     notifyListeners();
+  }
+
+  void createChatRoom(BuildContext context, int id) {
+    final options = {
+      "chatParticipantsId": id,
+      "chatParticipantsName": PrefsUtils.getString(PrefsUtils.utils.nickName),
+      "jwtRequest": {
+        "access_token": PrefsUtils.getString(PrefsUtils.utils.refreshToken)
+      }
+    };
+
+    _client.postChat(options).then((value) {
+      if (value.chatRoomResponseDTO != null) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatDetailsScreen(
+                      roomId: value.chatRoomResponseDTO!.chatRoomId,
+                    )));
+      }
+    });
   }
 
   void sendNewMessage() {}
