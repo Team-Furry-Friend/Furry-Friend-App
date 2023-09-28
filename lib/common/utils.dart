@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/domain/api/private_values.dart';
+import 'package:furry_friend/firebase_options.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Utils {
@@ -8,6 +10,9 @@ class Utils {
 
   Future<void> serviceSetting() async {
     await PrefsUtils.init();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
   }
 

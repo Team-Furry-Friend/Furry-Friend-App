@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/screen/login_email_screen.dart';
 import 'package:furry_friend/app/screen/sign_up_screen.dart';
 import 'package:furry_friend/app/screen/web_view_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
+import 'package:furry_friend/common/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -79,6 +81,10 @@ class _LoginScreenState extends State<LoginScreen> {
     if (type == "mail") {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const LoginEmailScreen()));
+      return;
+    }
+    if (kIsWeb) {
+      Utils.util.showSnackBar(context, '현재 웹에서는 해당 기능을 제공하지 않습니다.');
       return;
     }
     final redirectUrl = 'https://furry-friend-kappa.vercel.app/oauth2/$type';

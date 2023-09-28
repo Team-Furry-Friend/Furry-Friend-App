@@ -24,6 +24,7 @@ dependencies:
   stomp_dart_client:
   webview_flutter:
   supabase_flutter:
+  firebase_core:
 
 
 

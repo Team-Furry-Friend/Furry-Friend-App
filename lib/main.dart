@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
@@ -50,12 +51,14 @@ class _MyAppState extends State<MyApp> {
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, child) {
           WidgetColor.isDarkMode = currentMode == ThemeMode.dark;
-          return MaterialApp(
-            title: 'Furry Friend',
-            theme: ThemeData(fontFamily: 'Pretendard'),
-            darkTheme: ThemeData.dark(),
-            themeMode: currentMode,
-            home: Utils.util.isLogin() ? const MainScreen() : LoginScreen(),
+          return WebMobileSizeMatchLayout(
+            child: MaterialApp(
+                title: 'Furry Friend',
+                theme: ThemeData(fontFamily: 'Pretendard'),
+                darkTheme: ThemeData.dark(),
+                themeMode: currentMode,
+                home:
+                    Utils.util.isLogin() ? const MainScreen() : LoginScreen()),
           );
         });
   }
