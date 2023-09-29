@@ -49,3 +49,7 @@ ios/Runner/GoogleService-Info.plist
 lib/firebase_options.dart
 macos/firebase_app_id_file.json
 macos/Runner/GoogleService-Info.plist
+lib/domain/api/private_values.dart
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+android/app/google-services.json

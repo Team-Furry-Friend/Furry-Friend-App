@@ -13,7 +13,10 @@ import 'widget_color.dart';
 class PopularPostLayout extends StatelessWidget {
   const PopularPostLayout({
     super.key,
+    required this.buttonTap,
   });
+
+  final Function() buttonTap;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,9 @@ class PopularPostLayout extends StatelessWidget {
                 ),
               ),
             ),
-            const RoundBlueButton(text: '모두보기'),
+            GestureDetector(
+                onTap: () => buttonTap(),
+                child: const RoundBlueButton(text: '모두보기')),
           ],
         ),
         Padding(
@@ -79,22 +84,19 @@ class RoundBlueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
-        decoration: ShapeDecoration(
-          color: WidgetColor.lightMainColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-        ),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: WidgetColor.mainColor,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+      decoration: ShapeDecoration(
+        color: WidgetColor.lightMainColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: WidgetColor.mainColor,
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );

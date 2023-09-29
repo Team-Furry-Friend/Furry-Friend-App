@@ -95,7 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                 color: WidgetColor.cleanWhite,
               ),
-              child: const SingleChildScrollView(child: PopularPostLayout()),
+              child: SingleChildScrollView(child: PopularPostLayout(
+                buttonTap: () {
+                  widget.typeOnTap(typeList[0]);
+                },
+              )),
             ),
           ),
         ],
