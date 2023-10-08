@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 for (var element in loginList)
                   GestureDetector(
+                    key: Key('${element}LoginButton'),
                     onTap: () => loginOnTap(element),
                     child: Padding(
                       padding: const EdgeInsets.all(4),
