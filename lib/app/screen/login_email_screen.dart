@@ -48,12 +48,14 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
               child: Column(
                 children: [
                   TextFieldRow(
+                    key: const Key('idTextField'),
                     icon: Icons.alternate_email_rounded,
                     hintText: "이메일",
                     controller: emailController,
                     inputType: TextInputType.emailAddress,
                   ),
                   TextFieldRow(
+                    key: const Key('pwTextField'),
                     icon: Icons.vpn_key_outlined,
                     hintText: "비밀번호",
                     controller: pwController,
