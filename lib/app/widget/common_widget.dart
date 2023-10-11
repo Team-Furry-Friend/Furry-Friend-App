@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:furry_friend/domain/model/post/product_image.dart';
+import 'package:go_router/go_router.dart';
 
 import 'widget_color.dart';
 
@@ -15,7 +16,7 @@ PreferredSizeWidget DefaultAppBar(BuildContext context,
     leading: GestureDetector(
       onTap: onTap ??
           () {
-            Navigator.pop(context);
+            context.pop();
           },
       child: const Padding(
         padding: EdgeInsets.only(left: 18),

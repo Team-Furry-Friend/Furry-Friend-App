@@ -3,6 +3,7 @@ import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
+import 'package:furry_friend/config/route.dart';
 import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/chat_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
@@ -52,14 +53,13 @@ class _MyAppState extends State<MyApp> {
         builder: (_, ThemeMode currentMode, child) {
           WidgetColor.isDarkMode = currentMode == ThemeMode.dark;
           return WebMobileSizeMatchLayout(
-            child: MaterialApp(
-                title: 'Furry Friend',
-                theme: ThemeData(fontFamily: 'Pretendard'),
-                darkTheme: ThemeData.dark(),
-                themeMode: currentMode,
-                home:
-                    Utils.util.isLogin() ? const MainScreen() : LoginScreen()),
-          );
+              child: MaterialApp.router(
+            title: 'Furry Friend',
+            theme: ThemeData(fontFamily: 'Pretendard'),
+            darkTheme: ThemeData.dark(),
+            themeMode: currentMode,
+            routerConfig: router,
+          ));
         });
   }
 

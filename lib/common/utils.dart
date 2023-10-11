@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
-import 'package:furry_friend/domain/api/private_values.dart';
+import 'package:furry_friend/config/private_values.dart';
 import 'package:furry_friend/firebase_options.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

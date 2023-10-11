@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
-import 'package:furry_friend/domain/api/private_values.dart';
+import 'package:furry_friend/config/private_values.dart';
 
 class UserClient {
   Dio dio = Dio();

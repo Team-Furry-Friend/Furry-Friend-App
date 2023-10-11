@@ -4,6 +4,7 @@ import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/domain/model/basket/basket.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:furry_friend/domain/providers/basket_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -85,11 +86,8 @@ class SearchListLayout extends StatelessWidget {
                     .where((element) => element.pid == product.pid);
                 return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ProductDetailsScreen(pid: product.pid)));
+                      context.goNamed('productDetails',
+                          pathParameters: {"pid": "${product.pid}"});
                     },
                     child: SearchListItem(
                       product: product,

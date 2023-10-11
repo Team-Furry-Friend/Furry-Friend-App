@@ -3,6 +3,7 @@ import 'package:furry_friend/app/screen/product_write_screen.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
 import 'package:furry_friend/domain/providers/user_provider.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../widget/widget_color.dart';
@@ -55,10 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ProductWriteScreen()));
+                    context.goNamed('productWrite');
                   },
                   child: Container(
                     padding: const EdgeInsets.all(14),

@@ -6,6 +6,7 @@ import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:furry_friend/domain/model/post/product_image.dart';
 import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -189,7 +190,7 @@ class ProductDeleteAlertDialog extends StatelessWidget {
         TextButton(
           child: const Text("취소"),
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         TextButton(
@@ -223,12 +224,7 @@ class ProductEditModalBody extends StatelessWidget {
             text: '수정하기',
             iconData: Icons.edit,
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ProductWriteScreen(
-                            post: product,
-                          )));
+              context.goNamed('productWrite', extra: product);
             },
           ),
           ProductEditItem(
@@ -240,7 +236,7 @@ class ProductEditModalBody extends StatelessWidget {
                   builder: (dialogContext) {
                     return ProductDeleteAlertDialog(
                       deleteTap: () {
-                        Navigator.pop(dialogContext);
+                        dialogContext.pop();
                         context
                             .read<PostProvider>()
                             .deletePost(product.pid, context);

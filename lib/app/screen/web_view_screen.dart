@@ -5,6 +5,7 @@ import 'package:furry_friend/app/screen/sign_up_screen.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/domain/providers/user_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -55,7 +56,7 @@ class _WebViewState extends State<WebViewScreen> {
       _controller!.goBack();
       return false;
     } else {
-      Navigator.pop(context);
+      context.pop();
       return true;
     }
   }
@@ -109,13 +110,10 @@ class _WebViewState extends State<WebViewScreen> {
         .socialLogin(context, socialType, code)
         .then((isSign) {
       if (isSign) {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SignUpScreen(
-                      loginType: socialType,
-                      isSocialSign: true,
-                    )));
+        context.pushReplacementNamed('signUp', pathParameters: {
+          "isSocialSign": "true",
+          "loginType": socialType,
+        });
       }
     });
   }

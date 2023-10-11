@@ -4,6 +4,7 @@ import 'package:furry_friend/app/screen/main_screen.dart';
 import 'package:furry_friend/domain/model/user/token.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/domain/model/user/user.dart';
+import 'package:go_router/go_router.dart';
 
 import '../api/api.dart';
 
@@ -92,10 +93,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   void navigateHome(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const MainScreen()),
-        (route) => false);
+    context.pushReplacementNamed('main');
   }
 
   void setTokenPrefs(Token token) {

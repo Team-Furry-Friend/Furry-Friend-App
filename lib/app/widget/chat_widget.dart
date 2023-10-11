@@ -4,6 +4,7 @@ import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/domain/model/chat/chat.dart';
 import 'package:furry_friend/domain/model/chat/chat_message.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatRoomItem extends StatelessWidget {
   const ChatRoomItem({
@@ -19,14 +20,10 @@ class ChatRoomItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ChatDetailsScreen(
-                      roomId: chatRoom.chatParticipantsResponseDTO
-                              ?.chatRoomResponseDTO?.chatRoomId ??
-                          0,
-                    )));
+        context.goNamed('chatDetails', pathParameters: {
+          "roomId":
+              "${chatRoom.chatParticipantsResponseDTO?.chatRoomResponseDTO?.chatRoomId ?? 0}"
+        });
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

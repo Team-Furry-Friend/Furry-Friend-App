@@ -6,6 +6,7 @@ import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/domain/model/post/product.dart';
 import 'package:furry_friend/domain/model/post/product_image.dart';
 import 'package:furry_friend/domain/model/post/review.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../model/post/post.dart';
 import '../api/api.dart';
@@ -39,7 +40,7 @@ class PostProvider extends ChangeNotifier {
     _client.postPost(options).then((value) {
       if ((value.data["statusCode"] ?? 400) / 100 == 2) {
         Utils.util.showSnackBar(context, '상품이 게시되었습니다!');
-        Navigator.pop(context);
+        context.pop();
       } else {
         Utils.util.showSnackBar(context, '오류가 발생하였습니다.');
       }
@@ -72,7 +73,7 @@ class PostProvider extends ChangeNotifier {
         notifyListeners();
 
         Utils.util.showSnackBar(context, '상품이 수정되었습니다!');
-        Navigator.pop(context);
+        context.pop();
       } else {
         Utils.util.showSnackBar(context, '오류가 발생하였습니다.');
       }
@@ -99,8 +100,9 @@ class PostProvider extends ChangeNotifier {
         _post.removeWhere((element) => element.pid == pid);
 
         Utils.util.showSnackBar(context, '상품이 삭제되었습니다.');
-        Navigator.pop(context);
-        Navigator.pop(context);
+
+        context.pop();
+        context.pop();
         notifyListeners();
       }
     });

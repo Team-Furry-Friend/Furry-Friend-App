@@ -4,6 +4,7 @@ import 'package:furry_friend/app/screen/login_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/main.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -52,10 +53,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const BasketListScreen()));
+                    context.goNamed('basket');
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 30),
@@ -113,10 +111,7 @@ class _SettingScreenState extends State<SettingScreen> {
           InkWell(
             onTap: () {
               PrefsUtils.clear();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (route) => false);
+              context.pushReplacementNamed('login');
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),

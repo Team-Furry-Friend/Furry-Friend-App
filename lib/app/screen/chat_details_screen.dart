@@ -6,7 +6,7 @@ import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
-import 'package:furry_friend/domain/api/private_values.dart';
+import 'package:furry_friend/config/private_values.dart';
 import 'package:furry_friend/domain/providers/chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:stomp_dart_client/stomp.dart';

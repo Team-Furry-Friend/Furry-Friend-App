@@ -5,6 +5,7 @@ import 'package:furry_friend/app/screen/sign_up_screen.dart';
 import 'package:furry_friend/app/screen/web_view_screen.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/utils.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -55,13 +56,10 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SignUpScreen(
-                              loginType: 'email',
-                              isSocialSign: false,
-                            )));
+                context.goNamed('signUp', pathParameters: {
+                  "loginType": "email",
+                  "isSocialSign": "false",
+                });
               },
               child: const Text(
                 '이메일 회원가입',
@@ -80,8 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginOnTap(String type) {
     if (type == "mail") {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const LoginEmailScreen()));
+      context.goNamed('loginEmail');
       return;
     }
     if (kIsWeb) {
@@ -106,13 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
         break;
     }
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => WebViewScreen(
-            siteUrl: socialLoginUrl,
-            socialType: type,
-          ),
-        ));
+    context.goNamed('webView', pathParameters: {
+      "siteUrl": socialLoginUrl,
+      "socialType": type,
+    });
   }
 }

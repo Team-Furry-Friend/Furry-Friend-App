@@ -134,7 +134,8 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void nextPageLoad() {
-    if (searchProvider.hasNextPage &&
+    if (_textController.text.isNotEmpty &&
+        searchProvider.hasNextPage &&
         !searchProvider.isLoadingPage &&
         _scrollController.position.pixels ==
             _scrollController.position.maxScrollExtent) {

@@ -25,6 +25,7 @@ dependencies:
   webview_flutter:
   supabase_flutter:
   firebase_core:
+  go_router:
 
 
 

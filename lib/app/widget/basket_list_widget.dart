@@ -4,6 +4,7 @@ import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/domain/model/basket/basket.dart';
 import 'package:furry_friend/domain/providers/basket_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -26,11 +27,8 @@ class BasketListLayout extends StatelessWidget {
         final basket = basketList[index];
         return GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ProductDetailsScreen(pid: basket.pid)));
+              context.goNamed('productDetails',
+                  pathParameters: {"pid": "${basket.pid}"});
             },
             child: BasketListItem(
               basket: basket,

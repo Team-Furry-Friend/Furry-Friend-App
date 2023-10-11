@@ -7,6 +7,7 @@ import 'package:furry_friend/domain/api/api.dart';
 import 'package:furry_friend/domain/model/chat/chat.dart';
 import 'package:furry_friend/domain/model/chat/chat_message.dart';
 import 'package:furry_friend/domain/model/chat/chat_message_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 
 class ChatProvider extends ChangeNotifier {
@@ -62,12 +63,9 @@ class ChatProvider extends ChangeNotifier {
 
     _client.postChat(options).then((value) {
       if (value.chatRoomResponseDTO != null) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ChatDetailsScreen(
-                      roomId: value.chatRoomResponseDTO!.chatRoomId,
-                    )));
+        context.goNamed('chatDetails', pathParameters: {
+          "roomId": "${value.chatRoomResponseDTO!.chatRoomId}"
+        });
       }
     });
   }

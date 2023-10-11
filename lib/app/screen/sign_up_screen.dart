@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/utils.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/providers/user_provider.dart';
@@ -166,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 setState(() {
                   isCheckToS = isCheck;
                 });
-                Navigator.pop(context);
+                context.pop();
               });
             });
       } else {

@@ -5,6 +5,7 @@ import 'package:furry_friend/domain/model/basket/basket.dart';
 import 'package:furry_friend/domain/model/post/post.dart';
 import 'package:furry_friend/domain/providers/basket_provider.dart';
 import 'package:furry_friend/domain/providers/post_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -62,11 +63,8 @@ class PopularPostLayout extends StatelessWidget {
                   basket: basket.firstOrNull,
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ProductDetailsScreen(pid: post.pid)));
+                  context.goNamed('productDetails',
+                      pathParameters: {"pid": "${post.pid}"});
                 },
               );
             },
