@@ -106,39 +106,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ]),
             ),
             Expanded(
-                child: Column(
+                child: SingleChildScrollView(
+                  child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: isCheckToS,
-                        onChanged: checkBoxOnChanged,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.3)),
-                        side: MaterialStateBorderSide.resolveWith(
-                          (states) => const BorderSide(
-                              width: 1.0, color: Color(0xffB9B9B9)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: isCheckToS,
+                          onChanged: checkBoxOnChanged,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.3)),
+                          side: MaterialStateBorderSide.resolveWith(
+                            (states) => const BorderSide(
+                                width: 1.0, color: Color(0xffB9B9B9)),
+                          ),
+                          activeColor: WidgetColor.mainColor,
                         ),
-                        activeColor: WidgetColor.mainColor,
-                      ),
-                      Text(
-                        "이용약관 및 개인정보 처리방침에 동의합니다.",
-                        style: TextStyle(
-                            fontSize: 16, color: WidgetColor.mainBlack),
-                      )
-                    ],
+                        Text(
+                          "이용약관 및 개인정보 처리방침에 동의합니다.",
+                          style: TextStyle(
+                              fontSize: 16, color: WidgetColor.mainBlack),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                BottomButtonLayout(
-                    onTap: completeButtonOnTap,
-                    text: "다음",
-                    backgroundColor:
-                        completeCheck() ? WidgetColor.mainColor : deepGray),
+                  BottomButtonLayout(
+                      onTap: completeButtonOnTap,
+                      text: "다음",
+                      backgroundColor:
+                          completeCheck() ? WidgetColor.mainColor : deepGray),
               ],
-            )),
+            ),
+                )),
           ],
         ),
       ),
