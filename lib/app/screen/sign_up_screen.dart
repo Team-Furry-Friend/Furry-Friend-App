@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/common/utils.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import '../../domain/providers/user_provider.dart';
 import '../widget/widget_color.dart';
@@ -62,85 +61,86 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: const EdgeInsets.symmetric(vertical: 25),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Column(children: [
-                Visibility(
-                    visible: !widget.isSocialSign,
-                    child: Column(children: [
-                      TextFieldRow(
-                        icon: Icons.alternate_email_rounded,
-                        hintText: "이메일",
-                        controller: emailController,
-                        inputType: TextInputType.emailAddress,
-                      ),
-                      TextFieldRow(
-                        icon: Icons.vpn_key_outlined,
-                        hintText: "비밀번호",
-                        controller: pwController,
-                      ),
-                    ])),
-                TextFieldRow(
-                  icon: Icons.person,
-                  hintText: "별명",
-                  controller: nameController,
-                ),
-                Visibility(
-                  visible: !widget.isSocialSign,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-                    child: Divider(),
-                  ),
-                ),
-                TextFieldRow(
-                  icon: Icons.map_outlined,
-                  hintText: "주소",
-                  controller: addressController,
-                ),
-                TextFieldRow(
-                  icon: Icons.phone_outlined,
-                  hintText: "전화번호",
-                  controller: phoneController,
-                  inputType: TextInputType.phone,
-                ),
-              ]),
-            ),
             Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(children: [
+                    Visibility(
+                        visible: !widget.isSocialSign,
+                        child: Column(children: [
+                          TextFieldRow(
+                            icon: Icons.alternate_email_rounded,
+                            hintText: "이메일",
+                            controller: emailController,
+                            inputType: TextInputType.emailAddress,
+                          ),
+                          TextFieldRow(
+                            icon: Icons.vpn_key_outlined,
+                            hintText: "비밀번호",
+                            controller: pwController,
+                          ),
+                        ])),
+                    TextFieldRow(
+                      icon: Icons.person,
+                      hintText: "별명",
+                      controller: nameController,
+                    ),
+                    Visibility(
+                      visible: !widget.isSocialSign,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+                        child: Divider(),
+                      ),
+                    ),
+                    TextFieldRow(
+                      icon: Icons.map_outlined,
+                      hintText: "주소",
+                      controller: addressController,
+                    ),
+                    TextFieldRow(
+                      icon: Icons.phone_outlined,
+                      hintText: "전화번호",
+                      controller: phoneController,
+                      inputType: TextInputType.phone,
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+            Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      children: [
-                        Checkbox(
-                          value: isCheckToS,
-                          onChanged: checkBoxOnChanged,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.3)),
-                          side: MaterialStateBorderSide.resolveWith(
-                            (states) => const BorderSide(
-                                width: 1.0, color: Color(0xffB9B9B9)),
-                          ),
-                          activeColor: WidgetColor.mainColor,
-                        ),
-                        Text(
-                          "이용약관 및 개인정보 처리방침에 동의합니다.",
-                          style: TextStyle(
-                              fontSize: 16, color: WidgetColor.mainBlack),
-                        )
-                      ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: isCheckToS,
+                    onChanged: checkBoxOnChanged,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.3)),
+                    side: MaterialStateBorderSide.resolveWith(
+                      (states) => const BorderSide(
+                          width: 1.0, color: Color(0xffB9B9B9)),
                     ),
+                    activeColor: WidgetColor.mainColor,
                   ),
-                  BottomButtonLayout(
-                      onTap: completeButtonOnTap,
-                      text: "다음",
-                      backgroundColor:
-                          completeCheck() ? WidgetColor.mainColor : deepGray),
+                  Text(
+                    "이용약관 및 개인정보 처리방침에 동의합니다.",
+                    style: TextStyle(
+                        fontSize: 16, color: WidgetColor.mainBlack),
+                  )
+                ],
+              ),
+            ),
+            BottomButtonLayout(
+                onTap: completeButtonOnTap,
+                text: "다음",
+                backgroundColor:
+                    completeCheck() ? WidgetColor.mainColor : deepGray),
               ],
             ),
-                )),
           ],
         ),
       ),
