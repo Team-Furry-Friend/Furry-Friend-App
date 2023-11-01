@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:furry_friend/app/screen/sign_up_screen.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
@@ -71,7 +72,7 @@ class _WebViewState extends State<WebViewScreen> {
         onPageStarted: (url) {},
         onNavigationRequest: (request) {
           final url = request.url;
-          if (url.startsWith('https://furry-friend-kappa.vercel.app/oauth2/')) {
+          if (url.startsWith(dotenv.env['FURRY_FRIEND_URL'] ?? "")) {
             socialSignUpRoute(url);
             return NavigationDecision.prevent;
           }

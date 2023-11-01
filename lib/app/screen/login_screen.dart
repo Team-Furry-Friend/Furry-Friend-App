@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:furry_friend/app/screen/login_email_screen.dart';
 import 'package:furry_friend/app/screen/sign_up_screen.dart';
 import 'package:furry_friend/app/screen/web_view_screen.dart';
@@ -85,21 +86,21 @@ class _LoginScreenState extends State<LoginScreen> {
       Utils.util.showSnackBar(context, '현재 웹에서는 해당 기능을 제공하지 않습니다.');
       return;
     }
-    final redirectUrl = 'https://furry-friend-kappa.vercel.app/oauth2/$type';
+    final redirectUrl = '${dotenv.env['FURRY_FRIEND_URL'] ?? ""}$type';
     String socialLoginUrl = '';
 
     switch (type) {
       case "kakao":
         socialLoginUrl =
-            'https://kauth.kakao.com/oauth/authorize?client_id=a9fba49d1993fd773a9dc3bcaf08805c&redirect_uri=$redirectUrl&response_type=code';
+            '${dotenv.env['KAKAO_LOGIN_URL'] ?? ""}$redirectUrl&response_type=code';
         break;
       case "naver":
         socialLoginUrl =
-            'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=k630Wyb3TY8cxFgIdoIB&redirect_uri=$redirectUrl';
+            '${dotenv.env['NAVER_LOGIN_URL'] ?? ""}$redirectUrl';
         break;
       case "google":
         socialLoginUrl =
-            'https://accounts.google.com/o/oauth2/v2/auth?client_id=526477563372-29m9nrid0oq8mk2rfvkb5rd8j9iquq0k.apps.googleusercontent.com&redirect_uri=$redirectUrl&response_type=code&scope=email';
+            '${dotenv.env['GOOGLE_LOGIN_URL'] ?? ""}$redirectUrl&response_type=code&scope=email';
         break;
     }
 

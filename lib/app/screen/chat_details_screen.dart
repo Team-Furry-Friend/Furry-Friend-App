@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:furry_friend/app/widget/chat_widget.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
-import 'package:furry_friend/config/private_values.dart';
 import 'package:furry_friend/domain/providers/chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:stomp_dart_client/stomp.dart';
@@ -152,7 +152,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
   void sokectEventSetting() {
     stompClient = StompClient(
         config: StompConfig.sockJS(
-      url: '${baseUrl}chats/furry',
+      url: '${dotenv.env['BASE_URL'] ?? ""}chats/furry',
       onConnect: onConnect,
       webSocketConnectHeaders: {
         'Upgrade': 'websocket',

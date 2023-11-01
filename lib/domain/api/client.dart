@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
-import 'package:furry_friend/config/private_values.dart';
 
 class UserClient {
   Dio dio = Dio();
 
   UserClient() {
     BaseOptions _options = BaseOptions(
-      baseUrl: baseUrl,
+      baseUrl: dotenv.env['BASE_URL'] ?? "",
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       sendTimeout: const Duration(seconds: 10),

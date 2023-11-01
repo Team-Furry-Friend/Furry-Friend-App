@@ -26,6 +26,7 @@ dependencies:
   supabase_flutter:
   firebase_core:
   go_router:
+  flutter_dotenv:
 
 
 
@@ -61,3 +62,4 @@ flutter:
           weight: 900
   assets:
     - assets/images/
+    - assets/config/.env

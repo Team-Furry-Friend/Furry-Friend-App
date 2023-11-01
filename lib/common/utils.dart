@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
-import 'package:furry_friend/config/private_values.dart';
 import 'package:furry_friend/firebase_options.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -13,7 +13,7 @@ class Utils {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+    await Supabase.initialize(url: dotenv.env['SUPABASE_URL'] ?? "", anonKey: dotenv.env['SUPABASE_KEY'] ?? "");
   }
 
   bool isLogin() {

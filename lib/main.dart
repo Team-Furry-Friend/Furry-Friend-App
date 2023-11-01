@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:furry_friend/app/widget/common_widget.dart';
 import 'package:furry_friend/app/widget/widget_color.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:furry_friend/app/my_app.dart';
 import 'package:furry_friend/common/prefs_utils.dart';
 import 'package:furry_friend/common/utils.dart';
 import 'package:furry_friend/config/route.dart';
@@ -18,6 +20,7 @@ final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: 'assets/config/.env');
   await Utils.util.serviceSetting();
 
   runApp(MultiProvider(
