@@ -1,4 +1,4 @@
-# furryFriend
+# FurryFriend
 
 <br/>
 
@@ -6,7 +6,7 @@
 
 | Github | Figma |
 | --- | --- |
-| https://github.com/Team-Furry-Friend/Furry-Friend-App | https://www.figma.com/file/vvCLge3WpfmDjYHauk5jv4/Furry-Friend?type=design&node-id=0%3A1&mode=design&t=paT3ypPsShTG5bYa-1 |
+| [📍 GitHub](https://github.com/Team-Furry-Friend/Furry-Friend-App) | [🎨 Figma](https://www.figma.com/file/vvCLge3WpfmDjYHauk5jv4/Furry-Friend?type=design&node-id=0%3A1&mode=design&t=paT3ypPsShTG5bYa-1) |
 
 <br/>
 <br/>
@@ -39,9 +39,9 @@
 
 **기획의도**
 
-최근 들어서면서 점점 애완동물들을 키우는 사람들이 많아지고 있습니다.
+코로나 기간과 함께 최근 반려동물과 함께 살아가는 사람들이 많아지고 있습니다.
 
-이러한 영향으로 애완동물과 더불어 살아가기 위해, 동시에 환경을 보호하기 위해 더 이상 사용하지 않는 기구나 애완동물이 선호하지 않아 먹지 않는 사료 등의 물품을 거래하는 플랫폼을 만들어 거래할 수 있는 플랫폼을 기획하게 되었습니다.
+반려동물과 더불어 살아가기 위해, 동시에 환경을 보호하기 위해 더 이상 사용하지 않는 기구나 반려동물이 선호하지 않아 먹지 않는 사료 등의 물품을 전문적으로 거래하는 플랫폼을 만들어 거래할 수 있는 플랫폼을 기획하게 되었습니다.
 
 <br/>
 
@@ -67,8 +67,25 @@
 
 <br/>
 
-- 네이버, 카카오, 구글 등 각종 소셜 로그인에 대한 개발 경험을 얻었다.
-- `WebSokect` 사용 방법을 익히게 되었다.
-- `Supabase` 를 통한 이미지 업로드 및 불러오기 사용 방법을 익히게 되었다.
-- `Widget Test` 에 대한 경험을 쌓을 수 있었다.
-- View와 Data의 분리, 효율적인 앱 구조에 대하여 생각할 수 있는 기회가 되었고, 실전하여 개발할 수 있었다.
+- 각종 소셜 로그인에 대한 개발 경험을 얻었습니다.
+- `WebSokect` 연동 방법에 대해 생각하고 실제 경험을 할 수 있었습니다.
+- `Supabase` 를 통한 이미지 업로드 및 불러오기 사용 방법을 익히게 되었습니다.
+- `Widget Test` 에 대한 경험을 쌓을 수 있었습니다.
+- `Go_Router` 패키지를 통해 일괄적 화면 관리를 경험할 수 있었습니다.
+- View와 Data의 분리, 효율적인 앱 구조에 대하여 생각할 수 있는 기회가 되었고 그를 토대로 개발하여 더욱 앱에 대하여 깊게 생각할 수 있는 경험을 할 수 있었습니다.
+
+
+<br/>
+
+<br/>
+<br/>
+<br/>
+
+## 📷  앱 화면
+
+![001 1](https://github.com/Team-Furry-Friend/Furry-Friend-App/assets/48482259/349d7b56-789b-4f8e-aebf-fbe2cd582df4)
+![002 1](https://github.com/Team-Furry-Friend/Furry-Friend-App/assets/48482259/83cf50e6-c87b-42d1-8651-522ad68b25e7)
+![003](https://github.com/Team-Furry-Friend/Furry-Friend-App/assets/48482259/da8318f1-2a05-490a-8912-1283134a1566)
+
+
+<br/>
